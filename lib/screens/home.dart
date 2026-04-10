@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
+
+import './LoginPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  static const routename = 'Homepage';
+  static const routename = 'HomePage';
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,21 @@ class HomePage extends StatelessWidget {
         title: Text(HomePage.routename),
       ),
       body: Center(
-        child:        
-      ElevatedButton(
-         onPressed : (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-          },
-          child: Text('To the login page'),
-    ),
-    ),);
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              child: Text('To the LoginPage'),
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => LoginPage())));
+              },
+            ),
+            
+            
+          ],
+        ),
+      ),
+    );
   } //build
 
-}
+} //LoginPage
