@@ -45,8 +45,8 @@ class LoginPage extends StatelessWidget {
             ElevatedButton(
               child: Text('Login'),
               onPressed: () {
-                if (userController.text == 'bug@expert.com' && passwordController.text == '5TrNgP5Wd') {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomePage())));
+                if (userController.text == 'mms' && passwordController.text == '031828') {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomeScreen())));
                 } else {
                   // If incorrect, show a SnackBar with an error message
                   ScaffoldMessenger.of(context)
