@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/screens/profilepage.dart';
+import 'package:mms_app/screens/travelpage.dart';
+
 //import './login.dart';
 
 
@@ -15,8 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // List of pages
   final List<Widget> pages = [
     Center(child: Text("Home Page")),
-    Center(child: Text("Travel Page")),
-    Center(child: Text("Profile Page")),
+    TravelPage(),
+    Profile(),
   ];
 
   @override
