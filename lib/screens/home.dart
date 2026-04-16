@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/screens/options.dart';
 import 'package:mms_app/screens/profilepage.dart';
 import 'package:mms_app/screens/travelpage.dart';
 
@@ -15,18 +16,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  // List of pages
-  final List<Widget> pages = [
-    Center(child: Text("Home Page")),
-    TravelPage(),
-    Profile(),
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
+
+    final List<String> titles = [
+      "Home",
+      "Your trips",
+      "Profile",
+    ];
+    // List of pages
+    final List<Widget> pages = [
+    Center(child: ElevatedButton(
+    onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Options()));}, 
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.lightGreen, 
+      foregroundColor: Colors.black,
+      minimumSize: const Size(400, 120),),
+    child: Text("Crea percorso", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),),
+    ),
+    TravelPage(),
+    Profile(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(titles[selectedIndex], style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        backgroundColor: Colors.lightGreen
       ),
       body:pages[selectedIndex],
 
@@ -49,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
           NavigationDestination(
             icon: Icon(Icons.airplanemode_active),
             selectedIcon: Icon(Icons.airplanemode_active),
-            label: "Travel",
+            label: "Trips",
           ),
           NavigationDestination(
             icon: Icon(Icons.person_2_rounded),

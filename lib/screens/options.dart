@@ -1,7 +1,7 @@
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter/material.dart';
 
-class Example extends StatelessWidget {
+class Options extends StatelessWidget {
   List<Container> cards = [
     Container(
       alignment: Alignment.center,

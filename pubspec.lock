@@ -62,6 +62,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_card_swiper:
+    dependency: "direct main"
+    description:
+      name: flutter_card_swiper
+      sha256: b2b2b87e6fe4cffee8d28d3f8d7f3e303a3a7712bffaf364650e18c8433d0473
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -139,6 +147,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  profile_view:
+    dependency: "direct main"
+    description:
+      name: profile_view
+      sha256: "9af4f80ca39f9b7c56bb61e1017143753f500f535aa11ef4f0fbf01c3af0d6da"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

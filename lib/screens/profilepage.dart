@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile_view/profile_view.dart';
+
 
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -9,18 +11,28 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(), appBar adds the go back arrow
+       
       body: SafeArea(
-        child: Padding(
+        
+        child: Column(children: [
+
+        SizedBox(height: 20,),
+        
+        ProfileView(
+          image: AssetImage("lib/images/smile.png") ,
+          fullscreenOnEnlarge: true,
+          showCloseButton: true,
+          enableZoom: true,
+          enableDoubleTapZoom: true,
+        ),
+
+        Padding(
           padding:
                EdgeInsets.only(left: 12.0, right: 12.0, top: 60, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Profile',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
-              ),
+              
               SizedBox(
                 height: 5,
               ),
@@ -96,7 +108,9 @@ class Profile extends StatelessWidget {
           ),
             ])
         ),
+        ],
       ),
-    );
+       
+    ),);
   }
 }
