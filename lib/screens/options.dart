@@ -1,5 +1,6 @@
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:mms_app/models/swipe.dart';
 
 class Options extends StatelessWidget {
   List<Container> cards = [
@@ -37,3 +38,10 @@ class Options extends StatelessWidget {
     );
   }
 }
+
+void _save(BuildContext context){
+  if(CardSwiperDirection.right == true){
+    resultSwipe.saveSwipe()
+  }
+}
+
