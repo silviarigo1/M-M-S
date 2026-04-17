@@ -17,7 +17,20 @@ class Choices extends StatelessWidget{
           // for example, after the tap of the IconButton in the AppBar.
           child: Consumer<ResultSwipe>(
             builder: (context, number, child) {
-              return Text('You have ${number.swipes.length} items in your cart.');
+              return number.swipes.isEmpty
+                ? Text('No destinations selected')
+                : ListView.builder(
+                  itemCount: number.swipes.length,
+                  itemBuilder: (context, destIndex){
+                    return Card(
+                      elevation: 5,
+                      child: ListTile(
+                        leading: Icon(Icons.pin_drop),
+                        title: Text("ciao")
+                      ));
+                  }
+                );
+
             },
       ), ),
       );
