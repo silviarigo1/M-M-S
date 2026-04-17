@@ -25,6 +25,7 @@ class Options extends StatelessWidget {
           onSwipe:(previousIndex, currentIndex, direction) {
             if(direction == CardSwiperDirection.right){
                 Provider.of<ResultSwipe>(context, listen: false).saveSwipe(carte.cards[previousIndex!]);
+                Provider.of<ResultSwipe>(context, listen: false).saveIndex(previousIndex);
             }
             if (previousIndex == carte.length -1) {
               Future.delayed(Duration.zero, () {

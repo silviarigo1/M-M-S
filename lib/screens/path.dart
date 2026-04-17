@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/models/places.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
@@ -28,7 +29,7 @@ class Choices extends StatelessWidget{
                       elevation: 5,
                       child: ListTile(
                         leading: Icon(Icons.pin_drop),
-                        title: Text("ciao")
+                        title: Text("$Places.places[ResultSwipe.savedIndices]"),
                       ));
                   }
                 );
