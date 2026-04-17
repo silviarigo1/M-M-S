@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => resultSwipe() ,
+      create: (context) => ResultSwipe() ,
       child: MaterialApp(
         title: 'Login Page',
         home: LoginPage(),

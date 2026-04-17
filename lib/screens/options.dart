@@ -1,6 +1,8 @@
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
+import 'package:mms_app/screens/path.dart';
+import 'package:provider/provider.dart';
 import '../models/card.dart';
 
 class Options extends StatelessWidget {
@@ -20,6 +22,14 @@ class Options extends StatelessWidget {
           isLoop: false,
           cardsCount: carte.length,
           cardBuilder: (context, index) => carte[index],
+          onSwipe:(previousIndex, currentIndex, direction) {
+            if(direction == CardSwiperDirection.right){
+                Provider.of<ResultSwipe>(context, listen: false).saveSwipe(carte.cards[previousIndex!]);
+            }
+            if(previousIndex == carte.length-1){
+                Navigator.push(context, MaterialPageRoute(builder: ((context) => Choices())));
+            }
+          } ,
         ),
       ),
     );

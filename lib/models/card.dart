@@ -21,7 +21,9 @@ class TravelCard {
 
   int get length => cards.length;
 
-  Widget operator [](int other) {}
+  Widget operator [](int? index) {
+    return cards[index!];
+  }
 
 }
 

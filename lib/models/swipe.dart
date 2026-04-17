@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class resultSwipe extends ChangeNotifier{
-  
-  List<String> swipes = [];
+class ResultSwipe extends ChangeNotifier{
 
-  void saveSwipe(String toAdd){
+  List<Container> swipes = [];
+
+  void saveSwipe(Container toAdd){
     swipes.add(toAdd);
     notifyListeners();
   }
