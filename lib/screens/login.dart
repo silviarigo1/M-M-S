@@ -27,7 +27,13 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal:100.0),
 
               child: Column(children: [
-              Image.asset('lib/images/zaino.png'),
+              
+              Image.asset(
+                'lib/images/zaino.png',
+                width: 200, // Larghezza desiderata
+                height: 200, // Altezza desiderata
+                fit: BoxFit.contain, // Determina come l'immagine si adatta allo spazio
+              ),
 
               const SizedBox(
                 height: 20,
