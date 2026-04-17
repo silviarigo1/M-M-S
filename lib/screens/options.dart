@@ -28,6 +28,8 @@ class Options extends StatelessWidget {
       ),
       body: Flexible(
         child: CardSwiper(
+          isVerticalSwipingEnabled: false,
+          isLoop: false,
           cardsCount: cards.length,
           cardBuilder: (context, index) => cards[index],
         ),
