@@ -1,25 +1,12 @@
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
+import '../models/card.dart';
 
 class Options extends StatelessWidget {
-  List<Container> cards = [
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Venezia'),
-      color: Colors.blue,
-    ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('2'),
-      color: Colors.red,
-    ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('3'),
-      color: Colors.purple,
-    )
-  ];
+  Options({super.key});
+
+  final TravelCard carte =  TravelCard();
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +18,13 @@ class Options extends StatelessWidget {
         child: CardSwiper(
           isVerticalSwipingEnabled: false,
           isLoop: false,
-          cardsCount: cards.length,
-          cardBuilder: (context, index) => cards[index],
+          cardsCount: carte.length,
+          cardBuilder: (context, index) => carte[index],
         ),
       ),
     );
   }
 }
 
-void _save(BuildContext context){
-  if(CardSwiperDirection.right == true){
-    resultSwipe.saveSwipe()
-  }
-}
+
 

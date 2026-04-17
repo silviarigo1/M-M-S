@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Card {
+class TravelCard {
   List<Container> cards = [
     Container(
       alignment: Alignment.center,
@@ -18,6 +18,10 @@ class Card {
       color: Colors.purple,
     )
   ];
+
+  int get length => cards.length;
+
+  Widget operator [](int other) {}
 
 }
 
