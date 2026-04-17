@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/models/swipe.dart';
 import 'screens/login.dart';
+import 'package:provider/provider.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,10 +12,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login Page',
-      home: LoginPage(),
-    );
+    return ChangeNotifierProvider(
+      create: (context) => resultSwipe() ,
+      child: MaterialApp(
+        title: 'Login Page',
+        home: LoginPage(),
+    ));
+    
   }
   }
 
