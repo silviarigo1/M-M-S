@@ -19,16 +19,18 @@ class Options extends StatelessWidget {
       body: Flexible(
         child: CardSwiper(
           isVerticalSwipingEnabled: false,
-          isLoop: false,
+          //isLoop: false,
           cardsCount: carte.length,
           cardBuilder: (context, index) => carte[index],
           onSwipe:(previousIndex, currentIndex, direction) {
             if(direction == CardSwiperDirection.right){
                 Provider.of<ResultSwipe>(context, listen: false).saveSwipe(carte.cards[previousIndex!]);
             }
-            if(previousIndex == carte.length-1){
-                Navigator.push(context, MaterialPageRoute(builder: ((context) => Choices())));
+            if (currentIndex == null) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Choices())
+            );
             }
+          
           } ,
         ),
       ),

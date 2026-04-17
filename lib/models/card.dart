@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import './places.dart';
 
 class TravelCard {
-  List<String> places = ["Posto 1", "Posto 2", "Posto 3"];
-
   List<Container> cards = [
     Container(
       alignment: Alignment.center,
       color: Colors.blue,
-      child: Text(places[1]),
+      child: Text(Places.places[1]),
     ),
     Container(
       alignment: Alignment.center,
       color: Colors.red,
-      child: const Text('2'),
+      child: Text(Places.places[2]),
     ),
     Container(
       alignment: Alignment.center,
       color: Colors.purple,
-      child: const Text('3'),
+      child: Text(Places.places[3]),
     )
   ];
 
