@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/options.dart';
 import 'package:mms_app/screens/profilepage.dart';
@@ -16,6 +18,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
+  double? _steps;
+  final double _stepGoal = 10000;
+
+  @override
+  void initState(){
+    _steps = Random().nextDouble() * _stepGoal;
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -27,14 +37,47 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     // List of pages
     final List<Widget> pages = [
-    Center(child: ElevatedButton(
-    onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Options()));}, 
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.lightGreen, 
-      foregroundColor: Colors.black,
-      minimumSize: const Size(400, 120),),
-    child: Text("Crea percorso", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),),
+    Center( 
+    child: Padding(
+    padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 10.0, bottom: 4.0),
+    child: Column (
+    children: [
+        ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Options()));}, 
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.lightGreen, 
+            foregroundColor: Colors.black,
+            minimumSize: const Size(400, 120),),
+          child: Text("Crea percorso", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),),
+        
+        const SizedBox(
+                height: 40,
+              ),
+
+        const Align(
+                alignment: Alignment.centerLeft,
+                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+              ),
+              const SizedBox(height: 3),
+
+        
+        Container(
+          margin: const EdgeInsets.only(top:20, bottom:10),
+          height: 15,
+          child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          child: LinearProgressIndicator(
+          value: _steps! / _stepGoal,
+          backgroundColor: Colors.grey.withOpacity(0.5),
+          valueColor: const AlwaysStoppedAnimation<Color>(Colors.lightGreen),
+        )),),
+        
+    ],),),
+
+
+  
     ),
+
+
     TravelPage(),
     Profile(),
     ];
