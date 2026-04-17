@@ -63,6 +63,7 @@ flutter:
   assets:
     - lib/images/zaino.png
     - lib/images/smile.png
+    - lib/images/impronta.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

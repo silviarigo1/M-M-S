@@ -6,17 +6,17 @@ class TravelCard {
     Container(
       alignment: Alignment.center,
       color: Colors.blue,
-      child: Text(Places.places[1]),
+      child: Text(Places.places[0]),
     ),
     Container(
       alignment: Alignment.center,
       color: Colors.red,
-      child: Text(Places.places[2]),
+      child: Text(Places.places[1]),
     ),
     Container(
       alignment: Alignment.center,
       color: Colors.purple,
-      child: Text(Places.places[3]),
+      child: Text(Places.places[2]),
     )
   ];
 

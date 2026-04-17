@@ -5,7 +5,7 @@ import './home.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
-  static const routename = 'MM&S Travel';
+  static const routename = 'M&MS Trip';
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -29,14 +29,14 @@ class LoginPage extends StatelessWidget {
               child: Column(children: [
               
               Image.asset(
-                'lib/images/zaino.png',
-                width: 200, // Larghezza desiderata
-                height: 200, // Altezza desiderata
+                'lib/images/impronta.png',
+                width: 80, // Larghezza desiderata
+                height: 80, // Altezza desiderata
                 fit: BoxFit.contain, // Determina come l'immagine si adatta allo spazio
               ),
 
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
 
                 TextField(

@@ -22,6 +22,8 @@ class Choices extends StatelessWidget{
                 : ListView.builder(
                   itemCount: number.swipes.length,
                   itemBuilder: (context, destIndex){
+                    //String destinations = number.swipes[destIndex]; 
+
                     return Card(
                       elevation: 5,
                       child: ListTile(
