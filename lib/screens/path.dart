@@ -45,7 +45,7 @@ class Choices extends StatelessWidget {
                         title: Text(
                           destinations,
                           style: const TextStyle(
-                            color: Colors.lightGreen,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -55,7 +55,7 @@ class Choices extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 35),
+                      padding: const EdgeInsets.only(left: 28),
                       child: Container(
                         width: 2,
                         height: 30,

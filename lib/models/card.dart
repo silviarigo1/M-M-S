@@ -55,7 +55,7 @@ class TravelCard {
           child: Text(
             Places.descriptions[0],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
           ),
         ),
       ),
@@ -460,7 +460,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/CaffePedrocchi.jpeg',
+          'lib/images/mete/CaffePedrocchi.jpg',
           height: 300, // Altezza fissa per l'immagine
           fit: BoxFit.cover, // 3. Usa 'cover' per non avere bordi vuoti ai lati
         ),
