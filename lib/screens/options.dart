@@ -14,8 +14,26 @@ class Options extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ciao')
-      ),
+        centerTitle: true,
+        backgroundColor: Colors.lightGreen,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Swipe right to save!',
+              style: TextStyle(
+                fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              Icon(
+                Icons.swipe
+              ),
+          ],
+        ),
+          
+        ),
+  
+      
       body: Flexible(
         child: CardSwiper(
           isVerticalSwipingEnabled: false,
