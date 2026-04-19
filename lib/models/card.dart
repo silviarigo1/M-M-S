@@ -51,11 +51,14 @@ class TravelCard {
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], // Sfondo grigetto
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[0],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -112,11 +115,14 @@ class TravelCard {
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[1],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -172,11 +178,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[2],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -232,11 +241,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[3],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -292,11 +304,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[4],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -352,11 +367,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[5],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -412,11 +430,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[6],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -472,11 +493,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[7],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -532,11 +556,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[8],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),
@@ -592,11 +619,14 @@ Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          color: Colors.grey[200], // Sfondo grigetto
+          color: Colors.grey[300], 
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
           child: Text(
             Places.descriptions[9],
             style: TextStyle(fontSize: 16, height: 1.4),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
+          ),
           ),
         ),
       ),

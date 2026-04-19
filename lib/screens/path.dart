@@ -24,7 +24,11 @@ class Choices extends StatelessWidget {
       body: Consumer<ResultSwipe>(
         builder: (context, number, child) {
           return number.swipes.isEmpty
-              ? const Center(child: Text('No destinations selected'))
+              ? const Center(child: 
+                Text(
+                  'No destinations selected',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)))
+                
               : ListView.separated(
                   padding: const EdgeInsets.all(20),
                   itemCount: number.swipes.length,
