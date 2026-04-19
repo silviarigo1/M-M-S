@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double? _tiredness;
   final double _tirednessGoal = 100;
+  //final double _tirednessGoal = 100;
 
   @override
   void initState(){

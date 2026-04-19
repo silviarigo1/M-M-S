@@ -64,6 +64,16 @@ flutter:
     - lib/images/zaino.png
     - lib/images/smile.png
     - lib/images/impronta.png
+    - lib/images/mete/BasilicaAntonio.jpg
+    - lib/images/mete/CaffePedrocchi.jpg
+    - lib/images/mete/CappellaScrovegni.jpg
+    - lib/images/mete/OrtoBotanico.jpg
+    - lib/images/mete/PalazzoBo.jpg
+    - lib/images/mete/PalazzoRagione.jpg
+    - lib/images/mete/PiazzaFrutta.jpg
+    - lib/images/mete/PratoValle.jpg
+    - lib/images/mete/SanGiovanni.jpg
+    - lib/images/mete/Specola.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
