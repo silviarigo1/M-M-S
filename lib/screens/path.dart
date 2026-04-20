@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
+import 'package:mms_app/screens/travelpage.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
@@ -19,7 +20,7 @@ class Choices extends StatelessWidget {
         ),
         centerTitle: true,
         backgroundColor: Colors.lightGreen,
-      ), // Fine AppBar
+      ), 
 
       body: Consumer<ResultSwipe>(
         builder: (context, number, child) {
@@ -54,7 +55,7 @@ class Choices extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ); // Fine Card
+                    ); 
                   },
                   separatorBuilder: (context, index) {
                     return Container(
@@ -65,11 +66,20 @@ class Choices extends StatelessWidget {
                         height: 30,
                         color: Colors.lightGreen.withOpacity(0.4),
                       ),
-                    ); // Fine Container separatore
+                    ); 
                   },
-                ); // Fine ListView
-        }, // Fine Builder
-      ), // Fine Consumer
-    ); // Fine Scaffold (Qui serve il punto e virgola!)
-  } // Fine build
-} // Fine classe
+                ); 
+        }, 
+      ), 
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: ((context) => TravelPage())));
+        },
+        backgroundColor: Colors.lightGreen,
+        child: const Icon(
+          Icons.save,
+          color: Colors.white,),
+        ),
+    ); 
+  } 
+} 
