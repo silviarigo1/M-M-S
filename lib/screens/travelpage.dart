@@ -1,15 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/swipe.dart';
+
 
 class TravelPage extends StatelessWidget {
   const TravelPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Benvenuto nella Pagina Travel!",
-        style: TextStyle(fontSize: 24),
-      ),
+    
+    return Scaffold(
+      
+      body: Consumer<ResultSwipe>(
+        builder: (context, provider, child) {
+          return provider.trips.isEmpty
+              ? const Center(child: 
+                Text(
+                  'No trips saved',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)))
+                
+              : ListView.separated(
+                  padding: const EdgeInsets.all(20),
+                  itemCount: provider.trips.length,
+                  itemBuilder: (context, tripIndex) {
+                    final trip = provider.trips[tripIndex];
+                    
+
+                    return Card(
+                      elevation: 5,
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.pin_drop,
+                          color: Colors.lightGreen,
+                        ),
+                        title: Text(
+                          trip.title,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                      ),
+                    ); 
+                  },
+                  separatorBuilder: (context, index) {
+                    return Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 28),
+                      child: Container(
+                        width: 2,
+                        height: 30,
+                        color: Colors.lightGreen.withOpacity(0.4),
+                      ),
+                    ); 
+                  },
+                ); 
+        }, 
+      ), 
     );
   }
 }

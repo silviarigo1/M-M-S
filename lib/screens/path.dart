@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
-import 'package:mms_app/screens/travelpage.dart';
+import 'package:mms_app/screens/home.dart';
+
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
@@ -73,7 +74,8 @@ class Choices extends StatelessWidget {
       ), 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: ((context) => TravelPage())));
+          Provider.of<ResultSwipe>(context, listen: false).savePlaces();
+          Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
