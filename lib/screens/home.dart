@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mms_app/screens/options.dart';
 import 'package:mms_app/screens/profilepage.dart';
 import 'package:mms_app/screens/travelpage.dart';
+import 'package:dropdown_button2/dropdown_button2.dart'; 
 
 //import './login.dart';
 
@@ -26,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double? _tiredness;
   //final double _tirednessGoal = 100;
+
+  String? selectedCity;
 
   @override
   void initState(){
@@ -50,15 +53,73 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 10.0, bottom: 4.0),
                 child: Column (
                   children: [
-                      ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Options()));}, 
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightGreen, 
-                          foregroundColor: Colors.black,
-                          minimumSize: const Size(300, 100),),
-                        child: Text("Crea percorso", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Ciao Utente,',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+
+                      const SizedBox(
+                              height: 60,
+                            ),
+
+                        // Questo definisce l'aspetto del "pulsante"
+                        DropdownButton2<String>(
+                          
+                          isExpanded: true,
+                          // Qui definisci lo stile del "pulsante" che l'utente vede
+                          buttonStyleData: ButtonStyleData(
+                            height: 70,
+                            width: 220,
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: Colors.lightGreen,
+                            ),
+                          ),
+                          // Qui definisci lo stile del menu che appare
+                          dropdownStyleData: DropdownStyleData(
+                            maxHeight: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: Colors.white,
+                            ),
+                          ),
+                          hint: const Text('Scegli città', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          items: ['Padova', 'Milano', 'Bologna', 'Roma', 'Napoli', 'Palermo']
+                            .map<DropdownItem<String>>((String item) => DropdownItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                ))
+                            .toList(),
+                        
+                          onChanged: (value) {
+                            if (value != null) {
+                              setState(() {
+                                selectedCity = value;
+                              });
+                            Future.microtask(() {
+                              if (context.mounted) { // Verifica di sicurezza per il context
+                                Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(builder: (context) => Options()),
+                                );
+                              }
+                            });
+                          };
+                      }, 
+                    
+                        ),   
                       
                       const SizedBox(
-                              height: 30,
+                              height: 60,
                             ),
 
                       const Align(
@@ -109,8 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       
                   ],),),
-
-
             
     ),
 
