@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
               ),
                             
               const SizedBox(height: 3),
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                         child: LinearProgressIndicator(
                           value: _steps! / _stepGoal,
-                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          backgroundColor: Colors.grey.withOpacity(0.3),
                           valueColor: const AlwaysStoppedAnimation<Color>(Colors.lightGreen),
                         ),
                       ),
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Quanto sei stanco oggi:", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+                child: Text("Quanto sei stanco oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
               ),
                             
               const SizedBox(height: 8),
