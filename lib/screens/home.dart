@@ -138,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return AlertDialog(
                                   title: const Text("Scegli la tua destinazione!"),
                                   content: const Text("Clicca su: 'Scegli città' per scegliere la destinazione del tuo viaggio!\n\n"
-                                                    "In seguito, potrai personalizzare il tuo viaggio scegliendo le attrazioni che prefersci,"
-                                                    " fai swipe a destra per aggiungere un'attrazione desiderata, a sinsitra per rimuoverla!\n\n"
+                                                    "In seguito, potrai personalizzare il tuo viaggio scegliendo le attrazioni che preferisci;"
+                                                    " fai swipe a destra per aggiungere un'attrazione desiderata, a sinistra per rimuoverla!\n\n"
                                                     "Al resto ci pensiamo noi, buon viaggio!"),
                                   actions: [
                                     TextButton(
