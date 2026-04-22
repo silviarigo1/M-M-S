@@ -21,17 +21,37 @@ class Profile extends StatelessWidget {
         
         child: Column(children: [
 
-        SizedBox(height: 20,),
-        
-        Column( children: [ProfileView(
+        const SizedBox(height:20),
+        Row( 
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [ProfileView(
           image: AssetImage("lib/images/smile.png") ,
           fullscreenOnEnlarge: true,
           showCloseButton: true,
           enableZoom: true,
           enableDoubleTapZoom: true, 
         ),
-        const SizedBox(height: 10),
-            // USIAMO IL NICKNAME DAL PROVIDER
+        
+        
+         GestureDetector(
+            onTap: () => _mostraOpzioniFoto(context), // Funzione per il pop-up
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                color: Colors.grey, // Colore cerchio
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.edit, // Icona matita
+                color: Colors.white,
+                size: 10,
+              ),
+            ),
+          ),
+        
+      ],
+    ),
+            const SizedBox(height: 10),
             Text(
               accountData.nickname, 
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -127,7 +147,50 @@ class Profile extends StatelessWidget {
         ),
         ],
       ),
+      ),
+    );
        
-    ],),),);
+    
+    
   }
+}
+
+
+void _mostraOpzioniFoto(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return Wrap( // Il Wrap si adatta all'altezza del contenuto
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Immagine del profilo",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.photo_library, color: Colors.blue),
+            title: const Text("Upload new photo"),
+            onTap: () {
+              // Qui aggiungerai la logica per scegliere la foto
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete, color: Colors.red),
+            title: const Text("Delite photo", style: TextStyle(color: Colors.red)),
+            onTap: () {
+              // Qui aggiungerai la logica per resettare l'immagine
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(height: 20),
+        ],
+      );
+    },
+  );
 }
