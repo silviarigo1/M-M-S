@@ -1,33 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+
+
+class AccountProvider extends ChangeNotifier {
+  String _nome = "Nome";
+  String _cognome = "Cognome";
+  String _email = "";
+  String _nickname = "Il tuo Nickname";
+
+  // Getter
+  String get nome => _nome;
+  String get cognome => _cognome;
+  String get email => _email;
+  String get nickname => _nickname;
+
+  // Metodo per aggiornare tutto in una volta
+  void updateAccount(String n, String c, String e, String nick) {
+    _nome = n;
+    _cognome = c;
+    _email = e;
+    _nickname = nick;
+    notifyListeners(); // Questo avvisa tutte le pagine di aggiornarsi!
+  }
+}
 
 class Account extends StatefulWidget {
+  const Account({super.key});
+
   @override
   _AccountState createState() => _AccountState();
 }
 
 class _AccountState extends State<Account> {
-  // 1. Definiamo i controller (come quelli della tua immagine)
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
+  
+@override
+void initState() {
+  super.initState();
+  // Inizializziamo i controller con i valori attuali del Provider
+  final acc = Provider.of<AccountProvider>(context, listen: false);
+  _nameController.text = acc.nome;
+  _surnameController.text = acc.cognome;
+  _emailController.text = acc.email;
+  _nicknameController.text = acc.nickname;
+}
 
-  // 2. Variabili per "salvare" e visualizzare i dati nella schermata
-  String nomeSalvato = "";
-  String cognomeSalvato = "";
-  String emailSalvata = "";
-  String nicknameSalvato = "Il tuo Nickname"; // Questo comparirà sotto l'immagine
-
-  void _salvaDati() {
-    setState(() {
-      // Aggiorniamo le variabili con il testo attuale dei controller
-      nomeSalvato = _nameController.text;
-      cognomeSalvato = _surnameController.text;
-      emailSalvata = _emailController.text;
-      nicknameSalvato = _nicknameController.text;
-    });
-  }
+void _salvaDati() {
+  // Salviamo nel Provider
+  Provider.of<AccountProvider>(context, listen: false).updateAccount(
+    _nameController.text,
+    _surnameController.text,
+    _emailController.text,
+    _nicknameController.text,
+  );
+  
+  // Opzionale: torna indietro o mostra un messaggio
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text("Dati salvati con successo!")),
+  );
+}
 
   @override
     Widget build(BuildContext context) {

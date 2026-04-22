@@ -3,6 +3,7 @@ import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
 import 'package:mms_app/screens/login.dart';
 import 'package:profile_view/profile_view.dart';
+import 'package:provider/provider.dart';
 
 
 class Profile extends StatelessWidget {
@@ -13,6 +14,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accountData = Provider.of<AccountProvider>(context);
     return Scaffold(
        
       body: SafeArea(
@@ -28,8 +30,14 @@ class Profile extends StatelessWidget {
           enableZoom: true,
           enableDoubleTapZoom: true, 
         ),
-        Text("Nome Cognome")
-        ],),
+        const SizedBox(height: 10),
+            // USIAMO IL NICKNAME DAL PROVIDER
+            Text(
+              accountData.nickname, 
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            // Se vuoi mostrare anche Nome e Cognome sotto:
+            Text("${accountData.nome} ${accountData.cognome}"),
         
 
         Padding(
@@ -120,6 +128,6 @@ class Profile extends StatelessWidget {
         ],
       ),
        
-    ),);
+    ],),),);
   }
 }
