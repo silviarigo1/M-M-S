@@ -140,8 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return AlertDialog(
                                   title: const Text("Scegli la tua destinazione!"),
                                   content: const Text("Clicca su: 'Scegli città' per scegliere la destinazione del tuo viaggio!\n\n"
-                                                    "In seguito, potrai personalizzare il tuo viaggio scegliendo le attrazioni che prefersci,"
-                                                    " fai swipe a destra per aggiungere un'attrazione desiderata, a sinsitra per rimuoverla!\n\n"
+                                                    "In seguito, potrai personalizzare il tuo viaggio scegliendo le attrazioni che preferisci;"
+                                                    " fai swipe a destra per aggiungere un'attrazione desiderata, a sinistra per rimuoverla!\n\n"
                                                     "Al resto ci pensiamo noi, buon viaggio!"),
                                   actions: [
                                     TextButton(
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
               ),
                             
               const SizedBox(height: 3),
@@ -191,8 +191,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                         child: LinearProgressIndicator(
+<<<<<<< HEAD
                           value: (_steps! / currentStepGoal).clamp(0.0, 1.0),
                           backgroundColor: Colors.grey.withOpacity(0.5),
+=======
+                          value: _steps! / _stepGoal,
+                          backgroundColor: Colors.grey.withOpacity(0.3),
+>>>>>>> 10225d28cd77c282b45caf815a9b89c494f0a1af
                           valueColor: const AlwaysStoppedAnimation<Color>(Colors.lightGreen),
                         ),
                       ),
@@ -204,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Quanto sei stanco oggi:", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+                child: Text("Quanto sei stanco oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
               ),
                             
               const SizedBox(height: 8),
