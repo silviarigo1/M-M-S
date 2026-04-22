@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'package:mms_app/screens/aim.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/options.dart';
 import 'package:mms_app/screens/profilepage.dart';
@@ -20,28 +21,29 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   double? _steps;
-  final double _stepGoal = 10000;
+  //final double _stepGoal = 10000;
 
   double? _sleep;
   final double _sleepGoal = 8;
 
-  double? _tiredness;
+  //double? _tiredness;
   //final _tiredness = 0.95;
   // final double _tirednessGoal = 100;
 
   String? selectedCity;
 
   @override
-  void initState(){
-    _steps = Random().nextDouble() * _stepGoal;
-    _sleep = Random().nextDouble() * _sleepGoal;
-    _tiredness = (_steps!/_stepGoal) * (1-(_sleep!/_sleepGoal));
+  void initState() {
     super.initState();
+    _steps = Random().nextDouble() * 10000; 
+    _sleep = Random().nextDouble() * _sleepGoal;
   }
   
   @override
   Widget build(BuildContext context) {
-
+    final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
+    double currentTiredness = (_steps! / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
+    currentTiredness = currentTiredness.clamp(0.0, 1.0);
     final List<String> titles = [
       "Home",
       "My trips",
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> pages = [
     Center( 
       child: Padding(
-                padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 10.0, bottom: 4.0),
+                padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 4.0, bottom: 4.0),
                 child: Column (
                   children: [
                     const SizedBox(height: 10,),
@@ -173,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 4.0, bottom: 4.0), // Padding ora a destra
                         child: Text(
-                          '${_steps!.round()} / $_stepGoal passi',
+                          '${_steps!.round()} / ${currentStepGoal.toInt()} passi',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                         child: LinearProgressIndicator(
-                          value: _steps! / _stepGoal,
+                          value: (_steps! / currentStepGoal).clamp(0.0, 1.0),
                           backgroundColor: Colors.grey.withOpacity(0.5),
                           valueColor: const AlwaysStoppedAnimation<Color>(Colors.lightGreen),
                         ),
@@ -215,22 +217,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 120,
                     height: 120,
                     child: CircularProgressIndicator(
-                      value: _tiredness,
+                      value: currentTiredness,
                       strokeWidth: 12,
                       backgroundColor: Colors.grey.withOpacity(0.3),
                       // valueColor sovrascrive la proprietà color, quindi usiamo dynamicColor qui
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.lerp(Colors.green, Colors.red, _tiredness!) ?? Colors.green,
+                        Color.lerp(Colors.green, Colors.red, currentTiredness) ?? Colors.green,
             ),
                       strokeCap: StrokeCap.round,
                     ),
                   ),
 
                   Text(
-                    "${(_tiredness! * 100).toInt()}%",
+                    "${(currentTiredness! * 100).toInt()}%",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Color.lerp(Colors.green, Colors.red, _tiredness!) ?? Colors.green, // Anche il testo cambia colore!
+                      color: Color.lerp(Colors.green, Colors.red, currentTiredness!) ?? Colors.green, // Anche il testo cambia colore!
                     ),
                   ),
                 ],
@@ -270,12 +272,12 @@ class _HomeScreenState extends State<HomeScreen> {
             label: "Home",
           ),
           NavigationDestination(
-            icon: Icon(Icons.airplanemode_active),
-            selectedIcon: Icon(Icons.airplanemode_active),
+            icon: Icon(Icons.airplane_ticket_outlined),
+            selectedIcon: Icon(Icons.airplane_ticket_rounded),
             label: "Trips",
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_2_rounded),
+            icon: Icon(Icons.person_2_outlined),
             selectedIcon: Icon(Icons.person_2_rounded),
             label: "Profile",
           ),

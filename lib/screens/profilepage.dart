@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/accountpage.dart';
+import 'package:mms_app/screens/aim.dart';
 import 'package:mms_app/screens/login.dart';
 import 'package:profile_view/profile_view.dart';
 
@@ -77,6 +78,10 @@ class Profile extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       child: ListTile(
+                        onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  Aims()),
+                            );
+                          },
                         leading: const Icon(
                           Icons.flag,
                           color: Colors.lightGreen,

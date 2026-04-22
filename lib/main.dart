@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
+import 'package:mms_app/screens/aim.dart';
 import 'screens/login.dart';
 import 'package:provider/provider.dart';
 void main() {
@@ -12,12 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ResultSwipe() ,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ResultSwipe(), ),
+        ChangeNotifierProvider(create: (context) => AimsProvider()), 
+      ],
       child: MaterialApp(
-        title: 'Login Page',
-        home: LoginPage(),
-    ));
+          title: 'Login Page',
+          home: LoginPage(),    )
+    );
     
   }
   }
