@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
     double currentTiredness = (_steps! / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
     currentTiredness = currentTiredness.clamp(0.0, 1.0);
+    
+    final utente = Provider.of<AccountProvider>(context);
+    
     final List<String> titles = [
       "Home",
       "My trips",
@@ -58,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(height: 10,),
 
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Ciao Utente,',
-                        style: TextStyle(
+                        'Ciao ${utente.nome},',
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
