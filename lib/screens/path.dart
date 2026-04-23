@@ -16,7 +16,7 @@ class Choices extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Your Padova trip',
+          'Trip recap',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

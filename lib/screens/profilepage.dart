@@ -168,7 +168,7 @@ void _mostraOpzioniFoto(BuildContext context) {
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              "Immagine del profilo",
+              "Profile photo",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
@@ -182,7 +182,7 @@ void _mostraOpzioniFoto(BuildContext context) {
           ),
           ListTile(
             leading: const Icon(Icons.delete, color: Colors.red),
-            title: const Text("Delite photo", style: TextStyle(color: Colors.red)),
+            title: const Text("Delete photo", style: TextStyle(color: Colors.red)),
             onTap: () {
               // Qui aggiungerai la logica per resettare l'immagine
               Navigator.pop(context);

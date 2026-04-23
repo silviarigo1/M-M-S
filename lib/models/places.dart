@@ -25,5 +25,14 @@ class Places{
     "Sebbene la Cattedrale sia imponente, il vero tesoro si trova nel Battistero adiacente, interamente decorato da un ciclo di affreschi trecenteschi di Giusto de' Menabuoi. Le scene bibliche coprono ogni centimetro delle pareti e della cupola, con un Paradiso circolare che lascia senza parole per precisione e colori. È considerato uno dei capolavori meglio conservati dell'arte pittorica medievale, spesso ingiustamente messo in ombra dalla Cappella degli Scrovegni.",
     "Situata in un'antica torre del castello dei Carraresi, questa struttura è stata trasformata nel XVIII secolo in un osservatorio astronomico all'avanguardia. Oggi ospita un affascinante museo dove è possibile ammirare strumenti astronomici antichi e godere di una vista mozzafiato sui canali della città. Il percorso museale racconta l'evoluzione della scienza celeste e il legame profondo tra Padova e lo studio dell'universo."
   ];
+
+  static const List<String> cities = [
+    "Padova",
+    "Bologna",
+    "Milano",
+    "Roma",
+    "Napoli",
+    "Palermo",
+  ];
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/models/places.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
@@ -31,7 +32,72 @@ class TravelPage extends StatelessWidget {
                       margin: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
-                      child: ListTile(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                                title: const Text("Trip stages"),
+                                content: SizedBox( 
+                                  width: double.maxFinite, 
+                                  child: ListView.separated(
+                                    shrinkWrap: true, 
+                                    padding: const EdgeInsets.all(10),
+                                    itemCount: trip.length,
+                                    itemBuilder: (context, destIndex) {
+                                      int indexOriginale = trip.indices[destIndex];
+                                      String destinations = Places.places[indexOriginale];
+
+                                      return Card(
+                                        elevation: 3,
+                                        margin: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15)),
+                                        child: ListTile(
+                                          leading: const Icon(
+                                            Icons.pin_drop,
+                                            color: Colors.lightGreen,
+                                          ),
+                                          title: Text(
+                                            destinations,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14, 
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return Container(
+                                        alignment: Alignment.centerLeft,
+                                        padding: const EdgeInsets.only(left: 28),
+                                        child: Container(
+                                          width: 2,
+                                          height: 20, 
+                                          color: Colors.lightGreen.withOpacity(0.4),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: ListTile(
+                        
                         leading: const Icon(
                           Icons.pin_drop,
                           color: Colors.lightGreen,
@@ -43,8 +109,12 @@ class TravelPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        
 
                       ),
+                      ),
+                      
+                      
                     ); 
                   },
                   separatorBuilder: (context, index) {

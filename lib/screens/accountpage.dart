@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 
 
 class AccountProvider extends ChangeNotifier {
-  String _nome = "Nome";
-  String _cognome = "Cognome";
+  String _nome = "Name";
+  String _cognome = "Surname";
   String _email = "";
-  String _nickname = "Il tuo Nickname";
+  String _nickname = "Your Nickname";
 
   // Getter
   String get nome => _nome;
@@ -60,7 +60,7 @@ void _salvaDati() {
   
   // Opzionale: torna indietro o mostra un messaggio
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text("Dati salvati con successo!")),
+    const SnackBar(content: Text("Well done!")),
   );
 }
 
@@ -79,15 +79,15 @@ void _salvaDati() {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: _nameController, decoration: InputDecoration(labelText: "Nome")),
-            TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Cognome")),
+            TextField(controller: _nameController, decoration: InputDecoration(labelText: "Name")),
+            TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Surname")),
             TextField(controller: _emailController, decoration: InputDecoration(labelText: "Email")),
             TextField(controller: _nicknameController, decoration: InputDecoration(labelText: "Nickname")),
             
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _salvaDati,
-              child: Text("Salva Dati"),
+              child: Text("Save"),
             ),
           ],
        )));// Fine AppBar

@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:mms_app/models/places.dart';
+import 'package:mms_app/models/swipe.dart';
 import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
 import 'package:provider/provider.dart';
@@ -55,196 +57,187 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     // List of pages
     final List<Widget> pages = [
-    Center( 
-      child: Padding(
-                padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 4.0, bottom: 4.0),
-                child: Column (
-                  children: [
-                    const SizedBox(height: 10,),
+    Center(
+  child: Padding(
+    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
+    child: Column(
+      children: [
+        const SizedBox(height: 10),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Ciao ${utente.nome},',
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 60,),
-                    
-                    Center(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min, // La Row stringe la sua larghezza al minimo necessario
-                        mainAxisAlignment: MainAxisAlignment.center, // Centra orizzontalmente
-                        crossAxisAlignment: CrossAxisAlignment.center,
-
-                        children: [
-                        
-                          DropdownButton2<String>(
-                                
-                            isExpanded: true,
-                                // Qui definisci lo stile del "pulsante" che l'utente vede
-                            buttonStyleData: ButtonStyleData(
-                              height: 70,
-                              width: 220,
-                              padding: const EdgeInsets.symmetric(horizontal: 14),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: Colors.lightGreen,
-                              ),
-                            ),
-                                // Qui definisci lo stile del menu che appare
-                            dropdownStyleData: DropdownStyleData(
-                              maxHeight: 200,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: Colors.white,
-                              ),
-                            ),
-                            hint: const Text(
-                              'Scegli città', 
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                            items: ['Padova', 'Milano', 'Bologna', 'Roma', 'Napoli', 'Palermo']
-                                .map<DropdownItem<String>>((String item) => DropdownItem<String>(
-                                      value: item,
-                                      child: Text(item),
-                                    ))
-                                .toList(),
-                              
-                            onChanged: (value) {
-                              if (value != null) {
-                                setState(() {
-                                  selectedCity = value;
-                                });
-                                Future.microtask(() {
-                                  if (context.mounted) { // Verifica di sicurezza per il context
-                                    Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(builder: (context) => Options()),
-                                    );
-                                  }
-                                });
-                              };
-                            },
-                        ), 
-
-                        const SizedBox(width: 20),
-                         // Spazio tra il Dropdown e l'IconButton
-                        IconButton(
-                          icon: const Icon(Icons.help_outline),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Scegli la tua destinazione!"),
-                                  content: const Text("Clicca su: 'Scegli città' per scegliere la destinazione del tuo viaggio!\n\n"
-                                                    "In seguito, potrai personalizzare il tuo viaggio scegliendo le attrazioni che preferisci;"
-                                                    " fai swipe a destra per aggiungere un'attrazione desiderata, a sinistra per rimuoverla!\n\n"
-                                                    "Al resto ci pensiamo noi, buon viaggio!"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text("Chiudi"),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      ),  
-                    ],
-                  ), 
-                ), 
-
-              const SizedBox(height: 60,),
-
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text("I tuoi passi oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-              ),
-                            
-              const SizedBox(height: 3),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Allinea il testo a sinistra
-                children: [
-                    Align(
-                      alignment: Alignment.centerRight, 
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 4.0, bottom: 4.0), // Padding ora a destra
-                        child: Text(
-                          '${_steps!.round()} / ${currentStepGoal.toInt()} passi',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                    ),
-                        
-                    Container(
-                      margin: const EdgeInsets.only(top:20, bottom:10),
-                      height: 15,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        child: LinearProgressIndicator(
-                          value: (_steps! / currentStepGoal).clamp(0.0, 1.0),
-                          backgroundColor: Colors.grey.withOpacity(0.3),
-                          valueColor: const AlwaysStoppedAnimation<Color>(Colors.lightGreen),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-
-              const SizedBox(height: 20,),
-
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Quanto sei stanco oggi:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-              ),
-                            
-              const SizedBox(height: 8),
-
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SizedBox(
-
-                    width: 120,
-                    height: 120,
-                    child: CircularProgressIndicator(
-                      value: currentTiredness,
-                      strokeWidth: 12,
-                      backgroundColor: Colors.grey.withOpacity(0.3),
-                      // valueColor sovrascrive la proprietà color, quindi usiamo dynamicColor qui
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.lerp(Colors.green, Colors.red, currentTiredness) ?? Colors.green,
+        // 1. SALUTO INIZIALE
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            '👋 Hello ${utente.nome}',
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
-                      strokeCap: StrokeCap.round,
-                    ),
-                  ),
+          ),
+        ),
 
-                  Text(
-                    "${(currentTiredness! * 100).toInt()}%",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.lerp(Colors.green, Colors.red, currentTiredness!) ?? Colors.green, // Anche il testo cambia colore!
-                    ),
+        const SizedBox(height: 30),
+
+        // 2. DROPDOWN CENTRATO E ICONA AIUTO A DESTRA
+        // Usiamo uno Stack così il Dropdown è matematicamente al centro dello schermo
+        SizedBox(
+          width: double.infinity,
+          height: 70,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              DropdownButton2<String>(
+                isExpanded: true,
+                buttonStyleData: ButtonStyleData(
+                  height: 70,
+                  width: 220,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: Colors.lightGreen,
                   ),
-                ],
-              ),   
+                ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: Colors.white,
+                  ),
+                ),
+                hint: const Center(
+                  child: Text(
+                    'Choose the city',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                items: Places.cities.map<DropdownItem<String>>((String item) => DropdownItem<String>(
+                  value: item,
+                  child: Center(child: Text(item)),
+                )).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedCity = value;
+                      Provider.of<ResultSwipe>(context, listen: false).setSelectedCity(selectedCity!);
+                    });
+                    Future.microtask(() {
+                      if (context.mounted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Options()),
+                        );
+                      }
+                    });
+                  }
+                },
+              ),
+              // Posizioniamo l'icona aiuto a destra senza spostare il dropdown
+              Positioned(
+                right: 80,
+                child: IconButton(
+                  icon: const Icon(Icons.help_outline, color: Colors.grey),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text("Choose your destination!"),
+                        content: const Text("Click on 'Choose City' to select your trip destination!\n\n"
+                            "Afterwards, you can customize your trip by picking your favorite attractions; "
+                            "swipe right to add an attraction you like, and left to skip it!\n\n"
+                            "We'll take care of the rest. Have a great trip!"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Close"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
+
+        const SizedBox(height: 60),
+
+        // 3. ROW DEI CERCHI (STEPS E TIREDNESS)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // BLOCCO STEPS
+            Column(
+              children: [
+                const Text("Steps", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                const SizedBox(height: 20),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: CircularProgressIndicator(
+                        value: (_steps! / currentStepGoal),
+                        strokeWidth: 15,
+                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color.lerp(Colors.blue, Colors.green, (_steps! / currentStepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                        ),
+                        strokeCap: StrokeCap.round,
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("${_steps!.round()}",
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                        Text("${currentStepGoal.toInt()}",
+                            style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            // BLOCCO TIREDNESS
+            Column(
+              children: [
+                const Text("Tiredness", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                const SizedBox(height: 20),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: CircularProgressIndicator(
+                        value: currentTiredness,
+                        strokeWidth: 15,
+                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color.lerp(Colors.green, Colors.red, currentTiredness) ?? Colors.green,
+                        ),
+                        strokeCap: StrokeCap.round,
+                      ),
+                    ),
+                    Text(
+                      "${(currentTiredness * 100).toInt()}%",
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     ),
+  ),
+),
 
 
     TravelPage(),

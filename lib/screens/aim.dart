@@ -35,7 +35,7 @@ class _AimsState extends State<Aims> {
       Provider.of<AimsProvider>(context, listen: false).updateSteps(nuovoValore);
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Obiettivo aggiornato!")),
+        const SnackBar(content: Text("Goal updated!")),
       );
     }
   }
@@ -57,13 +57,13 @@ class _AimsState extends State<Aims> {
             TextField(
               controller: _aimsController, 
               keyboardType: TextInputType.number, // Tastierino numerico
-              decoration: const InputDecoration(labelText: "Obiettivo passi giornalieri"),
+              decoration: const InputDecoration(labelText: "Daily step goal"),
             ),
                         
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _salvaDati,
-              child: Text("Salva Dati"),
+              child: Text("Save"),
             ),
           ],
        )));// Fine AppBar
