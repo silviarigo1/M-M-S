@@ -72,7 +72,12 @@ class Choices extends StatelessWidget {
                 ); 
         }, 
       ), 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children:[
+          FloatingActionButton(
+            mini: true,
+        
         onPressed: () {
           Provider.of<ResultSwipe>(context, listen: false).savePlaces();
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
@@ -82,9 +87,24 @@ class Choices extends StatelessWidget {
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
+          Icons.add,
+          color: Colors.white,),
+        ),
+        const SizedBox(height: 20),
+        FloatingActionButton(
+          
+        
+        onPressed: () {
+          
+        },
+        backgroundColor: Colors.lightGreen,
+        child: const Icon(
           Icons.save,
           color: Colors.white,),
         ),
+        ],
+      ),
+      
     ); 
   } 
 } 

@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     // List of pages
     final List<Widget> pages = [
-    Center(
+    SafeArea(
   child: Padding(
     padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
     child: Column(
