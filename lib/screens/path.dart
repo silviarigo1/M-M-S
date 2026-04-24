@@ -5,11 +5,16 @@ import 'package:mms_app/screens/home.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
-class Choices extends StatelessWidget {
+class Choices extends StatefulWidget {
   Choices({Key? key}) : super(key: key);
 
   static const routename = "Choices";
 
+  @override
+  State<Choices> createState() => _ChoicesState();
+}
+
+class _ChoicesState extends State<Choices> {
   @override
   Widget build(BuildContext context) {
     print('${Choices.routename} built');
@@ -55,8 +60,19 @@ class Choices extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        trailing: IconButton(
+                          icon: const Icon(
+                            Icons.delete_rounded,
+                            color: Color.fromARGB(255, 93, 92, 92),
+                          ),
+                          onPressed: () {
+                            
+                            setState(() {number.TrashDest(destIndex);});
+                          }
+                        ),
                       ),
                     ); 
+                    
                   },
                   separatorBuilder: (context, index) {
                     return Container(
@@ -79,11 +95,7 @@ class Choices extends StatelessWidget {
             mini: true,
         
         onPressed: () {
-          Provider.of<ResultSwipe>(context, listen: false).savePlaces();
-          Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Trip saved!")),
-          );
+          
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
@@ -92,10 +104,12 @@ class Choices extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         FloatingActionButton(
-          
-        
         onPressed: () {
-          
+          Provider.of<ResultSwipe>(context, listen: false).savePlaces();
+          Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Trip saved!")),
+          );
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
