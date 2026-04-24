@@ -54,6 +54,7 @@ class ResultSwipe extends ChangeNotifier{
     trips.add(newtrip);
     swipes.clear();
     savedIndices.clear();
+   // nonSavedIndices.clear();
     notifyListeners();  
     }
     

@@ -95,8 +95,8 @@ class _ChoicesState extends State<Choices> {
             mini: true,
         
         onPressed: () {
-          
-        },
+    _showDestinationsPopup(context); // Chiamata alla funzione che crea il popup
+  },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
           Icons.add,
@@ -122,3 +122,60 @@ class _ChoicesState extends State<Choices> {
     ); 
   } 
 } 
+
+
+void _showDestinationsPopup(BuildContext context) {
+  final resultSwipe = Provider.of<ResultSwipe>(context, listen: false);
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Destinazioni non selezionate"),
+        content: SizedBox(
+          width: double.maxFinite,
+          // Usiamo nonSavedIndices per la logica del popup
+          child: resultSwipe.nonSavedIndices.isEmpty
+              ? const Text("Hai selezionato tutte le destinazioni!")
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: resultSwipe.nonSavedIndices.length,
+                  itemBuilder: (context, index) {
+                    // Recuperiamo l'indice originale dalla lista dei non salvati
+                    int indexOriginale = resultSwipe.nonSavedIndices[index];
+                    String nomePosto = Places.places[indexOriginale];
+
+                    return ListTile(
+                      leading: const Icon(Icons.pin_drop, color: Colors.lightGreen),
+                      title: Text(nomePosto),
+                      subtitle: const Text("Tocca per aggiungere"), // Opzionale
+                      onTap: () {
+                        
+                        resultSwipe.saveIndex(indexOriginale);
+    
+   
+                        resultSwipe.saveSwipe(Container(
+                          child: Text(nomePosto),
+                        ));
+
+                        
+                        Navigator.pop(context);
+
+                        // Opzionale: un feedback visivo
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("$nomePosto aggiunto!")),);
+                      },
+                    );
+                  },
+                ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Chiudi", style: TextStyle(color: Colors.lightGreen)),
+          ),
+        ],
+      );
+    },
+  );
+}
