@@ -25,7 +25,7 @@ class TravelPage extends StatelessWidget {
                   itemCount: provider.trips.length,
                   itemBuilder: (context, tripIndex) {
                     final trip = provider.trips[tripIndex];
-                    
+                    int index = provider.selectedIndexCity;
 
                     return Card(
                       elevation: 5,
@@ -98,10 +98,10 @@ class TravelPage extends StatelessWidget {
                         },
                         child: ListTile(
                         
-                        leading: const Icon(
-                          Icons.pin_drop,
-                          color: Colors.lightGreen,
-                        ),
+                        leading: Image.asset(
+                          Places.images[index],
+                                            
+                          ),
                         title: Text(
                           trip.title,
                           style: const TextStyle(
@@ -118,15 +118,9 @@ class TravelPage extends StatelessWidget {
                     ); 
                   },
                   separatorBuilder: (context, index) {
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 28),
-                      child: Container(
-                        width: 2,
-                        height: 30,
-                        color: Colors.lightGreen.withOpacity(0.4),
-                      ),
-                    ); 
+                    return const SizedBox(
+                                    height: 20, // Modifica questo valore per aumentare o diminuire lo spazio
+                            ); 
                   },
                 ); 
         }, 

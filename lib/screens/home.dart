@@ -118,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 )).toList(),
                 onChanged: (value) {
                   if (value != null) {
+                    int index = Places.cities.indexOf(value);
+                    Provider.of<ResultSwipe>(context, listen: false).setSelectedIndexCity(index);
                     setState(() {
                       selectedCity = value;
                       Provider.of<ResultSwipe>(context, listen: false).setSelectedCity(selectedCity!);

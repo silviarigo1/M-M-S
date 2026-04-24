@@ -5,8 +5,6 @@ class Trip {
   List<Container> destinations;
   List<int> indices;
 
-
-  
   Trip({required this.title, required this.destinations, required this.indices});
   int get length => destinations.length;
 
@@ -19,12 +17,17 @@ class ResultSwipe extends ChangeNotifier{
 
   List<Trip> trips = [];
   String selectedCity = "";
+  int selectedIndexCity = 0;
 
   void setSelectedCity(String city) {
     selectedCity = city;
     notifyListeners(); // Avvisa tutti che la città è cambiata
   }
-  
+
+  void setSelectedIndexCity(int index) {
+    selectedIndexCity = index;
+    notifyListeners(); // Avvisa tutti che la città è cambiata
+  }
 
 
   void saveSwipe(Container toAdd){

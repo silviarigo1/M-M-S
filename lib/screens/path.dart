@@ -76,6 +76,9 @@ class Choices extends StatelessWidget {
         onPressed: () {
           Provider.of<ResultSwipe>(context, listen: false).savePlaces();
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Trip saved!")),
+          );
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(

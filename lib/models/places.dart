@@ -34,5 +34,10 @@ class Places{
     "Napoli",
     "Palermo",
   ];
+  static const List<String> images = [
+    "lib/images/scudetti/PadovaCalcio.png",
+
+
+  ];
 }
 
