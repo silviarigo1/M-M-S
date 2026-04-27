@@ -54,7 +54,8 @@ class ResultSwipe extends ChangeNotifier{
     trips.add(newtrip);
     swipes.clear();
     savedIndices.clear();
-   // nonSavedIndices.clear();
+    nonSavedIndices.clear();
+    nonSavedIndices = List.generate(Places.places.length, (index) => index);
     notifyListeners();  
     }
     
@@ -62,6 +63,8 @@ class ResultSwipe extends ChangeNotifier{
   void TrashDest(int index) {
     swipes.removeAt(index);
     savedIndices.removeAt(index);
+    nonSavedIndices.add(index);
+    
     notifyListeners();
   }
 

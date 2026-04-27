@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AccountProvider()), 
       ],
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Login Page',
           home: LoginPage(),    )
     );

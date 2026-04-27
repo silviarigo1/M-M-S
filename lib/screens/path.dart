@@ -68,7 +68,10 @@ class _ChoicesState extends State<Choices> {
                           onPressed: () {
                             
                             setState(() {number.TrashDest(destIndex);});
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Destination removed!")),);
                           }
+                          
                         ),
                       ),
                     ); 
@@ -131,12 +134,12 @@ void _showDestinationsPopup(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text("Destinazioni non selezionate"),
+        title: const Text("Destination not selected"),
         content: SizedBox(
           width: double.maxFinite,
           // Usiamo nonSavedIndices per la logica del popup
           child: resultSwipe.nonSavedIndices.isEmpty
-              ? const Text("Hai selezionato tutte le destinazioni!")
+              ? const Text("You selected all destinations!")
               : ListView.builder(
                   shrinkWrap: true,
                   itemCount: resultSwipe.nonSavedIndices.length,
@@ -148,7 +151,7 @@ void _showDestinationsPopup(BuildContext context) {
                     return ListTile(
                       leading: const Icon(Icons.pin_drop, color: Colors.lightGreen),
                       title: Text(nomePosto),
-                      subtitle: const Text("Tocca per aggiungere"), // Opzionale
+                      subtitle: const Text("Tap to add"), // Opzionale
                       onTap: () {
                         
                         resultSwipe.saveIndex(indexOriginale);
@@ -161,9 +164,9 @@ void _showDestinationsPopup(BuildContext context) {
                         
                         Navigator.pop(context);
 
-                        // Opzionale: un feedback visivo
+                        
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("$nomePosto aggiunto!")),);
+                          SnackBar(content: Text("$nomePosto added!")),);
                       },
                     );
                   },
@@ -172,7 +175,7 @@ void _showDestinationsPopup(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Chiudi", style: TextStyle(color: Colors.lightGreen)),
+            child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
           ),
         ],
       );
