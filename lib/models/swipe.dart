@@ -61,9 +61,10 @@ class ResultSwipe extends ChangeNotifier{
     
   }
   void TrashDest(int index) {
+    int originalIndex = savedIndices[index];
     swipes.removeAt(index);
     savedIndices.removeAt(index);
-    nonSavedIndices.add(index);
+    nonSavedIndices.add(originalIndex);
     
     notifyListeners();
   }
