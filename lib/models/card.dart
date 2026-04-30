@@ -28,18 +28,23 @@ class TravelCard {
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[0],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![0],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![0]),
+            ),
+          ],),
         ),
       
         Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/CappellaScrovegni.jpg',
+          Places.mapDest["image"]![0],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -55,7 +60,7 @@ class TravelCard {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[0],
+            Places.mapDest["description"]![0],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -91,11 +96,16 @@ class TravelCard {
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[1],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![1],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![1]),
+            ),
+          ],),
   ),
       
       
@@ -103,7 +113,7 @@ class TravelCard {
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/BasilicaAntonio.jpg',
+          Places.mapDest["image"]![1],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -119,7 +129,7 @@ class TravelCard {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[1],
+            Places.mapDest["description"]![1],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -154,11 +164,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[2],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![2],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![2]),
+            ),
+          ],),
   ),
       
       
@@ -166,7 +181,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/PratoValle.jpg',
+          Places.mapDest["image"]![2],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -182,7 +197,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[2],
+            Places.mapDest["description"]![2],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -217,11 +232,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[3],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![3],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![3]),
+            ),
+          ],),
   ),
       
       
@@ -229,7 +249,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/PalazzoRagione.jpg',
+          Places.mapDest["image"]![3],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -245,7 +265,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[3],
+            Places.mapDest["description"]![3],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -280,11 +300,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[4],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![4],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![4]),
+            ),
+          ],),
   ),
       
       
@@ -292,7 +317,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/OrtoBotanico.jpg',
+          Places.mapDest["image"]![4],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -308,7 +333,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[4],
+            Places.mapDest["description"]![4],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -343,11 +368,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[5],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![5],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![5]),
+            ),
+          ],),
   ),
       
       
@@ -355,7 +385,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/PalazzoBo.jpg',
+          Places.mapDest["image"]![5],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -371,7 +401,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[5],
+            Places.mapDest["description"]![5],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -406,11 +436,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[6],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![6],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![6]),
+            ),
+          ],),
   ),
       
       
@@ -418,7 +453,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/PiazzaFrutta.jpg',
+          Places.mapDest["image"]![6],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -434,7 +469,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[6],
+            Places.mapDest["description"]![6],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -469,11 +504,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[7],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![7],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![7]),
+            ),
+          ],),
   ),
       
       
@@ -481,7 +521,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/CaffePedrocchi.jpg',
+          Places.mapDest["image"]![7],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -497,7 +537,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[7],
+            Places.mapDest["description"]![7],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -532,11 +572,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[8],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![8],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![8]),
+            ),
+          ],),
   ),
       
       
@@ -544,7 +589,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/SanGiovanni.jpg',
+          Places.mapDest["image"]![8],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -560,7 +605,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[8],
+            Places.mapDest["description"]![8],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -595,11 +640,16 @@ Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
           color: Colors.lightGreen, 
-          child: Text(
-            Places.places[9],
+          child: Row( 
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [ 
+            Text( Places.mapDest["title"]![9],
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
+           Text(emoji(Places.mapDest["pile"]![9]),
+            ),
+          ],),
   ),
       
       
@@ -607,7 +657,7 @@ Container(
         color: Colors.grey[200],
         width: double.infinity,
         child: Image.asset(
-          'lib/images/mete/Specola.jpg',
+          Places.mapDest["image"]![9],
           height: 300, 
           fit: BoxFit.cover, 
         ),
@@ -623,7 +673,7 @@ Container(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
           child: Text(
-            Places.descriptions[9],
+            Places.mapDest["description"]![9],
             style: TextStyle(fontSize: 16, height: 1.4),
             textAlign: TextAlign.justify,
           ),
@@ -642,4 +692,13 @@ Container(
     return cards[index!];
   }
 
+}
+
+
+String emoji(int numPile){
+  if(numPile == 1) {return '🔋';}
+  else if(numPile == 2) {return '🔋🔋';}
+  return '🪫🪫🪫';
+  
+  
 }

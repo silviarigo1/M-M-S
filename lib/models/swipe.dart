@@ -15,7 +15,7 @@ class ResultSwipe extends ChangeNotifier{
 
   List<Container> swipes = [];
   List<int> savedIndices = [];
-  List<int> nonSavedIndices = List.generate(Places.places.length, (index) => index);
+  List<int> nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index);
 
   List<Trip> trips = [];
   String selectedCity = "";
@@ -55,7 +55,7 @@ class ResultSwipe extends ChangeNotifier{
     swipes.clear();
     savedIndices.clear();
     nonSavedIndices.clear();
-    nonSavedIndices = List.generate(Places.places.length, (index) => index);
+    nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index);
     notifyListeners();  
     }
     

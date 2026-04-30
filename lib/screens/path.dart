@@ -41,7 +41,7 @@ class _ChoicesState extends State<Choices> {
                   itemCount: number.swipes.length,
                   itemBuilder: (context, destIndex) {
                     int indexOriginale = number.savedIndices[destIndex];
-                    String destinations = Places.places[indexOriginale];
+                    String destinations = Places.mapDest["title"]![indexOriginale];
 
                     return Card(
                       elevation: 5,
@@ -146,7 +146,7 @@ void _showDestinationsPopup(BuildContext context) {
                   itemBuilder: (context, index) {
                     // Recuperiamo l'indice originale dalla lista dei non salvati
                     int indexOriginale = resultSwipe.nonSavedIndices[index];
-                    String nomePosto = Places.places[indexOriginale];
+                    String nomePosto = Places.mapDest["title"]![indexOriginale];
 
                     return ListTile(
                       leading: const Icon(Icons.pin_drop, color: Colors.lightGreen),

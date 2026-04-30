@@ -50,7 +50,7 @@ class TravelPage extends StatelessWidget {
                                     itemCount: trip.length,
                                     itemBuilder: (context, destIndex) {
                                       int indexOriginale = trip.indices[destIndex];
-                                      String destinations = Places.places[indexOriginale];
+                                      String destinations = Places.mapDest["title"]![indexOriginale];
 
                                       return Card(
                                         elevation: 3,
