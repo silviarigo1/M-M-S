@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './places.dart';
 
-class TravelCard {
+/*class TravelCard {
   List<Container> cards = [
   Container(
     margin: EdgeInsets.all(20),  
@@ -701,4 +701,88 @@ String emoji(int numPile){
   return '🪫🪫🪫';
   
   
+}*/
+
+
+class TravelCard {
+  
+  List<Container> cards = [
+    for (int i = 0; i < Places.mapDest["title"]!.length; i++) 
+      Container(
+        margin: EdgeInsets.all(20),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 25,
+              spreadRadius: 5,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            // Intestazione
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16),
+              color: Colors.lightGreen,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    Places.mapDest["title"]![i], // <--- Qui usi l'indice i
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  Text(emoji(Places.mapDest["pile"]![i])), // <--- Qui usi l'indice i
+                ],
+              ),
+            ),
+            // Immagine
+            Container(
+              color: Colors.grey[200],
+              width: double.infinity,
+              child: Image.asset(
+                Places.mapDest["image"]![i], // <--- Qui usi l'indice i
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
+            // Descrizione
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(20),
+                color: Colors.grey[300],
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Text(
+                    Places.mapDest["description"]![i], // <--- Qui usi l'indice i
+                    style: TextStyle(fontSize: 16, height: 1.4),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+  ];
+
+  int get length => cards.length;
+
+  Widget operator [](int? index) {
+    return cards[index!];
+  }
 }
+
+
+String emoji(int numPile){
+  if(numPile == 1) {return '🪫';}
+  else if(numPile == 2) {return '🪫🪫';}
+  return '🪫🪫🪫';}
