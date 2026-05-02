@@ -4,6 +4,7 @@ import 'package:mms_app/screens/aim.dart';
 import 'package:mms_app/screens/login.dart';
 import 'package:profile_view/profile_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Profile extends StatelessWidget {
@@ -137,8 +138,10 @@ class Profile extends StatelessWidget {
                 child: TextButton.icon(
                   icon: const Icon(Icons.logout, color: Colors.grey),
                   label: const Text("Logout", style: TextStyle(color: Colors.grey)),
-                  onPressed: () {
-                    
+                  onPressed: () async {
+                    final sharedPreferences = await SharedPreferences.getInstance();
+                    await sharedPreferences.remove('isUserLogged');
+
                      Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
                   },
                 ),

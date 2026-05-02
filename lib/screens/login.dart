@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import './home.dart';
 
 class LoginPage extends StatelessWidget {
@@ -74,8 +74,10 @@ class LoginPage extends StatelessWidget {
 
             ElevatedButton(
               child: Text('Login'),
-              onPressed: () {
+              onPressed: () async {
                 if (userController.text == 'mms' && passwordController.text == '031828') {
+                  final sharedPreferences = await SharedPreferences.getInstance();
+                  await sharedPreferences.setBool('isUserLogged', true);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomeScreen())));
                 } else {
                   // If incorrect, show a SnackBar with an error message
