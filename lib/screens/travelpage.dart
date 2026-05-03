@@ -109,6 +109,10 @@ class TravelPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        trailing: ElevatedButton(onPressed: () {
+
+                        },
+                        child: const Text('START'))
                         
 
                       ),
