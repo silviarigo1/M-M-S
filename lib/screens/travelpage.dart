@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
+import 'package:mms_app/screens/suggestion.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
+
 
 
 class TravelPage extends StatelessWidget {
@@ -109,8 +111,18 @@ class TravelPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        trailing: ElevatedButton(onPressed: () {
-
+                        trailing: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            side: const BorderSide(
+                              color: Colors.green, // Colore del bordo
+                              width: 2,            // Spessore del bordo
+                            ),
+                          ),
+                          onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Suggestion()),
+                          );
                         },
                         child: const Text('START'))
                         
