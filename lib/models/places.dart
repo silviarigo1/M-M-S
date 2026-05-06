@@ -94,6 +94,39 @@ class Places{
 };
 
 
+double calcoloDelta(int steps, double hour, int crowded, bool opened) {
+  if (hour <= 0) return 0; // Evita divisione per zero
+
+  int cp = 25; // Soglia Critica (%HRR)
+  double durationMinutes = hour * 60;
+  double stepsPerMin = steps / durationMinutes;
+  
+  double regrHRR = (0.4 * stepsPerMin) + 10;  // regressione lineare "forzata"
+  double adjHRR = regrHRR + (crowded * 0.5) + (opened ? 5 : 0);  // aggiusto con coefficineti per affollamento e apertura
+
+  double percHRR = adjHRR.round().toDouble(); // Arrotonda al numero intero più vicino
+
+  double delta = 0; // inizializzo delta a 0
+  
+  if (percHRR > cp) { 
+    // sfozo sopra-soglia ---> affaticamento
+    delta = (percHRR - cp) * durationMinutes; 
+  } 
+  else if (percHRR > 20) {  
+    // Zona Neutra 
+    delta = 0; 
+  } 
+  else {
+    // sforzo sotto-soglia --> recupero
+    delta = 2.4 * (percHRR - cp) * durationMinutes;
+  }
+  
+  return delta;
+}
+
+
+
+
 
 static int pile(int steps, double hour, int crowded, bool opened){
   double points = 0;
@@ -124,7 +157,7 @@ static int pile(int steps, double hour, int crowded, bool opened){
   else if (points >= 5){
     return 2;}
   else{
-    return 1;}}
+    return 1;}} 
 
 /*static List<int> getAllPiles() {
     List<int> results = [];
