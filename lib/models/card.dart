@@ -733,12 +733,13 @@ class TravelCard {
               color: Colors.lightGreen,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Places.mapDest["title"]![i], // <--- Qui usi l'indice i
+                children: [Expanded(
+                  child:Text(
+                    Places.mapDest["title"]![i], 
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(emoji(Places.mapDest["pile"]![i])), // <--- Qui usi l'indice i
+                  ),),
+                  SizedBox(width: 8), 
+                  Text(emoji(Places.mapDest["pile"]![i])), 
                 ],
               ),
             ),
@@ -747,8 +748,8 @@ class TravelCard {
               color: Colors.grey[200],
               width: double.infinity,
               child: Image.asset(
-                Places.mapDest["image"]![i], // <--- Qui usi l'indice i
-                height: 300,
+                Places.mapDest["image"]![i], 
+                height: 250,
                 fit: BoxFit.cover,
               ),
             ),
@@ -762,7 +763,7 @@ class TravelCard {
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Text(
-                    Places.mapDest["description"]![i], // <--- Qui usi l'indice i
+                    Places.mapDest["description"]![i], 
                     style: TextStyle(fontSize: 16, height: 1.4),
                     textAlign: TextAlign.justify,
                   ),
