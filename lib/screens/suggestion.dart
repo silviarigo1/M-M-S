@@ -43,16 +43,31 @@ class _SuggestionState extends State<Suggestion> {
           // Chiamiamo la tua funzione Proposte
           List<int> indiciSelezionati = Proposte(trip, dispPile);
 
-          return ListView.builder(
+          return ListView.separated(
+            padding: const EdgeInsets.all(20),
             itemCount: indiciSelezionati.length,
             itemBuilder: (context, i) {
               int indexDellaMeta = indiciSelezionati[i];
               // Qui recuperi i dati della meta usando l'indice
-              return ListTile(
-                title: Text("Destination: ${Places.mapDest["title"]![indexDellaMeta]}"),
+              return Card(
+                elevation: 5,
+                
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: ListTile(
+                  leading: Image.asset(
+                    Places.mapDest["image"]![indexDellaMeta],
+                    width: 70,
+                    height: 70,
+                    fit: BoxFit.contain,
+                  ),
+                  title: Text("${Places.mapDest["title"]![indexDellaMeta]}"),
                 subtitle: Text("Cost: ${Places.batt[indexDellaMeta]} 🪫"),
+              ),
               );
             },
+            separatorBuilder: (context, index) => const SizedBox(height: 20),
           );
         },
       ),
