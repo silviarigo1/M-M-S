@@ -3,7 +3,7 @@ import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
 import 'package:mms_app/screens/login.dart';
 import 'package:profile_view/profile_view.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountData = Provider.of<AccountProvider>(context);
+    
     return Scaffold(
        
       body: SafeArea(
@@ -53,12 +53,46 @@ class Profile extends StatelessWidget {
       ],
     ),
             const SizedBox(height: 10),
-            Text(
-              accountData.nickname, 
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            
+            FutureBuilder(
+  future: SharedPreferences.getInstance(),
+  builder: (context, snapshot) {
+    if (snapshot.hasData) {
+      final sharedPreferences = snapshot.data!;
+      // Recuperiamo i valori o assegniamo un default se sono null
+      String nickname = sharedPreferences.getString('Nickname') ?? 'Your nickname';
+      String name = sharedPreferences.getString('Name') ?? 'Name';
+      String surname = sharedPreferences.getString('Surname') ?? 'Surname';
+
+      return Column(
+        children: [
+          Text(
+            nickname,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
+          ),
+          const SizedBox(height: 5), // Un po' di spazio tra nickname e nome
+          Text(
+            "$name $surname",
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      );
+    } else {
+      // Caricamento in corso o dati non ancora disponibili
+      return const CircularProgressIndicator(); 
+    }
+  },
+),
+            
             // Se vuoi mostrare anche Nome e Cognome sotto:
-            Text("${accountData.nome} ${accountData.cognome}"),
+            
         
 
         Padding(

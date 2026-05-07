@@ -42,7 +42,7 @@ class Places{
 
   ];
 
- static const List<int> _steps = [200, 3000, 1000, 2000, 5000, 2000, 1500, 300, 500, 1000];
+ static const List<int> _steps = [200, 3000, 1000, 2000, 5000, 2000, 1500, 300, 500, 2000];
   static const List<double> _hours = [0.25, 1.5, 1, 1, 3, 1, 0.5, 0.5, 1, 1.5];
   static const List<int> _crowded = [1, 3, 5, 4, 5, 3, 4, 6, 2, 1];
   static const List<bool> _opened = [false, false, true, false, true, false, true, false, false, false];
@@ -132,9 +132,9 @@ static int pile(int steps, double hour, int crowded, bool opened){
   double points = 0;
   double intensity = steps / hour;
 
-  if (intensity > 5000) {
+  if (intensity > 1500) {
     points += 7;
-  } else if (intensity > 3000) {
+  } else if (intensity > 900) {
     points += 4;
   } else {
     points += 2;

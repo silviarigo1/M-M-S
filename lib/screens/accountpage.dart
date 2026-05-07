@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -49,20 +50,7 @@ void initState() {
   _nicknameController.text = acc.nickname;
 }
 
-void _salvaDati() {
-  // Salviamo nel Provider
-  Provider.of<AccountProvider>(context, listen: false).updateAccount(
-    _nameController.text,
-    _surnameController.text,
-    _emailController.text,
-    _nicknameController.text,
-  );
-  
-  // Opzionale: torna indietro o mostra un messaggio
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text("Well done!")),
-  );
-}
+
 
   @override
     Widget build(BuildContext context) {
@@ -86,9 +74,20 @@ void _salvaDati() {
             
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _salvaDati,
               child: Text("Save"),
+              onPressed: () async {
+              final sharedPreferences = await SharedPreferences.getInstance();
+              await sharedPreferences.setString('Name', _nameController.text);
+              await sharedPreferences.setString('Surname', _surnameController.text);
+              await sharedPreferences.setString('Email', _emailController.text);
+              await sharedPreferences.setString('Nickname', _nicknameController.text);
+              
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Well done!")),
+            );
+              },
             ),
+    
           ],
        )));// Fine AppBar
 
