@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:mms_app/models/places.dart';
 import 'package:mms_app/models/swipe.dart';
-import 'package:mms_app/screens/accountpage.dart';
+
 import 'package:mms_app/screens/aim.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:mms_app/screens/options.dart';
 import 'package:mms_app/screens/profilepage.dart';
 import 'package:mms_app/screens/travelpage.dart';
 import 'package:dropdown_button2/dropdown_button2.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import './login.dart';
 
@@ -22,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+  
 
   double? _steps;
   //final double _stepGoal = 10000;
@@ -47,8 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
     final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
     double currentTiredness = (_steps! / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
     currentTiredness = currentTiredness.clamp(0.0, 1.0);
+    double currentEnergy = 1 - currentTiredness;
     
-    final utente = Provider.of<AccountProvider>(context);
+    int currentPile;
+    if (currentEnergy > 0.9) {
+      currentPile = 10;
+    }
+    else if (currentEnergy < 0.15) {
+      currentPile = 1;
+    } else {
+      currentPile = (currentEnergy / 0.1).round();
+    }
+    
+    Provider.of<ResultSwipe>(context, listen: false).saveBattery(currentPile);
     
     final List<String> titles = [
       "Home",
@@ -67,15 +80,47 @@ class _HomeScreenState extends State<HomeScreen> {
         // 1. SALUTO INIZIALE
         Align(
           alignment: Alignment.centerLeft,
-          child: Text(
-            '👋 Hello ${utente.nome}',
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
+          child: FutureBuilder(
+            future: SharedPreferences.getInstance(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final sharedPreferences = snapshot.data!;
+                if (sharedPreferences.getString('Name') != null) {
+                  return Text(
+                    '👋 Hello ${sharedPreferences.getString('Name')}',
+                    style: const TextStyle(
+                      fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            );
+                } else {
+                  return const Text(
+                    '👋 Hello user',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  );
+                }
+              }
+              else {
+                return const Text(
+                  '👋 Hello user',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                );
+              }
+          } 
+            
           ),
+          
         ),
+        
 
         const SizedBox(height: 30),
 
@@ -236,6 +281,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        const SizedBox(height: 30),
+        Text('User battery: [' + emoji(currentPile) + ']'),
       ],
     ),
   ),
@@ -284,3 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
 }}
+
+String emoji(int numPile) {
+  return '🔋' * numPile;
+}
