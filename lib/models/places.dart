@@ -30,11 +30,7 @@ class Places{
 
   static const List<String> cities = [
     "Padova",
-    "Bologna",
-    "Milano",
-    "Roma",
-    "Napoli",
-    "Palermo",
+    
   ];
   static const List<String> images = [
     "lib/images/scudetti/PadovaCalcio.png",
