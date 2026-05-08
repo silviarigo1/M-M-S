@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+
 import '../models/swipe.dart';
 import '../models/places.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
+
 
 class Suggestion extends StatefulWidget {
   const Suggestion({super.key});
@@ -49,14 +49,37 @@ class _SuggestionState extends State<Suggestion> {
           for (int index in indiciSelezionati) {
             hours = hours + Places.mapDest["hours"]![index];
           }
+          double minutes = (hours - hours.floor()) * 60;
+          String time = hours.floor().toString() + ":" + minutes.toString();
           
+          return Column(
+            children: [
+              // --- SEZIONE TEMPO STIMATO ---
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.access_time, color: Colors.lightGreen),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Estimated time: $time",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-          return ListView.separated(
-            padding: const EdgeInsets.all(20),
+          Expanded(child:  ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             
             itemCount: indiciSelezionati.length,
             itemBuilder: (context, i) {
-              title: Text("tempo stimato: $hours hours");
+              
               int indexDellaMeta = indiciSelezionati[i];
               bool isPari = i % 2 == 0;
               return Padding(
@@ -65,7 +88,7 @@ class _SuggestionState extends State<Suggestion> {
                 
                 left: isPari ? 10 : 80, 
                 right: isPari ? 80 : 10,
-                bottom: 20
+                
               ),
               
               child: Card(
@@ -93,11 +116,14 @@ class _SuggestionState extends State<Suggestion> {
                                         padding: const EdgeInsets.only(left: 200),
                                         child: Container(
                                           width: 2,
-                                          height: 20, 
+                                          height: 30, 
                                           color: Colors.lightGreen.withOpacity(0.4),
                                         ),
                                       );
             },
+          ),),
+            ]
+          
           );
         },
       ),
@@ -110,10 +136,12 @@ List<int> Proposte(Trip viaggio, int dispPile) {
   shuffled.shuffle();
   List<int> selected = [];
   int pileUsate = 0;
+  double Tothours = 0;
   for (var dest in shuffled) {
     
-    if (pileUsate + Places.batt[dest] <= dispPile) {
+    if (pileUsate + Places.batt[dest] <= dispPile && Tothours + Places.mapDest["hours"]![dest] <= 12) {
       selected.add(dest);
+      Tothours = Tothours + Places.mapDest["hours"]![dest];
       pileUsate += Places.batt[dest];
     }
     if (pileUsate == dispPile) break;
