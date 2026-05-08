@@ -3,6 +3,7 @@ import 'home.dart';
 import '../models/swipe.dart';
 import '../models/places.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 class Suggestion extends StatefulWidget {
   const Suggestion({super.key});
@@ -15,7 +16,7 @@ class _SuggestionState extends State<Suggestion> {
   @override
   Widget build(BuildContext context) {
     
-    // Supponiamo che questi dati arrivino da qualche parte (es. SharedPreferences o Provider)
+    
 
     
 
@@ -37,28 +38,36 @@ class _SuggestionState extends State<Suggestion> {
               ),
             );
           }
-          const SizedBox(height: 20);
+          
           int currentPile = provider.currentBattery;
           int dispPile = currentPile - 1;
-          // --- LOGICA SPOSTATA QUI ---
+          
           final trip = provider.trips[0];
-          // Chiamiamo la tua funzione Proposte
+          
           List<int> indiciSelezionati = Proposte(trip, dispPile);
+          double hours = 0;
+          for (int index in indiciSelezionati) {
+            hours = hours + Places.mapDest["hours"]![index];
+          }
+          
 
           return ListView.separated(
-            padding: const EdgeInsets.only(left:20, right:20),
+            padding: const EdgeInsets.all(20),
+            
             itemCount: indiciSelezionati.length,
             itemBuilder: (context, i) {
+              title: Text("tempo stimato: $hours hours");
               int indexDellaMeta = indiciSelezionati[i];
               bool isPari = i % 2 == 0;
               return Padding(
-    // Se è pari mette spazio a destra, se è dispari a sinistra
+    
               padding: EdgeInsets.only(
+                
                 left: isPari ? 10 : 80, 
                 right: isPari ? 80 : 10,
                 bottom: 20
               ),
-              // Qui recuperi i dati della meta usando l'indice
+              
               child: Card(
                 elevation: 5,
                 
@@ -102,7 +111,7 @@ List<int> Proposte(Trip viaggio, int dispPile) {
   List<int> selected = [];
   int pileUsate = 0;
   for (var dest in shuffled) {
-    // Controlliamo se questa specifica meta entra nello spazio rimanente
+    
     if (pileUsate + Places.batt[dest] <= dispPile) {
       selected.add(dest);
       pileUsate += Places.batt[dest];
