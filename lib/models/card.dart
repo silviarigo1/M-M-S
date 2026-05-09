@@ -739,7 +739,7 @@ class TravelCard {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),),
                   SizedBox(width: 8), 
-                  Text(emoji(Places.mapDest["pile"]![i])), 
+                  emoji(Places.mapDest["pile"]![i]), 
                 ],
               ),
             ),
@@ -783,7 +783,12 @@ class TravelCard {
 }
 
 
-String emoji(int numPile){
-  if(numPile == 1) {return '🪫';}
-  else if(numPile == 2) {return '🪫🪫';}
-  return '🪫🪫🪫';}
+Widget emoji(int numPile) {
+  // Definiamo l'icona base per non doverla riscrivere mille volte
+  const batteryIcon = Icon(Icons.battery_2_bar_rounded, color: Color.fromARGB(255, 152, 37, 29));
+
+  return Row(
+    mainAxisSize: MainAxisSize.min, // Fondamentale per non occupare tutta la riga
+    children: List.generate(numPile, (index) => batteryIcon),
+  );
+}

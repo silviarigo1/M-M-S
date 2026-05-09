@@ -72,14 +72,20 @@ class TravelPage extends StatelessWidget {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          trailing: Text(
-                                            "${Places.batt[indexOriginale]} 🪫",
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                          Text(
+                                            "${Places.batt[indexOriginale]} ",
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 14, 
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
+                                          const Icon(
+                                              Icons.battery_2_bar_rounded, color: Color.fromARGB(255, 152, 37, 29), ),
+                                          ],)
                                         ),
                                       );
                                     },

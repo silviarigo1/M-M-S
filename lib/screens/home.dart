@@ -282,8 +282,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const SizedBox(height: 60),
-        Text('User battery: [' + emoji(currentPile) + ']',
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Row(
+            mainAxisSize: MainAxisSize.min, // Evita che la riga occupi tutto lo schermo
+            children: [
+              const Text('User battery: [', style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              emoji(currentPile), // Qui Flutter disegnerà le icone vere e proprie
+              const Text(']', style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+            ],
+          )
       ],
     ),
   ),
@@ -333,6 +339,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 }}
 
-String emoji(int numPile) {
-  return '🔋' * numPile + '🪫' * (10-numPile);
+Widget emoji(int numPile) {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      // Icone verdi (cariche)
+      for (int i = 0; i < numPile; i++)
+        const Icon(Icons.battery_full_rounded, color: Colors.lightGreen),
+      
+      // Icone grigie (scariche)
+      for (int i = 0; i < (10 - numPile); i++)
+        const Icon(Icons.battery_0_bar_rounded, color: Colors.grey),
+    ],
+  );
 }

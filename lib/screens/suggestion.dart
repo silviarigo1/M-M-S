@@ -105,7 +105,12 @@ class _SuggestionState extends State<Suggestion> {
                     fit: BoxFit.contain,
                   ),
                   title: Text("${Places.mapDest["title"]![indexDellaMeta]}"),
-                subtitle: Text("Cost: ${Places.batt[indexDellaMeta]} 🪫"),
+                subtitle: Row(
+                  mainAxisSize: MainAxisSize.min,                
+                  children: [
+                  Text("Cost: ${Places.batt[indexDellaMeta]}"),
+                  const Icon(Icons.battery_2_bar_rounded, color: Color.fromARGB(255, 152, 37, 29), ),
+                ]),
               ),
               ),
               );
