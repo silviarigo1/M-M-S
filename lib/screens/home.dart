@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // BLOCCO STEPS
             Column(
               children: [
-                const Text("Steps", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                const Text("Steps", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 20),
                 Stack(
                   alignment: Alignment.center,
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // BLOCCO TIREDNESS
             Column(
               children: [
-                const Text("Tiredness", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                const Text("Tiredness", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 20),
                 Stack(
                   alignment: Alignment.center,
@@ -281,8 +281,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 30),
-        Text('User battery: [' + emoji(currentPile) + ']'),
+        const SizedBox(height: 60),
+        Text('User battery: [' + emoji(currentPile) + ']',
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ],
     ),
   ),
@@ -333,5 +334,5 @@ class _HomeScreenState extends State<HomeScreen> {
 }}
 
 String emoji(int numPile) {
-  return '🔋' * numPile;
+  return '🔋' * numPile + '🪫' * (10-numPile);
 }
