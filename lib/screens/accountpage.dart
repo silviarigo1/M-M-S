@@ -19,12 +19,8 @@ class _AccountState extends State<Account> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
   final sharedPreferences = SharedPreferences.getInstance();
-  return {
-    'Name': sharedPreferences.getString('Name') ?? '',
-    'Surname': sharedPreferences.getString('Surname') ?? '',
-    'Email': sharedPreferences.getString('Email') ?? '',
-    'Nickname': sharedPreferences.getString('Nickname') ?? '',
-  };
+  
+  
   
   
   @override
@@ -42,11 +38,15 @@ class _AccountState extends State<Account> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: _nameController, decoration: InputDecoration(labelText: "Name")),
-            TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Surname")),
-            TextField(controller: _emailController, decoration: InputDecoration(labelText: "Email")),
-            TextField(controller: _nicknameController, decoration: InputDecoration(labelText: "Nickname")),
-            
+            TextField(controller: _nameController, decoration: InputDecoration(labelText: "Name", 
+                          hintText: 'Enter your name',)),
+            TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Surname", 
+                          hintText: 'Enter your surname',)),
+            TextField(controller: _emailController, decoration: InputDecoration(labelText: "Email", 
+                          hintText: 'Enter your email',)),
+            TextField(controller: _nicknameController, decoration: InputDecoration(labelText: "Nickname", 
+                          hintText: 'Enter your nickname',)),
+
             SizedBox(height: 20),
             ElevatedButton(
               child: Text("Save"),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
-import 'package:mms_app/screens/accountpage.dart';
+
 import 'package:mms_app/screens/aim.dart';
 import 'package:mms_app/screens/onboarding.dart';
 import 'screens/login.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ResultSwipe(), ),
         ChangeNotifierProvider(create: (context) => AimsProvider()), 
-        ChangeNotifierProvider(create: (context) => AccountProvider()), 
+         
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

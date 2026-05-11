@@ -28,10 +28,10 @@ class _OnboardingState extends State<Onboarding> {
     Future<void> _loadSavedData() async {
     final sp = await SharedPreferences.getInstance();
     setState(() {
-      _nameController.text = sp.getString('nome') ?? '';
-      _surnameController.text = sp.getString('cognome') ?? '';
-      _dateController.text = sp.getString('data_di_nascita') ?? '';
-      _selectedGender = sp.getString('sesso');
+      _nameController.text = sp.getString('Name') ?? '';
+      _surnameController.text = sp.getString('Surname') ?? '';
+      _dateController.text = sp.getString('Dob') ?? '';
+      _selectedGender = sp.getString('Gender');
     });
   }
 
