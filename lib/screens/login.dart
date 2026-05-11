@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/screens/home.dart';
+import 'package:mms_app/screens/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './home.dart';
+
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -78,7 +80,12 @@ class LoginPage extends StatelessWidget {
                 if (userController.text == 'mms' && passwordController.text == '031828') {
                   final sharedPreferences = await SharedPreferences.getInstance();
                   await sharedPreferences.setBool('isUserLogged', true);
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomeScreen())));
+                  bool onboard = await sharedPreferences.getBool('onboarding_completed') ?? false;
+                  if (onboard == true) {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomeScreen())));
+                  } else {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Onboarding())));
+                }
                 } else {
                   // If incorrect, show a SnackBar with an error message
                   ScaffoldMessenger.of(context)

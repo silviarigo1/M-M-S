@@ -1,30 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class AccountProvider extends ChangeNotifier {
-  String _nome = "Name";
-  String _cognome = "Surname";
-  String _email = "";
-  String _nickname = "Your Nickname";
 
-  // Getter
-  String get nome => _nome;
-  String get cognome => _cognome;
-  String get email => _email;
-  String get nickname => _nickname;
-
-  // Metodo per aggiornare tutto in una volta
-  void updateAccount(String n, String c, String e, String nick) {
-    _nome = n;
-    _cognome = c;
-    _email = e;
-    _nickname = nick;
-    notifyListeners(); // Questo avvisa tutte le pagine di aggiornarsi!
-  }
-}
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -38,20 +18,15 @@ class _AccountState extends State<Account> {
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
+  final sharedPreferences = SharedPreferences.getInstance();
+  return {
+    'Name': sharedPreferences.getString('Name') ?? '',
+    'Surname': sharedPreferences.getString('Surname') ?? '',
+    'Email': sharedPreferences.getString('Email') ?? '',
+    'Nickname': sharedPreferences.getString('Nickname') ?? '',
+  };
   
-@override
-void initState() {
-  super.initState();
-  // Inizializziamo i controller con i valori attuali del Provider
-  final acc = Provider.of<AccountProvider>(context, listen: false);
-  _nameController.text = acc.nome;
-  _surnameController.text = acc.cognome;
-  _emailController.text = acc.email;
-  _nicknameController.text = acc.nickname;
-}
-
-
-
+  
   @override
     Widget build(BuildContext context) {
      return   Scaffold(

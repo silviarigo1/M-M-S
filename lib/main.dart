@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
 import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
+import 'package:mms_app/screens/onboarding.dart';
 import 'screens/login.dart';
 import 'package:provider/provider.dart';
 import 'screens/home.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
             else {
               //...otherwise go to LoginPage
               return LoginPage();
+              
             } //else
           } //if
           else {
