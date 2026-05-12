@@ -18,6 +18,7 @@ class _OnboardingState extends State<Onboarding> {
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   String? _selectedGender;
+  final TextEditingController _stepsAimController = TextEditingController();
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _OnboardingState extends State<Onboarding> {
       _surnameController.text = sp.getString('Surname') ?? '';
       _dateController.text = sp.getString('Dob') ?? '';
       _selectedGender = sp.getString('Gender');
+      _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
     });
   }
 
@@ -56,10 +58,14 @@ class _OnboardingState extends State<Onboarding> {
       await sp.setString('Surname', _surnameController.text);
       await sp.setString('Gender', _selectedGender!);
       await sp.setString('Dob', _dateController.text);
+      await sp.setInt('StepsAim', int.parse(_stepsAimController.text));
       await sp.setBool('onboarding_completed', true);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Data saved successfully!')),
+        SnackBar(
+          content: Text('Data saved successfully!'),
+          backgroundColor: Colors.green, 
+          behavior: SnackBarBehavior.floating,),
       );
 
       Navigator.pushReplacement(
@@ -167,6 +173,14 @@ class _OnboardingState extends State<Onboarding> {
                         decoration: InputDecoration(labelText: 'Date of birth', border: OutlineInputBorder()),
                         onTap: () => _selectDate(context),
                         validator: (value) => value == null || value.isEmpty ? 'Pick a date' : null,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                       TextFormField(
+                        controller: _stepsAimController,
+                        decoration: InputDecoration(labelText: 'Steps Aim', border: OutlineInputBorder()),
+                        validator: (value) => value == null || value.isEmpty ? 'Please enter steps aim' : null,
                       ),
                       SizedBox(height: 24),
                       ElevatedButton(

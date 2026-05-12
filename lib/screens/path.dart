@@ -112,7 +112,9 @@ class _ChoicesState extends State<Choices> {
           
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Trip saved!")),
+            const SnackBar(content: Text("Trip saved!"),
+                    backgroundColor: Colors.green, 
+                    behavior: SnackBarBehavior.floating,),
           );
         },
         backgroundColor: Colors.lightGreen,
@@ -133,7 +135,7 @@ void _showDestinationsPopup(BuildContext context) {
 
   showDialog(
     context: context,
-    builder: (BuildContext context) {
+    builder: (BuildContext dialogContext) {
       return AlertDialog(
         title: const Text("Destination not selected"),
         content: SizedBox(
@@ -163,11 +165,13 @@ void _showDestinationsPopup(BuildContext context) {
                         ));
 
                         
-                        Navigator.pop(context);
+                        Navigator.pop(dialogContext);
 
                         
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("$nomePosto added!")),);
+                          SnackBar(content: Text("$nomePosto added!"),
+                                  backgroundColor: Colors.green, 
+                                  behavior: SnackBarBehavior.floating,),);
                       },
                     );
                   },

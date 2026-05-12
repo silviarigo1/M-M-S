@@ -22,14 +22,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
-  
 
+  int selectedIndex = 0;
   double? _steps;
   //final double _stepGoal = 10000;
-
   double? _sleep;
   final double _sleepGoal = 8;
+  double _stepGoal = 10000; // Valore di default, verrà sovrascritto da SharedPreferences
 
   //double? _tiredness;
   //final _tiredness = 0.95;
@@ -42,11 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _steps = Random().nextDouble() * 10000; 
     _sleep = Random().nextDouble() * _sleepGoal;
+
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Legge 'StepsAim'. Se è null (es. onboarding saltato), usa 10000.
+      _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
+    });
   }
   
   @override
   Widget build(BuildContext context) {
-    final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
+    final double currentStepGoal = _stepGoal;
+    //final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
     double currentTiredness = (_steps! / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
     currentTiredness = currentTiredness.clamp(0.0, 1.0);
     double currentEnergy = 1 - currentTiredness;

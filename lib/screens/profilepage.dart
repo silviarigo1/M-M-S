@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Profile extends StatelessWidget {
-  Profile({super.key});
+  const Profile({super.key});
 
   //final TextEditingController _nameController = TextEditingController();
   //final TextEditingController _surnameController = TextEditingController();
@@ -172,12 +172,51 @@ class Profile extends StatelessWidget {
                 child: TextButton.icon(
                   icon: const Icon(Icons.logout, color: Colors.grey),
                   label: const Text("Logout", style: TextStyle(color: Colors.grey)),
-                  onPressed: () async {
+                  onPressed: () {
+ 
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Logout"),
+                        content: const Text("Sei sicuro di voler uscire?"),
+                        actions: [
+                          // Tasto per annullare: chiude solo il dialogo
+                          TextButton(
+                            child: const Text("Annulla"),
+                            onPressed: () {
+                              Navigator.of(context).pop(); 
+                            },
+                          ),
+                          // Tasto per confermare: esegue la logica di logout
+                          TextButton(
+                            child: const Text("Logout", style: TextStyle(color: Colors.red)),
+                            onPressed: () async {
+                              // Logica originale spostata qui
+                              final sharedPreferences = await SharedPreferences.getInstance();
+                              await sharedPreferences.remove('isUserLogged');
+
+                              // Verifica che il widget sia ancora "montato" prima di navigare
+                              if (context.mounted) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LoginPage()),
+                                  (route) => false,
+                                );
+                              }
+                            }, // onPressed del tasto Logout
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }, // onPressed del TextButton.icon
+                  /*onPressed: () async {
                     final sharedPreferences = await SharedPreferences.getInstance();
                     await sharedPreferences.remove('isUserLogged');
 
                      Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-                  },
+                  },*/
                 ),
           ),
             ])
