@@ -60,30 +60,20 @@ class Profile extends StatelessWidget {
     if (snapshot.hasData) {
       final sharedPreferences = snapshot.data!;
       // Recuperiamo i valori o assegniamo un default se sono null
-      String nickname = sharedPreferences.getString('Nickname') ?? 'Your nickname';
       String name = sharedPreferences.getString('Name') ?? 'Name';
       String surname = sharedPreferences.getString('Surname') ?? 'Surname';
 
-      return Column(
-        children: [
-          Text(
-            nickname,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 5), // Un po' di spazio tra nickname e nome
+      return 
+          
           Text(
             "$name $surname",
             style: const TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
+              fontSize: 20,
+              color: Colors.black,
             ),
-          ),
-        ],
-      );
+          );
+        
+      
     } else {
       // Caricamento in corso o dati non ancora disponibili
       return const CircularProgressIndicator(); 

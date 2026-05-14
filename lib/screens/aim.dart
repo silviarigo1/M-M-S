@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-class AimsProvider extends ChangeNotifier {
-  // Valori di default
-  int _stepsGoal = 10000;
-
-
-  // Getter per leggere i valori
-  int get stepsGoal => _stepsGoal;
- 
-
-  // Metodi per modificare i valori
-  void updateSteps(int newSteps) {
-    _stepsGoal = newSteps;
-    notifyListeners(); // Notifica la UI del cambiamento
-  }
-}
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Aims extends StatefulWidget {
   const Aims({super.key});
@@ -26,20 +10,22 @@ class Aims extends StatefulWidget {
 
 class _AimsState extends State<Aims> {
 
-  final TextEditingController _aimsController = TextEditingController();
-  String aimsSalvato = "";
-  void _salvaDati() {
-    int? nuovoValore = int.tryParse(_aimsController.text);
-    if (nuovoValore != null) {
-      // Aggiorna il Provider
-      Provider.of<AimsProvider>(context, listen: false).updateSteps(nuovoValore);
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Goal updated!")),
-      );
-    }
-  }
+  final TextEditingController _stepsAimController = TextEditingController();
+  final sharedPreferences = SharedPreferences.getInstance();
+
 @override
+  void initState() {
+    super.initState();
+    _loadSteps(); // Carica i dati salvati quando apri la pagina
+  }
+
+  Future<void> _loadSteps() async {
+    final sp = await SharedPreferences.getInstance();
+    setState(() {
+      _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
+    });
+  }
+
     Widget build(BuildContext context) {
      return   Scaffold(
       appBar: AppBar(
@@ -55,19 +41,27 @@ class _AimsState extends State<Aims> {
         child: Column(
           children: [
             TextField(
-              controller: _aimsController, 
+              controller: _stepsAimController, 
               keyboardType: TextInputType.number, // Tastierino numerico
               decoration: const InputDecoration(labelText: "Daily step goal"),
             ),
                         
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _salvaDati,
-              child: Text("Save"),
-            ),
+             child: Text("Save"),
+              onPressed: () async {
+              final sharedPreferences = await SharedPreferences.getInstance();
+              if (_stepsAimController.text.isNotEmpty) {
+                await sharedPreferences.setInt('StepsAim', int.parse(_stepsAimController.text));
+              }
+               ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Well done!")),
+              );
+            },)
           ],
        )));// Fine AppBar
 
     }
 
 }
+

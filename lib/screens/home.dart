@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      // Legge 'StepsAim'. Se è null (es. onboarding saltato), usa 10000.
+      
       _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
     });
   }
