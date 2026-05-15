@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiProvider( //vedi esempio prof lezione 15 maggio
       providers: [
         ChangeNotifierProvider(create: (context) => ResultSwipe(), ),
        // ChangeNotifierProvider(create: (context) => AimsProvider()), 
