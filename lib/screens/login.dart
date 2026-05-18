@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/home.dart';
 import 'package:mms_app/screens/onboarding.dart';
+import 'package:mms_app/utils/impact.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -10,6 +11,7 @@ class LoginPage extends StatelessWidget {
   static const routename = 'M&MS Trip';
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final Impact impact = Impact();
   @override
   Widget build(BuildContext context) {
     print('${LoginPage.routename} built');
@@ -76,7 +78,7 @@ class LoginPage extends StatelessWidget {
 
             ElevatedButton(
               child: Text('Login'),
-              onPressed: () async {
+              /*onPressed: () async {
                 if (userController.text == 'mms' && passwordController.text == '031828') {
                   final sharedPreferences = await SharedPreferences.getInstance();
                   await sharedPreferences.setBool('isUserLogged', true);
@@ -98,6 +100,35 @@ class LoginPage extends StatelessWidget {
                     content:
                         Text("Wrong credentials")));
                   }
+              },*/
+              onPressed: () async {
+                    // check if credentials are correct
+                    final result = await impact.getAndStoreTokens(userController.text, passwordController.text);
+                    // If correct, store the username and password in SharedPreferences
+                    // and navigate to the Exposure screen (pushReplacement to remove the login screen from the stack)
+                    if (result == 200) {
+                      final sp = await SharedPreferences.getInstance();
+                      await sp.setBool('isUserLogged', true);
+                      await sp.setString('username', userController.text);
+                      await sp.setString('password', passwordController.text);
+                      final onboarding_completed = await sp.getBool('onboarding_completed');
+                      if(onboarding_completed == null || onboarding_completed == false){
+                        Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Onboarding(),
+                        ),
+                      );
+                      }
+                      else{
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      }
+                      } 
               },
             ),
           ], 
