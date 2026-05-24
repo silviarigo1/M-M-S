@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mms_app/models/steps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +15,8 @@ class Impact{
   static String pingEndpoint = 'gate/v1/ping/';
   static String tokenEndpoint = 'gate/v1/token/';
   static String refreshEndpoint = 'gate/v1/refresh/';
+  static String stepsEndpoint = 'data/v1/steps/patients/';
+  static String patientUsername = 'Jpefaq6m58';
 
 //This method allows to refresh the stored JWT in SharedPreferences
   Future<int> refreshTokens() async {
@@ -63,4 +68,89 @@ class Impact{
   } //_getAndStoreTokens
 
 
-}//Impact
+
+
+Future<List<Steps>?> requestData() async {
+    //Initialize the result
+    List<Steps>? result;
+    
+
+    //Get the stored access token (Note that this code does not work if the tokens are null)
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final day = '2024-05-04';
+    final url = Impact.baseUrl + Impact.stepsEndpoint + Impact.patientUsername + '/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    
+    //if OK parse the response, otherwise return null
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(Steps.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = null;
+    }//else
+    print('Total steps: $stepsTotal');
+    //Return the result
+    
+    return result;
+
+  } //_requestData
+
+  Future<int?> stepsTotal() async {
+    //Initialize the result
+    int stepsTotal = 0;
+
+    //Get the stored access token (Note that this code does not work if the tokens are null)
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final day = '2024-02-04';
+    final url = Impact.baseUrl + Impact.stepsEndpoint + Impact.patientUsername + '/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    
+    //if OK parse the response, otherwise return null
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        stepsTotal += int.parse(decodedResponse['data']['data'][i]['value']);
+      }//for
+    } //if
+    else{
+      stepsTotal = 0;
+    }//else
+    print('Total steps: $stepsTotal');
+    //Return the result
+    
+    return stepsTotal;
+
+  } //_requestData
+
+}

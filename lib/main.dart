@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
+import 'package:mms_app/providers/data_provider.dart';
 
 //import 'package:mms_app/screens/aim.dart';
 // import 'package:mms_app/screens/onboarding.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider( //vedi esempio prof lezione 15 maggio
       providers: [
         ChangeNotifierProvider(create: (context) => ResultSwipe(), ),
-       // ChangeNotifierProvider(create: (context) => AimsProvider()), 
+        ChangeNotifierProvider(create: (context) => DataProvider()), 
          
       ],
       child: MaterialApp(

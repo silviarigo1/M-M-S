@@ -43,9 +43,24 @@ class TravelPage extends StatelessWidget {
                               return AlertDialog(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
-                                title: const Text("Trip stages"),
-                                content: SizedBox( 
-                                  width: double.maxFinite, 
+                                title: const Center( 
+                                  child:Text("TRIP STAGES", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),)),
+                               
+                                content: Container( 
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15), // Smussa gli angoli dello sfondo come il box
+                                  image: DecorationImage(
+                                    image: const AssetImage('lib/images/mete/PratoValle.jpg'), // Metti qui il percorso della tua immagine
+                                    fit: BoxFit.cover, // Fa occupare all'immagine tutto lo spazio disponibile
+                                    // --- TRASPARENTINO ---
+                                    // Questo filtro applica il bianco con un'opacità dello 0.15 (85% trasparente)
+                                    colorFilter: ColorFilter.mode(
+                                      Colors.white.withOpacity(0.40), 
+                                      BlendMode.dstATop,
+                                    ),
+                                  ),
+                                ), 
                                   child: ListView.separated(
                                     shrinkWrap: true, 
                                     padding: const EdgeInsets.all(10),
@@ -59,6 +74,7 @@ class TravelPage extends StatelessWidget {
                                         margin: EdgeInsets.zero,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(15)),
+                                        color: Colors.white.withOpacity(0.9),
                                         child: ListTile(
                                           leading: const Icon(
                                             Icons.pin_drop,

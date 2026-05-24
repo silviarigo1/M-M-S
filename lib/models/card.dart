@@ -734,10 +734,13 @@ class TravelCard {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [Expanded(
-                  child:Text(
-                    Places.mapDest["title"]![i], 
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),),
+                  child: Center(
+                    child: Text(
+                      Places.mapDest["title"]![i], 
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
                   SizedBox(width: 8), 
                   emoji(Places.mapDest["pile"]![i]), 
                 ],
@@ -770,6 +773,8 @@ class TravelCard {
                 ),
               ),
             ),
+            const Divider(),
+            emoji(Places.mapDest["pile"]![i]),
           ],
         ),
       ),

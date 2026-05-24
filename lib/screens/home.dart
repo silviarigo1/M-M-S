@@ -1,8 +1,12 @@
 import 'dart:math';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mms_app/models/places.dart';
+import 'package:mms_app/models/steps.dart';
 import 'package:mms_app/models/swipe.dart';
+import 'package:mms_app/providers/data_provider.dart';
 
 import 'package:mms_app/screens/aim.dart';
+import 'package:mms_app/utils/impact.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/options.dart';
@@ -22,9 +26,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  
   int selectedIndex = 0;
-  double? _steps;
+  double _steps = 0;
   //final double _stepGoal = 10000;
   double? _sleep;
   final double _sleepGoal = 8;
@@ -39,27 +43,48 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _steps = Random().nextDouble() * 10000; 
+    //_steps = Random().nextDouble() * 10000; 
     _sleep = Random().nextDouble() * _sleepGoal;
 
-    _loadSettings();
+    _loadSettings(); // Carica i dati una volta sola all'inizio
   }
 
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
+    
+
     setState(() {
-      
       _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
+      
     });
   }
+  /*Future<void> _inizializzaDatiHome() async {
+    // 1. Carica le SharedPreferences una volta sola per entrambe le cose
+    final prefs = await SharedPreferences.getInstance();
+    final localStepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
+
+    // 2. Scarica i passi reali dall'API (async/await lineare)
+    final provider = Provider.of<DataProvider>(context, listen: false);
+    await provider.getStepsTotal();
+    final realSteps = (provider.stepsTotal ?? 0).toDouble();
+
+    // 3. Fai UN SOLO setState alla fine con tutti i dati pronti
+    setState(() {
+      _stepGoal = localStepGoal;
+      _steps = realSteps;
+    });
+  }*/
+
+
   
   @override
   Widget build(BuildContext context) {
     final double currentStepGoal = _stepGoal;
     //final double currentStepGoal = Provider.of<AimsProvider>(context).stepsGoal.toDouble();
-    double currentTiredness = (_steps! / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
+    double currentTiredness = (_steps / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
     currentTiredness = currentTiredness.clamp(0.0, 1.0);
     double currentEnergy = 1 - currentTiredness;
+    final impact = Impact();
     
     int currentPile;
     if (currentEnergy > 0.9) {
@@ -221,6 +246,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
         const SizedBox(height: 60),
 
+        
+        ElevatedButton(
+                onPressed: () async {
+                  final result = await impact.requestData();
+                  print(result);
+                  final message =
+                      result == null ? 'Request failed' : 'Request successful';
+                  ScaffoldMessenger.of(context)
+                    ..removeCurrentSnackBar()
+                    ..showSnackBar(SnackBar(content: Text(message)));
+                },
+                child: Text('Get the data')),
+                
+
         // 3. ROW DEI CERCHI (STEPS E TIREDNESS)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -241,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         strokeWidth: 15,
                         backgroundColor: Colors.grey.withOpacity(0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color.lerp(Colors.blue, Colors.green, (_steps! / currentStepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                          Color.lerp(Colors.blue, Colors.green, (_steps / currentStepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
                         ),
                         strokeCap: StrokeCap.round,
                       ),
@@ -249,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("${_steps!.round()}",
+                        Text("${_steps.round()}",
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                         Text("${currentStepGoal.toInt()}",
                             style: const TextStyle(fontSize: 12, color: Colors.grey)),
@@ -295,9 +334,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
             mainAxisSize: MainAxisSize.min, // Evita che la riga occupi tutto lo schermo
             children: [
-              const Text('User battery: [', style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const Text('USER BATTERY: [', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               emoji(currentPile), // Qui Flutter disegnerà le icone vere e proprie
-              const Text(']', style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const Text(']', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ],
           )
       ],
@@ -316,7 +355,11 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.lightGreen
       ),
-      body:pages[selectedIndex],
+      body: 
+
+          
+          pages[selectedIndex],
+        
 
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
@@ -363,3 +406,4 @@ Widget emoji(int numPile) {
     ],
   );
 }
+

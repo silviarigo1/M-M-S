@@ -51,6 +51,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 labelText: 'Username',
                 hintText: 'Enter your username',
+                prefixIcon: Icon(Icons.person),
               ),),
 
               const SizedBox(
@@ -66,6 +67,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 labelText: 'Password',
                 hintText: 'Enter your password',
+                prefixIcon: Icon(Icons.lock),
               ),),
 
               ],)
@@ -113,6 +115,7 @@ class LoginPage extends StatelessWidget {
                       await sp.setString('password', passwordController.text);
                       final onboarding_completed = await sp.getBool('onboarding_completed');
                       if(onboarding_completed == null || onboarding_completed == false){
+                        
                         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -128,7 +131,18 @@ class LoginPage extends StatelessWidget {
                           ),
                         );
                       }
-                      } 
+                      } else {
+                  // If incorrect, show a SnackBar with an error message
+                  ScaffoldMessenger.of(context)
+                  ..removeCurrentSnackBar()
+                  ..showSnackBar(const SnackBar(
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(8),
+                    duration: Duration(seconds: 2),
+                    content:
+                        Text("Wrong credentials")));
+                  }
               },
             ),
           ], 
