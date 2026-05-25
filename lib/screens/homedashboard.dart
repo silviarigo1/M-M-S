@@ -60,6 +60,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
       currentPile = (currentEnergy / 0.1).round();
     }
 
+   // Provider.of<ResultSwipe>(context, listen: false).saveBattery(currentPile);
+
   return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
@@ -118,7 +120,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              DropdownButton2<String>(
+             /* DropdownButton2<String>(
                 isExpanded: true,
                 buttonStyleData: ButtonStyleData(
                   height: 70,
@@ -165,7 +167,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     });
                   }
                 },
-              ),
+              ),*/
               // Posizioniamo l'icona aiuto a destra senza spostare il dropdown
               Positioned(
                 right: 80,
