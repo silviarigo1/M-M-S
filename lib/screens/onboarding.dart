@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Onboarding extends StatefulWidget {
   Onboarding({Key? key}) : super(key: key);
 
@@ -12,20 +11,17 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
- 
-  final _formKey = GlobalKey<FormState>();
+   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   String? _selectedGender;
   final TextEditingController _stepsAimController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
     _loadSavedData();
   }
-
     Future<void> _loadSavedData() async {
     final sp = await SharedPreferences.getInstance();
     setState(() {
@@ -36,11 +32,10 @@ class _OnboardingState extends State<Onboarding> {
       _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
     });
   }
-
     Future<void> _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime(2000),
+      initialDate: DateTime(2002),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
@@ -50,7 +45,6 @@ class _OnboardingState extends State<Onboarding> {
       });
     }
   }
-
     Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       final sp = await SharedPreferences.getInstance();
@@ -60,26 +54,22 @@ class _OnboardingState extends State<Onboarding> {
       await sp.setString('Dob', _dateController.text);
       await sp.setInt('StepsAim', int.parse(_stepsAimController.text));
       await sp.setBool('onboarding_completed', true);
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Data saved successfully!'),
           backgroundColor: Colors.green, 
           behavior: SnackBarBehavior.floating,),
       );
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
     }
   }
-
   Future<void> _setOnboardingCompleted() async {
-  final sp = await SharedPreferences.getInstance();
-  await sp.setBool('onboarding_completed', true);
+    final sp = await SharedPreferences.getInstance();
+    await sp.setBool('onboarding_completed', true);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +81,7 @@ class _OnboardingState extends State<Onboarding> {
                 16.0),
             child: 
             SingleChildScrollView(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [              
                 // import the logo image from assets folder (make sure to add the folder in pubspec.yaml)
                 Image.asset(
                   'lib/images/impronta.png',
@@ -100,8 +89,7 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                 const SizedBox(
                       height: 30,
-                    ),
-                    
+                    ),  
                 const Text(
                   'Let\'s know you better',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
@@ -109,7 +97,6 @@ class _OnboardingState extends State<Onboarding> {
                 const SizedBox(
                   height: 25,
                 ),
-                
                 Form(
                   key: _formKey,
                   child: Column(
@@ -188,12 +175,9 @@ class _OnboardingState extends State<Onboarding> {
                         child: Text('Save'),
                       ),
                     ]),
-                ),
-                
+                 ),
                 ],
-                      ),
-                      
-                      
+              ),                      
             ),
                   ),
             Positioned(
@@ -211,8 +195,7 @@ class _OnboardingState extends State<Onboarding> {
                   'Skip',
                   style: TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
-              ),
-                    
+              ),    
                   ),]
         ),
       ),);

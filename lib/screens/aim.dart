@@ -22,7 +22,7 @@ class _AimsState extends State<Aims> {
   Future<void> _loadSteps() async {
     final sp = await SharedPreferences.getInstance();
     setState(() {
-      _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
+      _stepsAimController.text = sp.getString('StepsAim') ?? '';
     });
   }
 
@@ -52,7 +52,7 @@ class _AimsState extends State<Aims> {
               onPressed: () async {
               final sharedPreferences = await SharedPreferences.getInstance();
               if (_stepsAimController.text.isNotEmpty) {
-                await sharedPreferences.setInt('StepsAim', int.parse(_stepsAimController.text));
+                await sharedPreferences.setString('Steps Aim', _stepsAimController.text);
               }
                ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Well done!")),

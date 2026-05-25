@@ -75,6 +75,4 @@ class ResultSwipe extends ChangeNotifier{
     currentBattery = battery;
     notifyListeners();
   }
-
-  
 }

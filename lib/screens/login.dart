@@ -26,12 +26,9 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:100.0),
-
               child: Column(children: [
-              
               Image.asset(
                 'lib/images/impronta.png',
                 width: 80, // Larghezza desiderata
@@ -69,40 +66,13 @@ class LoginPage extends StatelessWidget {
                 hintText: 'Enter your password',
                 prefixIcon: Icon(Icons.lock),
               ),),
-
-              ],)
-              
+              ],)       
               ),
-            
             const SizedBox(
                 height: 20,
               ),
-
             ElevatedButton(
               child: Text('Login'),
-              /*onPressed: () async {
-                if (userController.text == 'mms' && passwordController.text == '031828') {
-                  final sharedPreferences = await SharedPreferences.getInstance();
-                  await sharedPreferences.setBool('isUserLogged', true);
-                  bool onboard = await sharedPreferences.getBool('onboarding_completed') ?? false;
-                  if (onboard == true) {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => HomeScreen())));
-                  } else {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Onboarding())));
-                }
-                } else {
-                  // If incorrect, show a SnackBar with an error message
-                  ScaffoldMessenger.of(context)
-                  ..removeCurrentSnackBar()
-                  ..showSnackBar(const SnackBar(
-                    backgroundColor: Colors.red,
-                    behavior: SnackBarBehavior.floating,
-                    margin: EdgeInsets.all(8),
-                    duration: Duration(seconds: 2),
-                    content:
-                        Text("Wrong credentials")));
-                  }
-              },*/
               onPressed: () async {
                     // check if credentials are correct
                     final result = await impact.getAndStoreTokens(userController.text, passwordController.text);
@@ -115,7 +85,6 @@ class LoginPage extends StatelessWidget {
                       await sp.setString('password', passwordController.text);
                       final onboarding_completed = await sp.getBool('onboarding_completed');
                       if(onboarding_completed == null || onboarding_completed == false){
-                        
                         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -149,7 +118,6 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
-                  
+  }     
 } //build
 
