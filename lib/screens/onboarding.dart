@@ -71,7 +71,7 @@ class _OnboardingState extends State<Onboarding> {
   MaterialPageRoute(
     builder: (context) => ChangeNotifierProvider<DataProvider>(
       create: (context) => DataProvider(),
-      child: const HomeScreen(), // La HomeScreen ora ha accesso al DataProvider
+      child: const HomeScreen(), 
     ),
   ),
 );
@@ -200,9 +200,14 @@ class _OnboardingState extends State<Onboarding> {
                 onPressed: () async {
                   await _setOnboardingCompleted();
                   Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+  context,
+  MaterialPageRoute(
+    builder: (context) => ChangeNotifierProvider<DataProvider>(
+      create: (context) => DataProvider(),
+      child: const HomeScreen(), 
+    ),
+  ),
+);
                 },
                 child: Text(
                   'Skip',
