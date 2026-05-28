@@ -8,15 +8,42 @@ class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () => _checkLogin(context));
-    return Scaffold(
-        body: Center(
-            child: Image.asset(
-      'lib/images/impronta.png',
-      
-    )));
-  }
+  @override
+@override
+Widget build(BuildContext context) {
+  // Il tuo solito timer per cambiare pagina dopo 3 secondi
+  Future.delayed(const Duration(seconds: 3), () => _checkLogin(context));
+
+  return Scaffold(
+    body: Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Il costruttore che ascolta il flusso del tempo
+          StreamBuilder<double>(
+            // Questo comando crea un flusso che dura 3 secondi e aggiorna il valore continuamente
+            stream: Stream.periodic(const Duration(milliseconds: 30), (x) => x * 0.01).take(101),
+            builder: (context, snapshot) {
+              return SizedBox(
+                width: 140,
+                height: 140,
+                child: CircularProgressIndicator(
+                  // snapshot.data è il numero che cresce da 0.0 a 1.0
+                  value: snapshot.data ?? 0.0, 
+                  strokeWidth: 5,
+                  color: Colors.lightGreen,
+                  backgroundColor: Colors.grey.shade200,
+                ),
+              );
+            },
+          ),
+          // Il tuo logo fisso al centro
+          Image.asset('lib/images/impronta.png', width: 80),
+        ],
+      ),
+    ),
+  );
+}
 
   // Method for navigation SplashPage -> HomePage
   void _toHomePage(BuildContext context) {

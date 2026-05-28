@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mms_app/providers/data_provider.dart';
+import 'package:provider/provider.dart';
 import 'home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,10 +62,20 @@ class _OnboardingState extends State<Onboarding> {
           backgroundColor: Colors.green, 
           behavior: SnackBarBehavior.floating,),
       );
-      Navigator.pushReplacement(
+      /*Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
+        );*/
+        Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (context) => ChangeNotifierProvider<DataProvider>(
+      create: (context) => DataProvider(),
+      child: const HomeScreen(), // La HomeScreen ora ha accesso al DataProvider
+    ),
+  ),
+);
+        
     }
   }
   Future<void> _setOnboardingCompleted() async {
@@ -173,6 +185,7 @@ class _OnboardingState extends State<Onboarding> {
                       ElevatedButton(
                         onPressed: _submitForm,
                         child: Text('Save'),
+                        
                       ),
                     ]),
                  ),

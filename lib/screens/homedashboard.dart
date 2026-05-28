@@ -39,7 +39,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
   Widget build(BuildContext context) {
     
 
-   // Provider.of<ResultSwipe>(context, listen: false).saveBattery(currentPile);
+   
 
   return SafeArea(
       child: Padding(
@@ -63,7 +63,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             } else {
               currentPile = (currentEnergy / 0.1).round();
             }
-        
+        Provider.of<ResultSwipe>(context, listen: false).saveBattery(currentPile);
         return Column(
           children: [
             const SizedBox(height: 10),

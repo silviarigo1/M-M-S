@@ -74,6 +74,16 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
             ElevatedButton(
+              
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(200, 50), 
+                side: const BorderSide(
+                color: Colors.lightGreen, // Colore del bordino verde chiaro
+                width: 2.0,               // Spessore del bordino in pixel
+              ),
+              
+              ),
+              
               child: Text('Login'),
               onPressed: () async {
                     // check if credentials are correct
@@ -104,6 +114,7 @@ class LoginPage extends StatelessWidget {
                             builder: (context) => ChangeNotifierProvider<DataProvider>(
                             create: (context) => DataProvider(),
                             child: HomeScreen(),
+                            
                           ),
                           ),
                         );

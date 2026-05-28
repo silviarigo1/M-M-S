@@ -23,11 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
       "Profile",
     ];
     // List of pages
-    final List<Widget> pages = [
+    final List<Widget> pages = [/*
     ChangeNotifierProvider<DataProvider>(
       create: (context) => DataProvider(),
       builder:(context, child) => HomeDashboard(),
-    ),
+    ),*/
+    HomeDashboard(),
    
     TravelPage(),
     Profile(),
