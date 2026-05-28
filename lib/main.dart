@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
 import 'package:mms_app/providers/data_provider.dart';
-
-//import 'package:mms_app/screens/aim.dart';
-// import 'package:mms_app/screens/onboarding.dart';
-import 'screens/login.dart';
+import 'package:mms_app/screens/splash.dart';
 import 'package:provider/provider.dart';
-import 'screens/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   runApp(MyApp());
 }
@@ -27,7 +23,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Login Page',
-          home:  FutureBuilder(
+          home:  Splash(),
+          /*FutureBuilder(
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
           //If the instance is ready...
@@ -52,7 +49,7 @@ class MyApp extends StatelessWidget {
             );
           } //else
         },
-      ),   )
+      ),*/   )
     );
     
   }

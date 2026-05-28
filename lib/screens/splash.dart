@@ -4,8 +4,8 @@ import 'login.dart';
 import '../utils/impact.dart';
 
 
-class Temporary extends StatelessWidget {
-  const Temporary({Key? key}) : super(key: key);
+class Splash extends StatelessWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +13,13 @@ class Temporary extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Image.asset(
-      'assets/logo.png',
-      scale: 4,
+      'lib/images/impronta.png',
+      scale: 8,
     )));
   }
 
-  // Method for navigation SplashPage -> ExposurePage
-  void _toExposurePage(BuildContext context) {
+  // Method for navigation SplashPage -> HomePage
+  void _toHomePage(BuildContext context) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
   } 
@@ -35,7 +35,7 @@ class Temporary extends StatelessWidget {
   void _checkLogin(BuildContext context) async {
     final result = await Impact().refreshTokens();
     if (result == 200) {
-      _toExposurePage(context);
+      _toHomePage(context);
     } else {
       _toLoginPage(context);
     }
