@@ -1,7 +1,9 @@
+import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/homedashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/profilepage.dart';
 import 'package:mms_app/screens/travelpage.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     // List of pages
     final List<Widget> pages = [
-    HomeDashboard(),
+    ChangeNotifierProvider<DataProvider>(
+      create: (context) => DataProvider(),
+      builder:(context, child) => HomeDashboard(),
+    ),
+   
     TravelPage(),
     Profile(),
     ];

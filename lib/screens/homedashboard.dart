@@ -17,55 +17,54 @@ class HomeDashboard extends StatefulWidget {
 }
 
 class _HomeDashboardState extends State<HomeDashboard> {
-  double? _sleep;
-  final double _sleepGoal = 8;
-  double _stepGoal = 10000;
-  double _steps = 0;
   String? selectedCity;
   final impact = Impact();
+  double _stepGoal = 10000.0;
 
   @override
   void initState() {
     super.initState();
-    _sleep = Random().nextDouble() * _sleepGoal;
     _loadSettings();
   }
 
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
+      double _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
       
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Il widget ascolta il provider: appena cambiano i passi, si ridisegna da solo!
-    //final dataProvider = Provider.of<DataProvider>(context);
-    //final double currentSteps = (dataProvider.stepsTotal ?? 0).toDouble();
-    final double currentSteps = 1000;
-    final double currentStepGoal = _stepGoal;
-
-    double currentTiredness = (currentSteps / currentStepGoal) * (1 - (_sleep! / _sleepGoal));
-    currentTiredness = currentTiredness.clamp(0.0, 1.0);
-    double currentEnergy = 1 - currentTiredness;
-
-    int currentPile;
-    if (currentEnergy > 0.9) {
-      currentPile = 10;
-    } else if (currentEnergy < 0.15) {
-      currentPile = 1;
-    } else {
-      currentPile = (currentEnergy / 0.1).round();
-    }
+    
 
    // Provider.of<ResultSwipe>(context, listen: false).saveBattery(currentPile);
 
   return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
-        child: Column(
+        child: Consumer<DataProvider>(
+          builder: (context, dataProvider, child) {
+          
+          if (dataProvider.stepsTotal == 0 && dataProvider.sleepHours == 0.0) {
+              return const Center(child: CircularProgressIndicator());
+            }
+               
+            final double currentSteps = dataProvider.stepsTotal.toDouble();
+            final double currentTiredness = dataProvider.tiredness;
+            final double currentEnergy = 1 - currentTiredness;
+
+            int currentPile;
+            if (currentEnergy > 0.9) {
+              currentPile = 10;
+            } else if (currentEnergy < 0.15) {
+              currentPile = 1;
+            } else {
+              currentPile = (currentEnergy / 0.1).round();
+            }
+        
+        return Column(
           children: [
             const SizedBox(height: 10),
 
@@ -112,6 +111,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         ),
         const SizedBox(height: 30),
 
+      
         // 2. DROPDOWN CENTRATO E ICONA AIUTO A DESTRA
         // Usiamo uno Stack così il Dropdown è matematicamente al centro dello schermo
         SizedBox(
@@ -120,7 +120,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-             /* DropdownButton2<String>(
+              DropdownButton2<String>(
                 isExpanded: true,
                 buttonStyleData: ButtonStyleData(
                   height: 70,
@@ -167,7 +167,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     });
                   }
                 },
-              ),*/
+              ),
               // Posizioniamo l'icona aiuto a destra senza spostare il dropdown
               Positioned(
                 right: 80,
@@ -198,20 +198,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         ),
 
         const SizedBox(height: 60),
-
-        
-        ElevatedButton(
-                onPressed: () async {
-                  final result = await impact.requestData();
-                  print(result);
-                  final message =
-                      result == null ? 'Request failed' : 'Request successful';
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Get the data')),
-                
+               
 
         // 3. ROW DEI CERCHI (STEPS E TIREDNESS)
         Row(
@@ -229,11 +216,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       width: 150,
                       height: 150,
                       child: CircularProgressIndicator(
-                        value: (_steps! / currentStepGoal),
+                        
+                        value: (_stepGoal > 0) ? (currentSteps / _stepGoal) : 0,
                         strokeWidth: 15,
                         backgroundColor: Colors.grey.withOpacity(0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color.lerp(Colors.blue, Colors.green, (_steps / currentStepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                          Color.lerp(Colors.blue, Colors.green, (currentSteps / _stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
                         ),
                         strokeCap: StrokeCap.round,
                       ),
@@ -241,9 +229,9 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("${_steps.round()}",
+                        Text("${currentSteps.round()}",
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                        Text("${currentStepGoal.toInt()}",
+                        Text("${_stepGoal.toInt()}",
                             style: const TextStyle(fontSize: 12, color: Colors.grey)),
                       ],
                     ),
@@ -293,11 +281,14 @@ class _HomeDashboardState extends State<HomeDashboard> {
             ],
           )
       ],
-    ),
+    );
+          }
+    )
+          
   ),
-);
+);}  
   }
-  }
+  
 
 
 Widget emoji(int numPile) {

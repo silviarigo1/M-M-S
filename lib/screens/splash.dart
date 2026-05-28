@@ -14,7 +14,7 @@ class Splash extends StatelessWidget {
         body: Center(
             child: Image.asset(
       'lib/images/impronta.png',
-      scale: 8,
+      
     )));
   }
 
