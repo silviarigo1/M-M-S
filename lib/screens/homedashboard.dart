@@ -8,6 +8,7 @@ import 'package:mms_app/models/swipe.dart';
 import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/utils/impact.dart';
 import 'package:mms_app/screens/options.dart';
+import 'package:mms_app/widgets/batteries.dart';
 
 class HomeDashboard extends StatefulWidget {
   const HomeDashboard({super.key});
@@ -197,7 +198,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           ),
         ),
 
-        const SizedBox(height: 60),
+        const SizedBox(height: 30),
                
 
         // 3. ROW DEI CERCHI (STEPS E TIREDNESS)
@@ -271,13 +272,13 @@ class _HomeDashboardState extends State<HomeDashboard> {
             ),
           ],
         ),
-        const SizedBox(height: 60),
-        Row(
-            mainAxisSize: MainAxisSize.min, // Evita che la riga occupi tutto lo schermo
-            children: [
-              const Text('USER BATTERY: [', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              emoji(currentPile), // Qui Flutter disegnerà le icone vere e proprie
-              const Text(']', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 40),
+            
+        Column(
+          children: [
+            Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            WidgetEnergia(livelloEnergia: currentPile),
             ],
           )
       ],
@@ -291,7 +292,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
   
 
 
-Widget emoji(int numPile) {
+
+
+
+/*Widget emoji(int numPile) {
   return Row(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -304,4 +308,4 @@ Widget emoji(int numPile) {
         const Icon(Icons.battery_0_bar_rounded, color: Colors.grey),
     ],
   );
-}
+}*/
