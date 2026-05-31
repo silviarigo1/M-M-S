@@ -109,7 +109,7 @@ class _SuggestionState extends State<Suggestion> {
                   mainAxisSize: MainAxisSize.min,                
                   children: [
                   Text("Cost: ${Places.batt[indexDellaMeta]}"),
-                  const Icon(Icons.battery_2_bar_rounded, color: Color.fromARGB(255, 152, 37, 29), ),
+                  const Icon(Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 198, 40, 40), ),
                 ]),
               ),
               ),

@@ -86,19 +86,22 @@ class _OnboardingState extends State<Onboarding> {
   Widget build(BuildContext context) {
     return Scaffold(
       // SafeArea widget to avoid system UI overlaps
-      body: SafeArea(
+      body: Center(
+
         child: Stack(
           children: [Padding(
-            padding: const EdgeInsets.all(
-                16.0),
+            padding: const EdgeInsets.all(16.0),
             child: 
             SingleChildScrollView(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [              
+              child: Column( children: [              
                 // import the logo image from assets folder (make sure to add the folder in pubspec.yaml)
                 Image.asset(
-                  'lib/images/impronta.png',
-                  scale: 4,
-                  ),
+                 
+                  'lib/images/logonuovo.jpeg',
+                  alignment: Alignment.center,
+                  width: 80, // Larghezza desiderata
+                  height: 80,
+                ),
                 const SizedBox(
                       height: 30,
                     ),  
@@ -185,6 +188,13 @@ class _OnboardingState extends State<Onboarding> {
                       ElevatedButton(
                         onPressed: _submitForm,
                         child: Text('Save'),
+
+                        style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(50, 50), 
+                        side: const BorderSide(
+                        color: Colors.lightGreen, // Colore del bordino verde chiaro
+                        width: 2.0,               // Spessore del bordino in pixel
+                      ),),
                         
                       ),
                     ]),

@@ -12,7 +12,7 @@ class Splash extends StatelessWidget {
 @override
 Widget build(BuildContext context) {
   // Il tuo solito timer per cambiare pagina dopo 3 secondi
-  Future.delayed(const Duration(seconds: 3), () => _checkLogin(context));
+  Future.delayed(const Duration(seconds: 3, milliseconds: 200), () => _checkLogin(context));
 
   return Scaffold(
     body: Center(
@@ -38,7 +38,7 @@ Widget build(BuildContext context) {
             },
           ),
           // Il tuo logo fisso al centro
-          Image.asset('lib/images/impronta.png', width: 80),
+          Image.asset('lib/images/logonuovo.jpeg', height: 80, width: 80),
         ],
       ),
     ),

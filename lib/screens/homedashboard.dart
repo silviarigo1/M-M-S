@@ -39,9 +39,6 @@ class _HomeDashboardState extends State<HomeDashboard> {
   @override
   Widget build(BuildContext context) {
     
-
-   
-
   return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
@@ -186,7 +183,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text("Close"),
+                            child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
                           ),
                         ],
                       ),
@@ -278,7 +275,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           children: [
             Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
-            WidgetEnergia(livelloEnergia: currentPile),
+            WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
             ],
           )
       ],

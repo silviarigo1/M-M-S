@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './places.dart';
-
+import '../widgets/batteries.dart';
 /*class TravelCard {
   List<Container> cards = [
   Container(
@@ -742,7 +742,7 @@ class TravelCard {
                   ),
                 ),
                   SizedBox(width: 8), 
-                  emoji(Places.mapDest["pile"]![i]), 
+                  //emoji(Places.mapDest["pile"]![i]), 
                 ],
               ),
             ),
@@ -773,8 +773,16 @@ class TravelCard {
                 ),
               ),
             ),
-            const Divider(),
+            const Divider(
+              height: 15,
+            ),
+            /*WidgetEnergia(
+              livelloEnergia: Places.mapDest["pile"]![i], 
+              livelloMassimo: 3,
+            ),*/
             emoji(Places.mapDest["pile"]![i]),
+            SizedBox(height: 8),
+            
           ],
         ),
       ),
@@ -790,7 +798,7 @@ class TravelCard {
 
 Widget emoji(int numPile) {
   // Definiamo l'icona base per non doverla riscrivere mille volte
-  const batteryIcon = Icon(Icons.battery_2_bar_rounded, color: Color.fromARGB(255, 152, 37, 29));
+  const batteryIcon = Icon(Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 198, 40, 40));
 
   return Row(
     mainAxisSize: MainAxisSize.min, // Fondamentale per non occupare tutta la riga
