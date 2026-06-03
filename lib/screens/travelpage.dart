@@ -3,6 +3,8 @@ import 'package:mms_app/models/places.dart';
 import 'package:mms_app/screens/suggestion.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
+import 'package:nps_survey/nps_survey.dart';
+
 
 
 
@@ -152,7 +154,18 @@ class TravelPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const Suggestion()),
-                          );
+                          ).then((_) {
+                            // 2. Al ritorno, mostriamo il sondaggio con la sintassi esatta di pub.dev
+                            NPSSurvey().showNPSDialog(
+                              context: context,
+                              callback: (feedback, score) {
+                                // feedback contiene il testo scritto dall'utente
+                                // score contiene il voto numerico da 0 a 10
+                                print('Commento dell\'utente: $feedback');
+                                print('Voto dell\'utente: $score');
+                              },
+                            );
+                          });
                         },
                         child: const Text('START'))
                         
