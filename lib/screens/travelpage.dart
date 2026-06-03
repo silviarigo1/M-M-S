@@ -91,19 +91,23 @@ class TravelPage extends StatelessWidget {
                                             ),
                                           ),
                                           trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                          Text(
-                                            "${Places.batt[indexOriginale]} ",
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14, 
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            mainAxisSize: MainAxisSize.min,   
+                                            children: [ 
+                                              // Testo dinamico
+                                              Text(Places.batt[indexOriginale] == -1 
+                                                ? '+1' 
+                                                : "${Places.batt[indexOriginale]}"
+                                              ),
+                                              // Icona con colore dinamico
+                                              Icon(
+                                                Icons.battery_charging_full_outlined, 
+                                                color: Places.batt[indexOriginale] == -1
+                                                  ? const Color.fromARGB(255, 82, 198, 40)  // Verde
+                                                  : const Color.fromARGB(255, 198, 40, 40), // Rosso
+                                              ),
+                                            ],
                                           ),
-                                          const Icon(
-                                              Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 198, 40, 40),),
-                                          ],)
+                                          
                                         ),
                                       );
                                     },

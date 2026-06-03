@@ -24,7 +24,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
   @override
   Widget build(BuildContext context) {
     
-  return SafeArea(
+  return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
         child: Consumer<DataProvider>(
