@@ -16,13 +16,13 @@ class _AimsState extends State<Aims> {
 @override
   void initState() {
     super.initState();
-    _loadSteps(); // Carica i dati salvati quando apri la pagina
+    _loadStepsAim(); // Carica i dati salvati quando apri la pagina
   }
 
-  Future<void> _loadSteps() async {
+  Future<void> _loadStepsAim() async {
     final sp = await SharedPreferences.getInstance();
     setState(() {
-      _stepsAimController.text = sp.getString('StepsAim') ?? '';
+      _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
     });
   }
 
@@ -52,11 +52,13 @@ class _AimsState extends State<Aims> {
               onPressed: () async {
               final sharedPreferences = await SharedPreferences.getInstance();
               if (_stepsAimController.text.isNotEmpty) {
-                await sharedPreferences.setString('Steps Aim', _stepsAimController.text);
+                await sharedPreferences.setInt('StepsAim', int.parse(_stepsAimController.text));
               }
-               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Well done!")),
-              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Well done!"),
+                                  backgroundColor: Colors.green, 
+                                  behavior: SnackBarBehavior.floating,),);
+              Navigator.pop(context);
             },)
           ],
        )));// Fine AppBar

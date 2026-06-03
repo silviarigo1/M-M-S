@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mms_app/screens/profilepage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -148,8 +149,10 @@ class _AccountState extends State<Account> {
               }
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Well done!")),
-              );
+                          SnackBar(content: Text("Well done!"),
+                                  backgroundColor: Colors.green, 
+                                  behavior: SnackBarBehavior.floating,),);
+              Navigator.pop(context);
             })
           ]
         )

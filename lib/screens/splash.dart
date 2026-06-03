@@ -7,8 +7,6 @@ import '../utils/impact.dart';
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
-  @override
-  @override
 @override
 Widget build(BuildContext context) {
   // Il tuo solito timer per cambiare pagina dopo 3 secondi
@@ -16,9 +14,11 @@ Widget build(BuildContext context) {
 
   return Scaffold(
     body: Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [ Stack(
+          alignment: Alignment.center,
+          children: [
           // Il costruttore che ascolta il flusso del tempo
           StreamBuilder<double>(
             // Questo comando crea un flusso che dura 3 secondi e aggiorna il valore continuamente
@@ -39,10 +39,19 @@ Widget build(BuildContext context) {
           ),
           // Il tuo logo fisso al centro
           Image.asset('lib/images/logonuovo.jpeg', height: 80, width: 80),
+        
+
+        ]
+      ),
+    
+      SizedBox(height: 20),
+      Text('WELCOME TO MMS TRIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green)),
         ],
       ),
     ),
+
   );
+  
 }
 
   // Method for navigation SplashPage -> HomePage

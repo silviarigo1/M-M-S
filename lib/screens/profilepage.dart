@@ -7,12 +7,15 @@ import 'package:profile_view/profile_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
   //final TextEditingController _nameController = TextEditingController();
   //final TextEditingController _surnameController = TextEditingController();
-
+@override 
+State<Profile> createState() => _ProfileState();
+}
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     
@@ -101,9 +104,10 @@ class Profile extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       child: ListTile(
-                        onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  Account()),
+                        onTap: () async {
+                            await Navigator.push(context, MaterialPageRoute(builder: (context) =>  Account()),
                             );
+                            setState((){});
                           },
                         leading: const Icon(
                           Icons.person,

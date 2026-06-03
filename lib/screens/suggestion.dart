@@ -106,11 +106,22 @@ class _SuggestionState extends State<Suggestion> {
                   ),
                   title: Text("${Places.mapDest["title"]![indexDellaMeta]}"),
                 subtitle: Row(
-                  mainAxisSize: MainAxisSize.min,                
-                  children: [
-                  Text("Cost: ${Places.batt[indexDellaMeta]}"),
-                  const Icon(Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 198, 40, 40), ),
-                ]),
+                  mainAxisSize: MainAxisSize.min,   
+                  children: [ 
+                    // Testo dinamico
+                    Text(Places.batt[indexDellaMeta] == -1 
+                      ? '+1' 
+                      : "Cost: ${Places.batt[indexDellaMeta]}"
+                    ),
+                    // Icona con colore dinamico
+                    Icon(
+                      Icons.battery_charging_full_outlined, 
+                      color: Places.batt[indexDellaMeta] == -1
+                        ? const Color.fromARGB(255, 82, 198, 40)  // Verde
+                        : const Color.fromARGB(255, 198, 40, 40), // Rosso
+                    ),
+                  ],
+                ),
               ),
               ),
               );

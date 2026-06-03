@@ -20,21 +20,6 @@ class HomeDashboard extends StatefulWidget {
 class _HomeDashboardState extends State<HomeDashboard> {
   String? selectedCity;
   final impact = Impact();
-  double _stepGoal = 10000.0;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      double _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
-      
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,34 +60,44 @@ class _HomeDashboardState extends State<HomeDashboard> {
               if (snapshot.hasData) {
                 final sharedPreferences = snapshot.data!;
                 if (sharedPreferences.getString('Name') != null) {
-                  return Text(
-                    '👋 Hello ${sharedPreferences.getString('Name')}',
+                  return Row(
+                    children: [
+                      Image.asset("lib/images/mms.png", width: 45, height: 45),
+                      Text(
+                    'Hello ${sharedPreferences.getString('Name')}',
                     style: const TextStyle(
                       fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
-            );
+            )]);
+            
                 } else {
-                  return const Text(
-                    '👋 Hello user',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                  return Row( 
+                    children: [
+                      Image.asset("lib/images/mms.png", width: 45, height: 45),
+                      Text(
+                        'Hello user',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
-                  );
+                  )]);
                 }
               }
               else {
-                return const Text(
-                  '👋 Hello user',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                );
+                return Row( 
+                    children: [
+                      Image.asset("lib/images/mms.png", width: 45, height: 45),
+                      Text(
+                        'Hello user',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  )]);
               }
           }
          ),
@@ -207,7 +202,16 @@ class _HomeDashboardState extends State<HomeDashboard> {
               children: [
                 const Text("Steps", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 20),
-                Stack(
+                FutureBuilder( future: SharedPreferences.getInstance(),
+                builder: (context, snapshot) {
+                  int stepGoal = 10000;
+                  if (snapshot.hasData) {
+                    final sharedPreferences = snapshot.data!;
+                    stepGoal = sharedPreferences.getInt('StepsAim') ?? 10000;
+                  }
+                  
+                
+                return Stack(
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
@@ -215,11 +219,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       height: 150,
                       child: CircularProgressIndicator(
                         
-                        value: (_stepGoal > 0) ? (currentSteps / _stepGoal) : 0,
+                        value: (stepGoal > 0) ? (currentSteps / stepGoal) : 0,
                         strokeWidth: 15,
                         backgroundColor: Colors.grey.withOpacity(0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color.lerp(Colors.blue, Colors.green, (currentSteps / _stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                          Color.lerp(Colors.blue, Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
                         ),
                         strokeCap: StrokeCap.round,
                       ),
@@ -229,11 +233,13 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       children: [
                         Text("${currentSteps.round()}",
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                        Text("${_stepGoal.toInt()}",
+                        Text("${stepGoal.toInt()}",
                             style: const TextStyle(fontSize: 12, color: Colors.grey)),
                       ],
                     ),
                   ],
+                );
+                },
                 ),
               ],
             ),
