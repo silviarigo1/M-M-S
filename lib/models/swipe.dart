@@ -57,7 +57,7 @@ class ResultSwipe extends ChangeNotifier{
   void savePlaces() {
     if (swipes.isNotEmpty) {
       Trip newtrip = Trip(
-        title: "Trip to ${selectedCity} ${trips.length + 1}", // Titolo dinamico basato sulla città e sul numero di viaggi
+        title: "Trip to $selectedCity ${trips.length + 1}", // Titolo dinamico basato sulla città e sul numero di viaggi
         destinations: List.from(swipes),
         indices: List.from(savedIndices),
       );
@@ -79,7 +79,7 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
-  void TrashDest(int index) {
+  void trashDest(int index) {
     int originalIndex = savedIndices[index];
     swipes.removeAt(index);
     savedIndices.removeAt(index);

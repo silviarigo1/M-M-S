@@ -222,8 +222,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         
                         value: (stepGoal > 0) ? (currentSteps / stepGoal) : 0,
                         strokeWidth: 15,
-                        // ignore: deprecated_member_use
-                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        backgroundColor: Colors.grey.withValues(alpha: 0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           Color.lerp(Colors.blue, Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
                         ),
@@ -261,7 +260,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         // ignore: deprecated_member_use
                         value: currentTiredness,
                         strokeWidth: 15,
-                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        backgroundColor: Colors.grey.withValues(alpha: 0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           Color.lerp(Colors.green, Colors.red, currentTiredness) ?? Colors.green,
                         ),

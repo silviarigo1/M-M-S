@@ -15,10 +15,10 @@ class MetaCardItem extends StatefulWidget {
   });
 
   @override
-  State<MetaCardItem> createState() => _MetaCardItemState();
+  State<MetaCardItem> createState() => MetaCardItemState();
 }
 
-class _MetaCardItemState extends State<MetaCardItem> {
+class MetaCardItemState extends State<MetaCardItem> {
   // Ogni riga memorizza qui dentro se è stata cliccata o meno
   bool _isCompleted = false; 
   @override

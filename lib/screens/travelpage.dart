@@ -76,7 +76,7 @@ class TravelPage extends StatelessWidget {
                                         margin: EdgeInsets.zero,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(15)),
-                                        color: Colors.white.withOpacity(0.9),
+                                        color: Colors.white.withValues(alpha: 0.9),
                                         child: ListTile(
                                           leading: const Icon(
                                             Icons.pin_drop,
@@ -118,7 +118,7 @@ class TravelPage extends StatelessWidget {
                                         child: Container(
                                           width: 2,
                                           height: 20, 
-                                          color: Colors.lightGreen.withOpacity(0.4),
+                                          color: Colors.lightGreen.withValues(alpha: 0.4),
                                         ),
                                       );
                                     },

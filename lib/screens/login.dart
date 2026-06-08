@@ -18,16 +18,21 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('${LoginPage.routename} built');
     return Scaffold(
-      appBar: AppBar(
-        title: Text(LoginPage.routename, style: TextStyle(fontWeight: FontWeight.bold),),
-        centerTitle: true,
-        backgroundColor: Colors.lightGreen,
-        
-      ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'M&MS Trip',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+                height: 40,
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:100.0),
               child: Column(children: [

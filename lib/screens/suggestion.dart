@@ -169,7 +169,7 @@ class _SuggestionState extends State<Suggestion> {
   }
 }
 
-List<int> Proposte(Trip viaggio, int dispPile) {
+List<int> proposte(Trip viaggio, int dispPile) {
   List<int> shuffled = List.from(viaggio.indices);
   shuffled.shuffle();
   List<int> selected = [];
@@ -190,7 +190,7 @@ List<int> Proposte(Trip viaggio, int dispPile) {
 
 }*/
 
-import '../models/metaCard.dart';
+import '../models/meta_card.dart';
 
 class Suggestion extends StatefulWidget {
   const Suggestion({super.key});
@@ -227,7 +227,7 @@ class _SuggestionState extends State<Suggestion> {
           
           final trip = provider.currentTrip;
           
-          List<int> indiciSelezionati = Proposte(trip!, dispPile);
+          List<int> indiciSelezionati = proposal(trip!, dispPile);
           double hours = 0;
           for (int index in indiciSelezionati) {
             hours = hours + Places.mapDest["hours"]![index];
@@ -280,7 +280,7 @@ class _SuggestionState extends State<Suggestion> {
                       child: Container(
                         width: 2,
                         height: 30, 
-                        color: Colors.lightGreen.withOpacity(0.4),
+                        color: Colors.lightGreen.withValues(alpha: 0.4),
                       ),
                     );
                   },
@@ -295,18 +295,18 @@ class _SuggestionState extends State<Suggestion> {
 }
 
 // --- FUNZIONE LOGICA ALGORITMO ---
-List<int> Proposte(Trip viaggio, int dispPile) {
+List<int> proposal(Trip viaggio, int dispPile) {
   List<int> shuffled = List.from(viaggio.indices);
   final randomconSeed = Random(42);
   shuffled.shuffle(randomconSeed);
   List<int> selected = [];
   int pileUsate = 0;
-  double Tothours = 0;
+  double tothours = 0;
   
   for (var dest in shuffled) {
-    if (pileUsate + Places.batt[dest] <= dispPile && Tothours + Places.mapDest["hours"]![dest] <= 12) {
+    if (pileUsate + Places.batt[dest] <= dispPile && tothours + Places.mapDest["hours"]![dest] <= 12) {
       selected.add(dest);
-      Tothours = Tothours + Places.mapDest["hours"]![dest];
+      tothours = tothours + Places.mapDest["hours"]![dest];
       pileUsate += Places.batt[dest];
     }
     if (pileUsate == dispPile) break;

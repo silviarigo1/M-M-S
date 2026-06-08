@@ -5,10 +5,10 @@ class Aims extends StatefulWidget {
   const Aims({super.key});
 
   @override
-  _AimsState createState() => _AimsState();
+  AimsState createState() => AimsState();
 }
 
-class _AimsState extends State<Aims> {
+class AimsState extends State<Aims> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _stepsAimController = TextEditingController();
   final sharedPreferences = SharedPreferences.getInstance();

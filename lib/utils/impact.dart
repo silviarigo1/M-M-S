@@ -88,7 +88,7 @@ Future<List<Steps>?> requestData() async {
 
     //Create the (representative) request
     final day = '2024-05-04';
-    final url = Impact.baseUrl + Impact.stepsEndpoint + Impact.patientUsername + '/day/$day/';
+    final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response

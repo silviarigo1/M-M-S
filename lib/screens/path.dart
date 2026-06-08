@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 
 class Choices extends StatefulWidget {
-  Choices({Key? key}) : super(key: key);
+  const Choices({Key? key}) : super(key: key);
 
   static const routename = "Choices";
 
@@ -66,7 +66,7 @@ class _ChoicesState extends State<Choices> {
                           ),
                           onPressed: () {
                             
-                            setState(() {number.TrashDest(destIndex);});
+                            setState(() {number.trashDest(destIndex);});
                             ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Destination removed!")),);
                           }
@@ -83,7 +83,7 @@ class _ChoicesState extends State<Choices> {
                       child: Container(
                         width: 2,
                         height: 30,
-                        color: Colors.lightGreen.withOpacity(0.4),
+                        color: Colors.lightGreen.withValues(alpha: 0.4),
                       ),
                     ); 
                   },
