@@ -9,7 +9,7 @@ class Aims extends StatefulWidget {
 }
 
 class _AimsState extends State<Aims> {
-
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _stepsAimController = TextEditingController();
   final sharedPreferences = SharedPreferences.getInstance();
 
@@ -26,6 +26,7 @@ class _AimsState extends State<Aims> {
     });
   }
 
+@override
     Widget build(BuildContext context) {
      return   Scaffold(
       appBar: AppBar(
@@ -36,20 +37,31 @@ class _AimsState extends State<Aims> {
         centerTitle: true,
         backgroundColor: Colors.lightGreen,
       ),
-      body: SingleChildScrollView(
+      body: Form(
+        key: _formKey, // Colleghiamo la chiave al Form
+        child:  SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _stepsAimController, 
-              keyboardType: TextInputType.number, // Tastierino numerico
-              decoration: const InputDecoration(labelText: "Daily step goal"),
-            ),
+            TextFormField(
+                        controller: _stepsAimController,
+                        decoration: InputDecoration(labelText: 'Steps Aim', border: OutlineInputBorder()),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter steps aim';
+                          }
+                          if (int.tryParse(value) == null) {
+                            return 'Invalid format';
+                          }
+                          return null;
+                        },
+                      ),
                         
             SizedBox(height: 20),
             ElevatedButton(
              child: Text("Save"),
               onPressed: () async {
+              if (_formKey.currentState!.validate()) {
               final sharedPreferences = await SharedPreferences.getInstance();
               if (_stepsAimController.text.isNotEmpty) {
                 await sharedPreferences.setInt('StepsAim', int.parse(_stepsAimController.text));
@@ -59,9 +71,10 @@ class _AimsState extends State<Aims> {
                                   backgroundColor: Colors.green, 
                                   behavior: SnackBarBehavior.floating,),);
               Navigator.pop(context);
-            },)
+            };}
+            )
           ],
-       )));// Fine AppBar
+       ))));// Fine AppBar
 
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mms_app/providers/data_provider.dart';
 import 'package:provider/provider.dart';
@@ -118,6 +119,9 @@ class _OnboardingState extends State<Onboarding> {
                     children:[
                       TextFormField(
                         controller: _nameController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r"[a-zA-ZàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚùûüÿÝ\s']")),
+                        ],
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -137,6 +141,9 @@ class _OnboardingState extends State<Onboarding> {
                       ),
                       TextFormField(
                         controller: _surnameController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r"[a-zA-ZàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚùûüÿÝ\s']")),
+                        ],
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -147,7 +154,7 @@ class _OnboardingState extends State<Onboarding> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your surname';
-                          }
+                          } 
                           return null;
                         },
                       ),
@@ -182,7 +189,15 @@ class _OnboardingState extends State<Onboarding> {
                        TextFormField(
                         controller: _stepsAimController,
                         decoration: InputDecoration(labelText: 'Steps Aim', border: OutlineInputBorder()),
-                        validator: (value) => value == null || value.isEmpty ? 'Please enter steps aim' : null,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter steps aim';
+                          }
+                          if (int.tryParse(value) == null) {
+                            return 'Invalid format';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 24),
                       ElevatedButton(

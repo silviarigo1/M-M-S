@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mms_app/screens/profilepage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,18 +76,36 @@ class _AccountState extends State<Account> {
 
             return Column(
               children: [*/
-                TextField(controller: _nameController, decoration: InputDecoration(labelText: "Name")),
+                TextFormField(controller: _nameController, 
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r"[a-zA-ZàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚùûüÿÝ\s']")),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                decoration: InputDecoration(labelText: "Name")),
                             
-                TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Surname", 
-                              )),
-                SizedBox(    height: 15,
-              ),
-                TextField(controller: _dateController, readOnly: true,
+                TextFormField(controller: _surnameController, 
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r"[a-zA-ZàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚùûüÿÝ\s']")),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your surname';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(labelText: "Surname",  )),
+                SizedBox(    height: 15,),
+                TextFormField(controller: _dateController, readOnly: true,
                         decoration: const InputDecoration(labelText: 'Date of birth', border: OutlineInputBorder()),
                         onTap: () async {
                           DateTime? picked = await showDatePicker(
                             context: context,
-                            initialDate: DateTime(2000),
+                            initialDate: DateTime(2002),
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now(),
                           );

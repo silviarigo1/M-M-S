@@ -23,6 +23,14 @@ class ResultSwipe extends ChangeNotifier{
   String selectedCity = "";
   int selectedIndexCity = 0;
 
+  Trip? _selectedTripData;
+  Trip? get currentTrip => _selectedTripData;
+
+  void startTrip(Trip trip) {
+    _selectedTripData = trip;
+    notifyListeners();
+  }
+
   void setSelectedCity(String city) {
     selectedCity = city;
     notifyListeners(); // Avvisa tutti che la città è cambiata
@@ -49,7 +57,7 @@ class ResultSwipe extends ChangeNotifier{
   void savePlaces() {
     if (swipes.isNotEmpty) {
       Trip newtrip = Trip(
-        title: "Trip to ${selectedCity}",
+        title: "Trip to ${selectedCity} ${trips.length + 1}", // Titolo dinamico basato sulla città e sul numero di viaggi
         destinations: List.from(swipes),
         indices: List.from(savedIndices),
       );
@@ -62,6 +70,15 @@ class ResultSwipe extends ChangeNotifier{
     }
     
   }
+
+  void clearSwipes() {
+    swipes.clear();
+    savedIndices.clear();
+    nonSavedIndices.clear();
+    nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index);
+    notifyListeners();
+  }
+
   void TrashDest(int index) {
     int originalIndex = savedIndices[index];
     swipes.removeAt(index);

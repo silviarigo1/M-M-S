@@ -154,8 +154,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       if (context.mounted) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Options()),
+                          MaterialPageRoute(builder: (context) => Options())
                         );
+                          Provider.of<ResultSwipe>(context, listen: false).clearSwipes();
+                        
                       }
                     });
                   }

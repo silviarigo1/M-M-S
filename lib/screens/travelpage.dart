@@ -154,7 +154,7 @@ class TravelPage extends StatelessWidget {
                               width: 2,            // Spessore del bordo
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () { provider.startTrip(trip);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const Suggestion()),

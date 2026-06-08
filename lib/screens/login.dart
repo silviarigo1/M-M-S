@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/home.dart';
 import 'package:mms_app/screens/onboarding.dart';
+import 'package:mms_app/screens/presentation.dart';
 import 'package:mms_app/utils/impact.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,7 +103,7 @@ class LoginPage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => ChangeNotifierProvider<DataProvider>(
                             create: (context) => DataProvider(),
-                            child: Onboarding(),
+                            child: PresentationPage(),
                           ),
                         ),
                       );

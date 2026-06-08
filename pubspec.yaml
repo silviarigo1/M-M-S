@@ -87,6 +87,9 @@ flutter:
     - lib/images/scarica.png
     - lib/images/simbolo_padova.png
     - lib/images/mms.png
+    - lib/images/screen1.png
+    - lib/images/screen2.png
+   # - lib/images/screen3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

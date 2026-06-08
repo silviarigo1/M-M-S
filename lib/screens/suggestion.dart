@@ -225,9 +225,9 @@ class _SuggestionState extends State<Suggestion> {
           int currentPile = provider.currentBattery;
           int dispPile = currentPile - 1;
           
-          final trip = provider.trips[0];
+          final trip = provider.currentTrip;
           
-          List<int> indiciSelezionati = Proposte(trip, dispPile);
+          List<int> indiciSelezionati = Proposte(trip!, dispPile);
           double hours = 0;
           for (int index in indiciSelezionati) {
             hours = hours + Places.mapDest["hours"]![index];

@@ -108,6 +108,14 @@ class _ChoicesState extends State<Choices> {
         const SizedBox(height: 20),
         FloatingActionButton(
         onPressed: () {
+          if (Provider.of<ResultSwipe>(context, listen: false).savedIndices.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Please select at least one destination!"),
+                      backgroundColor: Colors.red, 
+                      behavior: SnackBarBehavior.floating,),
+            );
+             // Non procedere se non ci sono destinazioni
+          }
           Provider.of<ResultSwipe>(context, listen: false).savePlaces();
           
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
@@ -146,7 +154,7 @@ void _showDestinationsPopup(BuildContext context) {
               : ListView.builder(
                   shrinkWrap: true,
                   itemCount: resultSwipe.nonSavedIndices.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (context2, index) {
                     // Recuperiamo l'indice originale dalla lista dei non salvati
                     int indexOriginale = resultSwipe.nonSavedIndices[index];
                     String nomePosto = Places.mapDest["title"]![indexOriginale];
@@ -179,7 +187,7 @@ void _showDestinationsPopup(BuildContext context) {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
           ),
         ],

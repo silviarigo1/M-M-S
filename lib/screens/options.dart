@@ -47,7 +47,7 @@ class Options extends StatelessWidget {
             }
             if (previousIndex == carte.length -1) {
               Future.delayed(Duration.zero, () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Choices()),
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Choices()),
                 );
               });
             }
