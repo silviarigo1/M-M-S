@@ -35,7 +35,7 @@ class _PresentationPageState extends State<PresentationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             // L'area sacrificata alla PageView deve essere flessibile (Expanded)
