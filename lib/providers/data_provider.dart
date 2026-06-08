@@ -71,6 +71,7 @@ Future<List<Sleep>?> requestSleepData() async {
     }
 
     final day = '2024-02-14'; 
+    // ignore: prefer_interpolation_to_compose_strings
     final url = Impact.baseUrl + Impact.sleepEndpoint + Impact.patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -95,7 +96,7 @@ Future<List<Sleep>?> requestSleepData() async {
       if (sleepRecords.isNotEmpty) {
           // Se la tua classe ha il campo minutesAsleep (es. int o double)
           // Sommiamo tutti i minuti se ci sono più sessioni nello stesso giorno
-          int totalMinutes = sleepRecords.fold(0, (sum, item) => sum + (item.minutesAsleep ?? 0).toInt());
+          int totalMinutes = sleepRecords.fold(0, (sum, item) => sum + (item.minutesAsleep).toInt());
           sleepHours = totalMinutes / 60.0;
         } else {
           sleepHours = 0.0;

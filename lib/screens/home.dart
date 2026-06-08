@@ -1,9 +1,7 @@
-import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/homedashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/profilepage.dart';
 import 'package:mms_app/screens/travelpage.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

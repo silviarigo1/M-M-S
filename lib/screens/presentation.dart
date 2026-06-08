@@ -35,7 +35,7 @@ class _PresentationPageState extends State<PresentationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: [
             // L'area sacrificata alla PageView deve essere flessibile (Expanded)
@@ -56,7 +56,7 @@ class _PresentationPageState extends State<PresentationPage> {
                           height: 300,
                           fit: BoxFit.contain,
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 24),
                         // Titolo
                         Text(
                           _slides[index]["title"]!,
@@ -67,7 +67,7 @@ class _PresentationPageState extends State<PresentationPage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 10),
                         // Descrizione
                         Text(
                           _slides[index]["desc"]!,

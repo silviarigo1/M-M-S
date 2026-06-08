@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
 import 'package:mms_app/screens/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 

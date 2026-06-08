@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/home.dart';
-import 'package:mms_app/screens/onboarding.dart';
 import 'package:mms_app/screens/presentation.dart';
 import 'package:mms_app/utils/impact.dart';
 import 'package:provider/provider.dart';

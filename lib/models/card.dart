@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import './places.dart';
-import '../widgets/batteries.dart';
-
 
 class TravelCard {
   
@@ -15,7 +13,7 @@ class TravelCard {
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               blurRadius: 25,
               spreadRadius: 5,
               offset: Offset(0, 0),

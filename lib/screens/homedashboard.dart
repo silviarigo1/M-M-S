@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -223,6 +222,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         
                         value: (stepGoal > 0) ? (currentSteps / stepGoal) : 0,
                         strokeWidth: 15,
+                        // ignore: deprecated_member_use
                         backgroundColor: Colors.grey.withOpacity(0.3),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           Color.lerp(Colors.blue, Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
@@ -258,6 +258,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       width: 150,
                       height: 150,
                       child: CircularProgressIndicator(
+                        // ignore: deprecated_member_use
                         value: currentTiredness,
                         strokeWidth: 15,
                         backgroundColor: Colors.grey.withOpacity(0.3),

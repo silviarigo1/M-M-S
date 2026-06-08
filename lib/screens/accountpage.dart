@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mms_app/screens/profilepage.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
-
-
-
 
 class Account extends StatefulWidget {
   const Account({super.key});
 
   @override
-  _AccountState createState() => _AccountState();
+  AccountState createState() => AccountState();
 }
 
-class _AccountState extends State<Account> {
+class AccountState extends State<Account> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -49,7 +43,7 @@ class _AccountState extends State<Account> {
         }
     });
   }
-
+    @override
     Widget build(BuildContext context) {
      return   Scaffold(
       appBar: AppBar(

@@ -58,7 +58,7 @@ class TravelPage extends StatelessWidget {
                                     // --- TRASPARENTINO ---
                                     // Questo filtro applica il bianco con un'opacità dello 0.15 (85% trasparente)
                                     colorFilter: ColorFilter.mode(
-                                      Colors.white.withOpacity(0.40), 
+                                      Colors.white.withValues(alpha: 0.40), 
                                       BlendMode.dstATop,
                                     ),
                                   ),
