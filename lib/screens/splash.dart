@@ -45,7 +45,7 @@ Widget build(BuildContext context) {
       ),
     
       SizedBox(height: 20),
-      Text('WELCOME TO MMS TRIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green)),
+      Text('WELCOME TO MMS TRIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.lightGreen)),
         ],
       ),
     ),
