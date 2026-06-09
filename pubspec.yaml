@@ -42,6 +42,7 @@ dependencies:
   jwt_decoder: 
   intl:
   nps_survey: ^1.3.1
+  
 
 dev_dependencies:
   flutter_test:

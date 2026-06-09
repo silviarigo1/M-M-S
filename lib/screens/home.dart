@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body:         
           pages[selectedIndex],
       bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: selectedIndex,
         // When user taps an item
         onDestinationSelected: (int index) {
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         destinations: [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home_outlined,),
             selectedIcon: Icon(Icons.home),
             label: "Home",
           ),

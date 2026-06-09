@@ -95,9 +95,9 @@ class _ChoicesState extends State<Choices> {
         children:[
           FloatingActionButton(
             mini: true,
-        
+            tooltip: "Add more destinations",
         onPressed: () {
-    _showDestinationsPopup(context); // Chiamata alla funzione che crea il popup
+    _showDestinationsPopup(context); 
   },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
@@ -113,10 +113,10 @@ class _ChoicesState extends State<Choices> {
                       backgroundColor: Colors.red, 
                       behavior: SnackBarBehavior.floating,),
             );
-             // Non procedere se non ci sono destinazioni
+             
           }
           Provider.of<ResultSwipe>(context, listen: false).savePlaces();
-          
+          // guarda qui il push and remove 
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Trip saved!"),
@@ -147,38 +147,30 @@ void _showDestinationsPopup(BuildContext context) {
         title: const Text("Destination not selected"),
         content: SizedBox(
           width: double.maxFinite,
-          // Usiamo nonSavedIndices per la logica del popup
+          
           child: resultSwipe.nonSavedIndices.isEmpty
               ? const Text("You selected all destinations!")
               : ListView.builder(
                   shrinkWrap: true,
                   itemCount: resultSwipe.nonSavedIndices.length,
                   itemBuilder: (context2, index) {
-                    // Recuperiamo l'indice originale dalla lista dei non salvati
+                    
                     int indexOriginale = resultSwipe.nonSavedIndices[index];
                     String nomePosto = Places.mapDest["title"]![indexOriginale];
 
                     return ListTile(
                       leading: const Icon(Icons.pin_drop, color: Colors.lightGreen),
                       title: Text(nomePosto),
-                      subtitle: const Text("Tap to add"), // Opzionale
+                      subtitle: const Text("Tap to add"), 
                       onTap: () {
-                        
+
                         resultSwipe.saveIndex(indexOriginale);
-    
-   
+
                         resultSwipe.saveSwipe(Container(
                           child: Text(nomePosto),
                         ));
 
-                        
                         Navigator.pop(dialogContext);
-
-                        
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("$nomePosto added!"),
-                                  backgroundColor: Colors.green, 
-                                  behavior: SnackBarBehavior.floating,),);
                       },
                     );
                   },

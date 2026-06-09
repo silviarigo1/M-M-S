@@ -104,8 +104,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         const SizedBox(height: 30),
 
       
-        // 2. DROPDOWN CENTRATO E ICONA AIUTO A DESTRA
-        // Usiamo uno Stack così il Dropdown è matematicamente al centro dello schermo
+        
         SizedBox(
           width: double.infinity,
           height: 70,

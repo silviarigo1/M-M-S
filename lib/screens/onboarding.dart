@@ -7,7 +7,7 @@ import 'home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Onboarding extends StatefulWidget {
-  Onboarding({Key? key}) : super(key: key);
+  const Onboarding({super.key});
 
   @override
   State<Onboarding> createState() => _OnboardingState();

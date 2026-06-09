@@ -18,6 +18,7 @@ class Impact{
   static String stepsEndpoint = 'data/v1/steps/patients/';
   static String sleepEndpoint = 'data/v1/sleep/patients/';
   static String patientUsername = 'Jpefaq6m58';
+  
 
 //This method allows to refresh the stored JWT in SharedPreferences
   Future<int> refreshTokens() async {

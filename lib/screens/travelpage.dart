@@ -5,9 +5,6 @@ import 'package:provider/provider.dart';
 import '../models/swipe.dart';
 import 'package:nps_survey/nps_survey.dart';
 
-
-
-
 class TravelPage extends StatelessWidget {
   const TravelPage({super.key});
 

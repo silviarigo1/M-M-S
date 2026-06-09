@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   static const routename = 'M&MS Trip';
   final TextEditingController userController = TextEditingController();
@@ -125,7 +125,7 @@ class LoginPage extends StatelessWidget {
                         );
                       }
                       } else {
-                  // If incorrect, show a SnackBar with an error message
+                
                   ScaffoldMessenger.of(context)
                   ..removeCurrentSnackBar()
                   ..showSnackBar(const SnackBar(
