@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mms_app/models/heart.dart';
 import 'package:mms_app/models/steps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,7 @@ class Impact{
   static String tokenEndpoint = 'gate/v1/token/';
   static String refreshEndpoint = 'gate/v1/refresh/';
   static String stepsEndpoint = 'data/v1/steps/patients/';
+  static String heartRateEndpoint = 'data/v1/heart_rate/patients/';
   static String sleepEndpoint = 'data/v1/sleep/patients/';
   static String patientUsername = 'Jpefaq6m58';
   
@@ -113,6 +115,46 @@ Future<List<Steps>?> requestData() async {
 
   } //_requestData
 
+Future<List<HeartRate>?> requestHeartRateData() async {
+    //Initialize the result
+    List<HeartRate>? result;
+    
+
+    //Get the stored access token (Note that this code does not work if the tokens are null)
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final day = '2024-03-03';
+    final url = '${Impact.baseUrl}${Impact.heartRateEndpoint}${Impact.patientUsername}/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    
+    //if OK parse the response, otherwise return null
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(HeartRate.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = null;
+    }//else
+    
+    return result;
+
+  } //_requestData
   
 
 }

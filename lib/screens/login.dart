@@ -1,3 +1,5 @@
+//This is the login page of the app. It contains two text fields for the username and password, and a login button.
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/home.dart';
@@ -18,7 +20,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('${LoginPage.routename} built');
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,9 +39,9 @@ class LoginPage extends StatelessWidget {
               child: Column(children: [
               Image.asset(
                 'lib/images/logonuovo.jpeg',
-                width: 80, // Larghezza desiderata
-                height: 80, // Altezza desiderata
-                fit: BoxFit.contain, // Determina come l'immagine si adatta allo spazio
+                width: 80, 
+                height: 80, 
+                fit: BoxFit.contain, 
               ),
 
               const SizedBox(
@@ -79,22 +80,19 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
             ElevatedButton(
-              
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(200, 50), 
                 side: const BorderSide(
-                color: Colors.lightGreen, // Colore del bordino verde chiaro
-                width: 2.0,               // Spessore del bordino in pixel
+                color: Colors.lightGreen, 
+                width: 2.0,               
               ),
-              
               ),
-              
               child: Text('Login'),
               onPressed: () async {
                     // check if credentials are correct
                     final result = await impact.getAndStoreTokens(userController.text, passwordController.text);
                     // If correct, store the username and password in SharedPreferences
-                    // and navigate to the Exposure screen (pushReplacement to remove the login screen from the stack)
+                    // and navigate to the PresentationPage screen
                     if (result == 200) {
                       final sp = await SharedPreferences.getInstance();
                       await sp.setBool('isUserLogged', true);
@@ -102,6 +100,7 @@ class LoginPage extends StatelessWidget {
                       await sp.setString('password', passwordController.text);
                       final onboarding_completed = await sp.getBool('onboarding_completed');
                       if(onboarding_completed == null || onboarding_completed == false){
+                        //pushReplacement to remove the login screen from the stack
                         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -125,7 +124,6 @@ class LoginPage extends StatelessWidget {
                         );
                       }
                       } else {
-                
                   ScaffoldMessenger.of(context)
                   ..removeCurrentSnackBar()
                   ..showSnackBar(const SnackBar(

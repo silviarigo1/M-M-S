@@ -1,3 +1,6 @@
+//This page is the first one that is called when the app is opened. It shows a splash screen with a loading animation and the logo of the app.
+//Then, it checks if the user has still valid tokens. If yes, it navigates to the HomePage, if not, it navigates to the LoginPage.
+
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'login.dart';
@@ -9,9 +12,7 @@ class Splash extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-  // Il tuo solito timer per cambiare pagina dopo 3 secondi
   Future.delayed(const Duration(seconds: 3, milliseconds: 200), () => _checkLogin(context));
-
   return Scaffold(
     body: Center(
       child: Column(
@@ -19,16 +20,14 @@ Widget build(BuildContext context) {
         children: [ Stack(
           alignment: Alignment.center,
           children: [
-          // Il costruttore che ascolta il flusso del tempo
+          // This is the circular progress indicator that shows the loading animation. 
           StreamBuilder<double>(
-            // Questo comando crea un flusso che dura 3 secondi e aggiorna il valore continuamente
             stream: Stream.periodic(const Duration(milliseconds: 30), (x) => x * 0.01).take(101),
             builder: (context, snapshot) {
               return SizedBox(
                 width: 140,
                 height: 140,
                 child: CircularProgressIndicator(
-                  // snapshot.data è il numero che cresce da 0.0 a 1.0
                   value: snapshot.data ?? 0.0, 
                   strokeWidth: 5,
                   color: Colors.lightGreen,
@@ -37,13 +36,9 @@ Widget build(BuildContext context) {
               );
             },
           ),
-          // Il tuo logo fisso al centro
           Image.asset('lib/images/logonuovo.jpeg', height: 80, width: 80),
-        
-
         ]
       ),
-    
       SizedBox(height: 20),
       Text('WELCOME TO MMS TRIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.lightGreen)),
         ],
@@ -67,7 +62,7 @@ Widget build(BuildContext context) {
   } 
 
   // Method for checking if the user has still valid tokens
-  // If yes, navigate to ExposurePage, if not, navigate to LoginPage
+  // If yes, navigate to HomePage if not, navigate to LoginPage
   void _checkLogin(BuildContext context) async {
     final result = await Impact().refreshTokens();
     if (result == 200) {

@@ -283,6 +283,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
             Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
+            Text('punteggio: ' + dataProvider.punteggio.toString())
+            
             ],
           )
       ],

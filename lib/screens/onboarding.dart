@@ -1,3 +1,7 @@
+//This is the onboarding page of the app, where the user can insert some personal data that 
+//will be used to personalize the app experience. The data are stored in SharedPreferences and 
+//can be edited later in the settings page. The user can also skip this page and go directly to the home page.
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +24,7 @@ class _OnboardingState extends State<Onboarding> {
   final TextEditingController _dateController = TextEditingController();
   String? _selectedGender;
   final TextEditingController _stepsAimController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -33,6 +38,7 @@ class _OnboardingState extends State<Onboarding> {
       _dateController.text = sp.getString('Dob') ?? '';
       _selectedGender = sp.getString('Gender');
       _stepsAimController.text = sp.getInt('StepsAim')?.toString() ?? '';
+      _ageController.text = sp.getInt('Age')?.toString() ?? '';
     });
   }
     Future<void> _selectDate(BuildContext context) async {
@@ -51,6 +57,8 @@ class _OnboardingState extends State<Onboarding> {
     Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       final sp = await SharedPreferences.getInstance();
+      int age = DateTime.now().year - DateFormat('dd/MM/yyyy').parse(_dateController.text).year;
+      await sp.setInt('Age', age);
       await sp.setString('Name', _nameController.text);
       await sp.setString('Surname', _surnameController.text);
       await sp.setString('Gender', _selectedGender!);
@@ -63,20 +71,15 @@ class _OnboardingState extends State<Onboarding> {
           backgroundColor: Colors.green, 
           behavior: SnackBarBehavior.floating,),
       );
-      /*Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );*/
         Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ChangeNotifierProvider<DataProvider>(
-      create: (context) => DataProvider(),
-      child: const HomeScreen(), 
-    ),
-  ),
-);
-        
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider<DataProvider>(
+              create: (context) => DataProvider(),
+              child: const HomeScreen(), 
+            ),
+          ),
+        );
     }
   }
   Future<void> _setOnboardingCompleted() async {
@@ -86,18 +89,14 @@ class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // SafeArea widget to avoid system UI overlaps
       body: Center(
-
         child: Stack(
           children: [Padding(
             padding: const EdgeInsets.all(16.0),
             child: 
             SingleChildScrollView(
               child: Column( children: [              
-                // import the logo image from assets folder (make sure to add the folder in pubspec.yaml)
                 Image.asset(
-                 
                   'lib/images/logonuovo.jpeg',
                   alignment: Alignment.center,
                   width: 80, // Larghezza desiderata
@@ -207,10 +206,9 @@ class _OnboardingState extends State<Onboarding> {
                         style: ElevatedButton.styleFrom(
                         minimumSize: const Size(50, 50), 
                         side: const BorderSide(
-                        color: Colors.lightGreen, // Colore del bordino verde chiaro
-                        width: 2.0,               // Spessore del bordino in pixel
-                      ),),
-                        
+                        color: Colors.lightGreen, 
+                        width: 2.0,               
+                      ),),   
                       ),
                     ]),
                  ),
@@ -225,14 +223,14 @@ class _OnboardingState extends State<Onboarding> {
                 onPressed: () async {
                   await _setOnboardingCompleted();
                   Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ChangeNotifierProvider<DataProvider>(
-      create: (context) => DataProvider(),
-      child: const HomeScreen(), 
-    ),
-  ),
-);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider<DataProvider>(
+                        create: (context) => DataProvider(),
+                        child: const HomeScreen(), 
+                      ),
+                    ),
+                  );
                 },
                 child: Text(
                   'Skip',

@@ -1,3 +1,6 @@
+//This is the presentation page of the app, where the user can see a carrousel with some images and text 
+//that explain the main features of the app.
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/onboarding.dart';
 
@@ -9,10 +12,7 @@ class PresentationPage extends StatefulWidget {
 }
 
 class _PresentationPageState extends State<PresentationPage> {
-  // Il controller ci permette di gestire o monitorare lo scorrimento
   final PageController _pageController = PageController();
-
-  // I dati della tua carrellata (Immagini e Testi)
   final List<Map<String, String>> _slides = [
     {
       "image": "lib/images/screen1.png",
@@ -38,11 +38,10 @@ class _PresentationPageState extends State<PresentationPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // L'area sacrificata alla PageView deve essere flessibile (Expanded)
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                scrollDirection: Axis.horizontal, // <--- FORZA LO SCROLL VERSO DESTRA
+                scrollDirection: Axis.horizontal, 
                 itemCount: _slides.length,
                 itemBuilder: (context, index) {
                   return Padding(
@@ -50,14 +49,12 @@ class _PresentationPageState extends State<PresentationPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Immagine del tutorial
                         Image.asset(
                           _slides[index]["image"]!,
                           height: 300,
                           fit: BoxFit.contain,
                         ),
                         const SizedBox(height: 24),
-                        // Titolo
                         Text(
                           _slides[index]["title"]!,
                           style: const TextStyle(
@@ -68,7 +65,6 @@ class _PresentationPageState extends State<PresentationPage> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 10),
-                        // Descrizione
                         Text(
                           _slides[index]["desc"]!,
                           style: const TextStyle(
@@ -84,7 +80,6 @@ class _PresentationPageState extends State<PresentationPage> {
               ),
             ),
             
-            // Pulsante in basso per saltare o andare avanti
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: ElevatedButton(
