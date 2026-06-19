@@ -35,7 +35,6 @@ Future<void> _initData() async {
     // Calcoliamo la stanchezza solo dopo aver ottenuto sia passi che sonno
     await _calculateTiredness();
     await _calculatePile();
-    await sleepQuality(prefs.getInt('Age') ?? 30); // Passa l'età dell'utente per calcolare la qualità del sonno
   }
 
 Future<int> _calculatePile() async {
@@ -116,6 +115,7 @@ Future<List<Sleep>?> requestSleepData() async {
           // Sommiamo tutti i minuti se ci sono più sessioni nello stesso giorno
           int totalMinutes = sleepRecords.fold(0, (sum, item) => sum + (item.minutesAsleep).toInt());
           sleepHours = totalMinutes / 60.0;
+          await sleepQuality(30); 
         } else {
           sleepHours = 0.0;
         }

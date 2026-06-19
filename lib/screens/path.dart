@@ -98,6 +98,7 @@ class _ChoicesState extends State<Choices> {
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
           FloatingActionButton(
+            heroTag: 'add_destination',
             mini: true,
             tooltip: "Add more destinations",
         onPressed: () {
@@ -110,11 +111,12 @@ class _ChoicesState extends State<Choices> {
         ),
         const SizedBox(height: 20),
         FloatingActionButton(
-        onPressed: () {
-          if (Provider.of<ResultSwipe>(context, listen: false).savedIndices.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Please select at least one destination!"),
-                      backgroundColor: Colors.red, 
+          heroTag: 'save_trip',
+          onPressed: () {
+            if (Provider.of<ResultSwipe>(context, listen: false).savedIndices.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Please select at least one destination!"),
+                        backgroundColor: Colors.red, 
                       behavior: SnackBarBehavior.floating,),
             );
           }
@@ -122,9 +124,8 @@ class _ChoicesState extends State<Choices> {
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Trip saved!"),
-                    backgroundColor: Colors.green, 
-                    behavior: SnackBarBehavior.floating,),
-          );
+                    backgroundColor: Colors.green,          
+          ));
         },
         backgroundColor: Colors.lightGreen,
         child: const Icon(
