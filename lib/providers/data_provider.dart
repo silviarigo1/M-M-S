@@ -33,9 +33,9 @@ Future<void> _initData() async {
     //await impact.requestHeartRateData();
     
     // Calcoliamo la stanchezza solo dopo aver ottenuto sia passi che sonno
-    _calculateTiredness();
-    _calculatePile();
-    sleepQuality(prefs.getInt('Age') ?? 30); // Passa l'età dell'utente per calcolare la qualità del sonno
+    await _calculateTiredness();
+    await _calculatePile();
+    await sleepQuality(prefs.getInt('Age') ?? 30); // Passa l'età dell'utente per calcolare la qualità del sonno
   }
 
 Future<int> _calculatePile() async {
@@ -136,7 +136,7 @@ Future<List<Sleep>?> requestSleepData() async {
   
 }
 
-void _calculateTiredness() {
+Future<void> _calculateTiredness() async {
     if (_stepGoal == 0) _stepGoal = 10000.0; // Evita divisioni per zero
     
     double currentSteps = stepsTotal.toDouble();
@@ -154,7 +154,7 @@ void saveBattery(int battery) {
     notifyListeners();
   }
 
- double sleepQuality(int age) {
+ Future<double> sleepQuality(int age) async {
 
     List<String> category = ['kids', 'teenagers', 'young adults', 'adults', 'older adults'];
     String subjectCategory = '';

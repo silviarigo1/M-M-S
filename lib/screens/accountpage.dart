@@ -16,9 +16,6 @@ class AccountState extends State<Account> {
   String? _selectedGender;
   final sharedPreferences = SharedPreferences.getInstance();
   
-  
-  
-  
   @override
 
   void initState() {
