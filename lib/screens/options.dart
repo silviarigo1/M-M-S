@@ -1,3 +1,7 @@
+//This is the options page of the app, where the user can swipe through the available destinations and save the ones they like.
+//It uses the flutter_card_swiper package.
+//It uses TravelCard class to create the cards and ResultSwipe class to save the swipes.
+
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/swipe.dart';
@@ -30,10 +34,7 @@ class Options extends StatelessWidget {
               ),
           ],
         ),
-          
-        ),
-  
-      
+        ),  
       body: Flexible(
         child: CardSwiper(
           isVerticalSwipingEnabled: false,

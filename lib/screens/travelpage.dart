@@ -1,3 +1,8 @@
+//This is the travel page of the app, where the user can see the trips they have saved and start a trip.
+//If you click on a trip, you can see the stages of the trip and the energy cost of each stage. 
+//You can also start a trip by clicking on the "START" button.
+//When you click start, the app will propose trip suggestions based on the user's tiredness level and the energy cost of the trip.
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
 import 'package:mms_app/screens/suggestion.dart';
@@ -41,19 +46,16 @@ class TravelPage extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
+                                borderRadius: BorderRadius.circular(20)),
                                 title: const Center( 
                                   child:Text("TRIP STAGES", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),)),
-                               
                                 content: Container( 
                                   width: double.maxFinite,
                                   decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15), // Smussa gli angoli dello sfondo come il box
+                                  borderRadius: BorderRadius.circular(15), 
                                   image: DecorationImage(
-                                    image: const AssetImage('lib/images/mete/PratoValle.jpg'), // Metti qui il percorso della tua immagine
-                                    fit: BoxFit.cover, // Fa occupare all'immagine tutto lo spazio disponibile
-                                    // --- TRASPARENTINO ---
-                                    // Questo filtro applica il bianco con un'opacità dello 0.15 (85% trasparente)
+                                    image: const AssetImage('lib/images/mete/PratoValle.jpg'), 
+                                    fit: BoxFit.cover, 
                                     colorFilter: ColorFilter.mode(
                                       Colors.white.withValues(alpha: 0.40), 
                                       BlendMode.dstATop,
@@ -95,12 +97,12 @@ class TravelPage extends StatelessWidget {
                                                 ? '+1' 
                                                 : "${Places.batt[indexOriginale]}"
                                               ),
-                                              // Icona con colore dinamico
+                                              // If the destination lets you recharge, show a green icon, otherwise show a red icon
                                               Icon(
                                                 Icons.battery_charging_full_outlined, 
                                                 color: Places.batt[indexOriginale] == -1
-                                                  ? const Color.fromARGB(255, 82, 198, 40)  // Verde
-                                                  : const Color.fromARGB(255, 198, 40, 40), // Rosso
+                                                  ? const Color.fromARGB(255, 82, 198, 40)  
+                                                  : const Color.fromARGB(255, 198, 40, 40), 
                                               ),
                                             ],
                                           ),
@@ -132,10 +134,8 @@ class TravelPage extends StatelessWidget {
                           );
                         },
                         child: ListTile(
-                        
                         leading: Image.asset(
-                          Places.images[index],
-                                            
+                          Places.images[index],                 
                           ),
                         title: Text(
                           trip.title,
@@ -147,8 +147,8 @@ class TravelPage extends StatelessWidget {
                         trailing: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             side: const BorderSide(
-                              color: Colors.green, // Colore del bordo
-                              width: 2,            // Spessore del bordo
+                              color: Colors.green, 
+                              width: 2,            
                             ),
                           ),
                           onPressed: () { provider.startTrip(trip);
@@ -156,12 +156,10 @@ class TravelPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(builder: (context) => const Suggestion()),
                           ).then((_) {
-                            // 2. Al ritorno, mostriamo il sondaggio con la sintassi esatta di pub.dev
+                            //when the user returns from the Suggestion page, show the NPS survey dialog 
                             NPSSurvey().showNPSDialog(
                               context: context,
                               callback: (feedback, score) {
-                                // feedback contiene il testo scritto dall'utente
-                                // score contiene il voto numerico da 0 a 10
                                 print('Commento dell\'utente: $feedback');
                                 print('Voto dell\'utente: $score');
                               },
@@ -169,17 +167,13 @@ class TravelPage extends StatelessWidget {
                           });
                         },
                         child: const Text('START'))
-                        
-
                       ),
                       ),
-                      
-                      
                     ); 
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(
-                                    height: 20, // Modifica questo valore per aumentare o diminuire lo spazio
+                                  height: 20, 
                             ); 
                   },
                 ); 

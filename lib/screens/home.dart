@@ -1,3 +1,7 @@
+//This is the home page of the app, where the user can see the main features of the app and navigate to other pages.
+//There is a bottom navigation bar that allows the user to navigate between the home page, the trips page and 
+//the profile page. By default, the home page is selected and the user can see the home dashboard.
+
 import 'package:mms_app/screens/homedashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/profilepage.dart';
@@ -21,15 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
       "Profile",
     ];
     // List of pages
-    final List<Widget> pages = [/*
-    ChangeNotifierProvider<DataProvider>(
-      create: (context) => DataProvider(),
-      builder:(context, child) => HomeDashboard(),
-    ),*/
-    HomeDashboard(),
-   
-    TravelPage(),
-    Profile(),
+    final List<Widget> pages = [
+      HomeDashboard(),
+      TravelPage(),
+      Profile(),
     ];
 
     return Scaffold(
@@ -43,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: selectedIndex,
-        // When user taps an item
         onDestinationSelected: (int index) {
           setState(() {
             selectedIndex = index;

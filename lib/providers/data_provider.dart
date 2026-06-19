@@ -14,13 +14,12 @@ class DataProvider extends ChangeNotifier {
   int stepsTotal = 0;
   double sleepHours = 0.0;
   double tiredness = 0.0;
+  int currentBattery = 0;
   double _stepGoal = 10000.0;
   final double _sleepGoal = 8.0;
   double punteggio = 0;
-
   final Impact impact = Impact();
   List<Sleep> sleepRecords = [];
-  
 
   DataProvider() {
     _initData();
@@ -29,18 +28,33 @@ class DataProvider extends ChangeNotifier {
 Future<void> _initData() async {
     final prefs = await SharedPreferences.getInstance();
     _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
-
     await getStepsTotal();
     await requestSleepData();
     //await impact.requestHeartRateData();
     
     // Calcoliamo la stanchezza solo dopo aver ottenuto sia passi che sonno
     _calculateTiredness();
+    _calculatePile();
     sleepQuality(prefs.getInt('Age') ?? 30); // Passa l'età dell'utente per calcolare la qualità del sonno
   }
 
+Future<int> _calculatePile() async {
+    int currentEnergy = 1 - tiredness.toInt();
+    int currentPile;
+
+    if (currentEnergy > 0.9) {
+      currentPile = 10;
+    } else if (currentEnergy < 0.15) {
+      currentPile = 1;
+    } else {
+      currentPile = (currentEnergy / 0.1).round();
+    }
+
+    saveBattery(currentPile);
+    return currentPile;
+  }
+
 Future<int> getStepsTotal() async {
-  
 
   try {
     final List<Steps>? stepsList = await impact.requestData();
@@ -132,6 +146,11 @@ void _calculateTiredness() {
     tiredness = tirednessFormula.clamp(0.0, 1.0);
     
     print('Stanchezza calcolata nel Provider: $tiredness (Ore Sonno: $sleepHours)');
+    notifyListeners();
+  }
+
+void saveBattery(int battery) {
+    currentBattery = battery;
     notifyListeners();
   }
 

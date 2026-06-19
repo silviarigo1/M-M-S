@@ -1,3 +1,7 @@
+//This is the profile page where the user can see his/her profile picture, name and surname.
+//You can also navigate to the account page where you can change your personal data and to the aims page 
+//where you can change your steps aim.
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/accountpage.dart';
 import 'package:mms_app/screens/aim.dart';
@@ -10,21 +14,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
-  //final TextEditingController _nameController = TextEditingController();
-  //final TextEditingController _surnameController = TextEditingController();
 @override 
 State<Profile> createState() => _ProfileState();
 }
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-       
       body: SafeArea(
-        
         child: Column(children: [
-
         const SizedBox(height:20),
         Row( 
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +33,6 @@ class _ProfileState extends State<Profile> {
           enableZoom: true,
           enableDoubleTapZoom: true, 
         ),
-        
         
          GestureDetector(
             onTap: () => _mostraOpzioniFoto(context), // Funzione per il pop-up
@@ -56,53 +53,41 @@ class _ProfileState extends State<Profile> {
       ],
     ),
             const SizedBox(height: 10),
-            
             FutureBuilder(
-  future: SharedPreferences.getInstance(),
-  builder: (context, snapshot) {
-    if (snapshot.hasData) {
-      final sharedPreferences = snapshot.data!;
-      // Recuperiamo i valori o assegniamo un default se sono null
-      String name = sharedPreferences.getString('Name') ?? 'Name';
-      String surname = sharedPreferences.getString('Surname') ?? 'Surname';
+              future: SharedPreferences.getInstance(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final sharedPreferences = snapshot.data!;
+                  String name = sharedPreferences.getString('Name') ?? 'Name';
+                  String surname = sharedPreferences.getString('Surname') ?? 'Surname';
 
-      return 
-          
-          Text(
-            "$name $surname",
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.black,
+                  return Text(
+                        "$name $surname",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      );
+                } else {
+                  return const CircularProgressIndicator(); 
+                }
+              },
             ),
-          );
-        
-      
-    } else {
-      // Caricamento in corso o dati non ancora disponibili
-      return const CircularProgressIndicator(); 
-    }
-  },
-),
-            
-            // Se vuoi mostrare anche Nome e Cognome sotto:
-            
-        
-
-        Padding(
-          padding:
-               EdgeInsets.only(left: 12.0, right: 12.0, top: 60, bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               SizedBox(
-                height: 5,
-              ),
-              
-            Card(
-              elevation: 5,
-                      margin: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
+          Padding(
+            padding:
+                EdgeInsets.only(left: 12.0, right: 12.0, top: 60, bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                
+              Card(
+                elevation: 5,
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
                       child: ListTile(
                         onTap: () async {
                             await Navigator.push(context, MaterialPageRoute(builder: (context) =>  Account()),
@@ -123,12 +108,9 @@ class _ProfileState extends State<Profile> {
                       ),
                     
             ),
-
               const SizedBox(
                 height: 20,
-              ),
-
-                         
+              ),                     
             Card(
               elevation: 5,
                       margin: EdgeInsets.zero,
@@ -151,9 +133,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-                    
             ),
-
               const SizedBox(
                 height: 20,
               ),
@@ -161,6 +141,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 20,
               ),
+              // Log out button
               Align(
                 alignment: Alignment.center,
                 child: TextButton.icon(
@@ -175,22 +156,19 @@ class _ProfileState extends State<Profile> {
                         title: const Text("Logout"),
                         content: const Text("Sei sicuro di voler uscire?"),
                         actions: [
-                          // Tasto per annullare: chiude solo il dialogo
                           TextButton(
                             child: const Text("Annulla"),
                             onPressed: () {
                               Navigator.of(context).pop(); 
                             },
                           ),
-                          // Tasto per confermare: esegue la logica di logout
+
                           TextButton(
                             child: const Text("Logout", style: TextStyle(color: Colors.red)),
                             onPressed: () async {
                               // Logica originale spostata qui
                               final sharedPreferences = await SharedPreferences.getInstance();
                               await sharedPreferences.remove('isUserLogged');
-
-                              // Verifica che il widget sia ancora "montato" prima di navigare
                               if (context.mounted) {
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -204,13 +182,7 @@ class _ProfileState extends State<Profile> {
                       );
                     },
                   );
-                }, // onPressed del TextButton.icon
-                  /*onPressed: () async {
-                    final sharedPreferences = await SharedPreferences.getInstance();
-                    await sharedPreferences.remove('isUserLogged');
-
-                     Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-                  },*/
+                }, 
                 ),
           ),
             ])
@@ -218,13 +190,11 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       ),
-    );
-       
-    
-    
+    );    
   }
 }
 
+// Function to show the bottom sheet with options to upload or delete the profile picture 
 
 void _mostraOpzioniFoto(BuildContext context) {
   showModalBottomSheet(

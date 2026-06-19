@@ -1,3 +1,7 @@
+// This is the page where the user can see the destinations he/she has selected and can remove them if he/she wants.
+// When the user presses the button, the app will save the selected destinations and navigate to the home page and 
+// the trip will be saved in the travel page. 
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
 import 'package:mms_app/screens/home.dart';
@@ -113,10 +117,8 @@ class _ChoicesState extends State<Choices> {
                       backgroundColor: Colors.red, 
                       behavior: SnackBarBehavior.floating,),
             );
-             
           }
           Provider.of<ResultSwipe>(context, listen: false).savePlaces();
-          // guarda qui il push and remove 
           Navigator.pushAndRemoveUntil( context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Trip saved!"),
@@ -130,16 +132,13 @@ class _ChoicesState extends State<Choices> {
           color: Colors.white,),
         ),
         ],
-      ),
-      
+      ), 
     ); 
   } 
 } 
 
-
 void _showDestinationsPopup(BuildContext context) {
   final resultSwipe = Provider.of<ResultSwipe>(context, listen: false);
-
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
@@ -163,13 +162,10 @@ void _showDestinationsPopup(BuildContext context) {
                       title: Text(nomePosto),
                       subtitle: const Text("Tap to add"), 
                       onTap: () {
-
                         resultSwipe.saveIndex(indexOriginale);
-
                         resultSwipe.saveSwipe(Container(
                           child: Text(nomePosto),
                         ));
-
                         Navigator.pop(dialogContext);
                       },
                     );
