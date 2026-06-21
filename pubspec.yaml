@@ -76,6 +76,7 @@ flutter:
     - lib/images/mete/BasilicaAntonio.jpg
     - lib/images/mete/CaffePedrocchi.jpg
     - lib/images/mete/CappellaScrovegni.jpg
+    - lib/images/mete/GiardiniArena.jpg
     - lib/images/mete/OrtoBotanico.jpg
     - lib/images/mete/PalazzoBo.jpg
     - lib/images/mete/PalazzoRagione.jpg
@@ -83,7 +84,8 @@ flutter:
     - lib/images/mete/PratoValle.jpg
     - lib/images/mete/SanGiovanni.jpg
     - lib/images/mete/Specola.jpg
-    - lib/images/scudetti/PadovaCalcio.png
+    - lib/images/mete/trattoria.jpg
+    - lib/images/mete/Pazientina.jpg
     - lib/images/carica.png
     - lib/images/scarica.png
     - lib/images/simbolo_padova.png
