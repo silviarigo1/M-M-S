@@ -7,12 +7,36 @@ import 'login.dart';
 import '../utils/impact.dart';
 
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
   const Splash({super.key});
 
-@override
-Widget build(BuildContext context) {
-  Future.delayed(const Duration(seconds: 3, milliseconds: 200), () => _checkLogin(context));
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimerandCheck();
+  }
+
+  void _startTimerandCheck() async{
+    await Future.delayed(const Duration(seconds: 3, milliseconds: 200),);
+    final result = await Impact().refreshTokens();
+
+    if (!mounted) return; // Check if the widget is still mounted before navigating
+    if (result == 200) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>  LoginPage()));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 3, milliseconds: 200), () => _checkLogin(context));
   return Scaffold(
     body: Center(
       child: Column(

@@ -30,14 +30,14 @@ class Sleep {
           ? DateFormat('yyyy-MM-dd').parse(date) 
           : DateFormat('yyyy-MM-dd HH:mm:ss').parse('${date.substring(0, 4)}-${json["endTime"]}'),
           
-      duration = json["duration"] ?? 0,
-      minutesToFallAsleep = json["minutesToFallAsleep"] ?? 0,
-      minutesAsleep = json["minutesAsleep"] ?? 0,
-      minutesAwake = json["minutesAwake"] ?? 0,
-      minutesAfterWakeup = json["minutesAfterWakeup"] ?? 0,
-      efficiency = json["efficiency"] ?? 0,
-      logType = json["logType"] ?? 'auto_detected',
-      mainSleep = json["mainSleep"] ?? false,
+      duration = (json["duration"] as num?)?.toInt() ?? 0,
+      minutesToFallAsleep = (json["minutesToFallAsleep"] as num?)?.toInt() ?? 0,
+      minutesAsleep = (json["minutesAsleep"] as num?)?.toInt() ?? 0,
+      minutesAwake = (json["minutesAwake"] as num?)?.toInt() ?? 0,
+      minutesAfterWakeup = (json["minutesAfterWakeup"] as num?)?.toInt() ?? 0,
+      efficiency = (json["efficiency"] as num?)?.toInt() ?? 0,
+      logType = (json["logType"] as String?) ?? 'auto_detected',
+      mainSleep = (json["mainSleep"] as bool?) ?? false,
       // Passiamo la data del giorno anche alle classi figlie per usarla come fallback se necessario
       levels = Levels.fromJson(date, json['levels'] ?? {}); 
 
@@ -88,9 +88,9 @@ class SleepStageInfo {
   SleepStageInfo({required this.count, required this.minutes, required this.thirtyDayAvgMinutes});
 
   SleepStageInfo.fromJson(Map<String, dynamic> json) :
-      count = json['count'] ?? 0,
-      minutes = json['minutes'] ?? 0,
-      thirtyDayAvgMinutes = json['thirtyDayAvgMinutes'] ?? 0;
+      count = (json['count'] as num?)?.toInt() ?? 0,
+      minutes = (json['minutes'] as num?)?.toInt() ?? 0,
+      thirtyDayAvgMinutes = (json['thirtyDayAvgMinutes'] as num?)?.toInt() ?? 0;
 }
 
 // --- CRONOLOGIA DATA ---
@@ -105,6 +105,6 @@ class SleepStageData {
       dateTime = json["dateTime"] == null 
           ? DateFormat('yyyy-MM-dd').parse(date) 
           : DateFormat('yyyy-MM-dd HH:mm:ss').parse('${date.substring(0, 4)}-${json["dateTime"]}'),
-      level = json['level'] ?? 'unknown',
-      seconds = json['seconds'] ?? 0;
+      level = (json['level'] as String?) ?? 'unknown',
+      seconds = (json['seconds'] as num?)?.toInt() ?? 0;
 }

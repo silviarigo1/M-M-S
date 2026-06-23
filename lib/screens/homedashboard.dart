@@ -111,14 +111,20 @@ class _HomeDashboardState extends State<HomeDashboard> {
             SizedBox(
               width: double.infinity,
               height: 70,
-              child: Stack(
-                alignment: Alignment.center,
+              child: Row(
                 children: [
+                  // 1. Compensatore a sinistra: serve a bilanciare l'ingombro dell'icona a destra
+                  // così il dropdown rimane matematicamente al centro dello schermo.
+                  const Expanded(
+                    child: SizedBox.shrink(),
+                  ),
+
+                  // 2. Il tuo dropdown originale (mantiene la sua dimensione al centro)
                   DropdownButton2<String>(
                     isExpanded: true,
                     buttonStyleData: ButtonStyleData(
                       height: 70,
-                      width: 220,
+                      width: 220, // La larghezza fissa che hai scelto
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
@@ -157,35 +163,38 @@ class _HomeDashboardState extends State<HomeDashboard> {
                               context,
                               MaterialPageRoute(builder: (context) => Options())
                             );
-                              Provider.of<ResultSwipe>(context, listen: false).clearSwipes();
-                            
+                            Provider.of<ResultSwipe>(context, listen: false).clearSwipes();
                           }
                         });
                       }
                     },
                   ),
-                  Positioned(
-                    right: 80,
-                    child: IconButton(
-                      icon: const Icon(Icons.help_outline, color: Colors.grey),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text("Choose your destination!"),
-                            content: const Text("Click on 'Choose City' to select your trip destination!\n\n"
-                                "Afterwards, you can customize your trip by picking your favorite attractions; "
-                                "swipe right to add an attraction you like, and left to skip it!\n\n"
-                                "We'll take care of the rest. Have a great trip!"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+
+                  // 3. Spazio fluido a destra: prende TUTTO lo spazio rimanente fino al margine destro
+                  // e posiziona l'icona esattamente al centro di questo spazio vuoto.
+                  Expanded(
+                    child: Center(
+                      child: IconButton(
+                        icon: const Icon(Icons.help_outline, color: Colors.grey),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text("Choose your destination!"),
+                              content: const Text("Click on 'Choose City' to select your trip destination!\n\n"
+                                  "Afterwards, you can customize your trip by picking your favorite attractions; "
+                                  "swipe right to add an attraction you like, and left to skip it!\n\n"
+                                  "We'll take care of the rest. Have a great trip!"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -221,7 +230,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                                 strokeWidth: 15,
                                 backgroundColor: Colors.grey.withValues(alpha: 0.3),
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  Color.lerp(Colors.blue, Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                                  Color.lerp(const Color.fromARGB(255, 33, 243, 79), Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
                                 ),
                                 strokeCap: StrokeCap.round,
                               ),
@@ -242,10 +251,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   ],
                 ),
 
-                //Tiredness indicator
+                //Sleep Quality indicator
                 Column(
                   children: [
-                    const Text("Tiredness", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const Text("Sleep Quality", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 20),
                     Stack(
                       alignment: Alignment.center,
@@ -255,17 +264,17 @@ class _HomeDashboardState extends State<HomeDashboard> {
                           height: 150,
                           child: CircularProgressIndicator(
                             // ignore: deprecated_member_use
-                            value: currentTiredness,
+                            value: dataProvider.punteggioFinale / 100,
                             strokeWidth: 15,
                             backgroundColor: Colors.grey.withValues(alpha: 0.3),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Color.lerp(Colors.green, Colors.red, currentTiredness) ?? Colors.green,
+                              Color.lerp(const Color.fromARGB(255, 91, 76, 175), Colors.red, dataProvider.punteggioFinale / 100) ?? Colors.green,
                             ),
                             strokeCap: StrokeCap.round,
                           ),
                         ),
                         Text(
-                          "${(currentTiredness * 100).toInt()}%",
+                          "${(dataProvider.punteggioFinale).toInt()}%",
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ],
@@ -281,7 +290,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
-            Text('punteggio: ' + dataProvider.punteggio.toString())
+            Text('punteggio: ' + dataProvider.punteggioFinale.toString())
             ],
           )
       ],

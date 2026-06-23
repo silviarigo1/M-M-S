@@ -18,6 +18,7 @@ class DataProvider extends ChangeNotifier {
   double _stepGoal = 10000.0;
   final double _sleepGoal = 8.0;
   double punteggio = 0;
+  int punteggioFinale = 0;
   final Impact impact = Impact();
   List<Sleep> sleepRecords = [];
 
@@ -30,15 +31,12 @@ Future<void> _initData() async {
     _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
     await getStepsTotal();
     await requestSleepData();
-    //await impact.requestHeartRateData();
-    
-    // Calcoliamo la stanchezza solo dopo aver ottenuto sia passi che sonno
     await _calculateTiredness();
     await _calculatePile();
   }
 
 Future<int> _calculatePile() async {
-    int currentEnergy = 1 - tiredness.toInt();
+    double currentEnergy = 1 - tiredness;
     int currentPile;
 
     if (currentEnergy > 0.9) {
@@ -46,7 +44,7 @@ Future<int> _calculatePile() async {
     } else if (currentEnergy < 0.15) {
       currentPile = 1;
     } else {
-      currentPile = (currentEnergy / 0.1).round();
+      currentPile = (currentEnergy*10).round();
     }
 
     saveBattery(currentPile);
@@ -154,7 +152,14 @@ void saveBattery(int battery) {
     notifyListeners();
   }
 
- Future<double> sleepQuality(int age) async {
+ Future<int> sleepQuality(int age) async {
+
+    if (sleepRecords.isEmpty) {
+      print('Nessun record di sonno disponibile per il calcolo della qualità del sonno.');
+      return 0; // O un valore di default appropriato
+    }
+
+    double punteggioCalcolato = 0.0;
 
     List<String> category = ['kids', 'teenagers', 'young adults', 'adults', 'older adults'];
     String subjectCategory = '';
@@ -174,199 +179,199 @@ void saveBattery(int battery) {
     // MINUTES TO FALL ASLEEP
     if (subjectCategory == category[4]) {
       if (minutesToFallAsleep > 30) {
-        punteggio += 1;
+        punteggioCalcolato += 1;
       } if (minutesToFallAsleep >60) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
       } else {
-        punteggio += 0;
+        punteggioCalcolato += 0;
       }
       
   } else {
     if (minutesToFallAsleep > 30) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } if (minutesToFallAsleep >45) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
   }
   int minutesAwake = sleep.minutesAwake;
   //MINUTES AWAKE
   if (subjectCategory == category[0]) {
       if (minutesAwake > 20) {
-        punteggio += 1;
+        punteggioCalcolato += 1;
       } if (minutesAwake >45) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
       } else {
-        punteggio += 0;
+        punteggioCalcolato += 0;
       }
       
   } if (subjectCategory == category[1]) {
     if (minutesAwake > 20) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } if (minutesToFallAsleep >50) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
   } if (subjectCategory == category[2] || subjectCategory == category[3]) {
     if (minutesAwake > 20) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } if (minutesToFallAsleep >40) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
   } if (subjectCategory == category[4]) {
     if (minutesAwake > 30) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
   }
   int sleepEfficiency = sleep.efficiency;
   //SLEEP EFFICIENCY
   if (subjectCategory == category[2]) {
     if (sleepEfficiency < 85) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } if (sleepEfficiency <= 64) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
     
     } else {
       if (sleepEfficiency < 85) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } if (sleepEfficiency < 75) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     }
     }
-    int RemSleep = sleep.levels.summary.rem.minutes;
-    int percentageRemSleep = (RemSleep * 100) ~/ sleep.minutesAsleep;
+    int remSleep = sleep.levels.summary.rem.minutes;
+    int percentageRemSleep = (remSleep * 100) ~/ sleep.minutesAsleep;
     //REM SLEEP PERCENTAGE
     if (subjectCategory == category[0]) {
       if (percentageRemSleep <=5) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
       } if (percentageRemSleep >=11) {
-        punteggio += 1;
+        punteggioCalcolato += 1;
     }
   } if (subjectCategory == category[1]) {
       if (percentageRemSleep <=10) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
       } if (percentageRemSleep >=11) {
-        punteggio += 1;
+        punteggioCalcolato += 1;
     }
-  } if (subjectCategory == category[2] && subjectCategory == category[3]) {
+  } if (subjectCategory == category[2] || subjectCategory == category[3]) {
       if (percentageRemSleep <=40) {
-        punteggio += 1;
+        punteggioCalcolato += 1;
       } if (percentageRemSleep >=41) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
     }
   } if (subjectCategory == category[3]) {
       if (percentageRemSleep >=41) {
-        punteggio += 2;
+        punteggioCalcolato += 2;
       } if (percentageRemSleep >=21 && percentageRemSleep <=30) {
-        punteggio += 0;
+        punteggioCalcolato += 0;
     } else {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     }
   } 
   int lightSleep = sleep.levels.summary.light.minutes;
   int percentageLightSleep = (lightSleep * 100) ~/ sleep.minutesAsleep;
   //Blocco N2
   if (percentageLightSleep >= 81) {
-    punteggio += 2;
+    punteggioCalcolato += 2;
   } else {
-    punteggio += 1;
+    punteggioCalcolato += 1;
   }
   int deepSleep = sleep.levels.summary.deep.minutes;
   int percentageDeepSleep = (deepSleep * 100) ~/ sleep.minutesAsleep;
   //Blocco N3
   if (subjectCategory == category[0]) {
     if (percentageDeepSleep <= 10) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } if (percentageDeepSleep >= 20 && percentageDeepSleep <= 25) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } else {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     }
   } if (subjectCategory == category[1]) {
     if (percentageDeepSleep <= 5) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } if (percentageDeepSleep >= 20 && percentageDeepSleep <= 25) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } else {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     }
   } if (subjectCategory == category[2]) {
     if (percentageDeepSleep <= 5) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } else {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     }
   } if (subjectCategory == category[3]) {
     if (percentageDeepSleep <= 5) {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     } if (percentageDeepSleep >= 16 && percentageDeepSleep <= 20) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } else {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     }
   } if (subjectCategory == category[4]) {
-    punteggio +=1;
+    punteggioCalcolato +=1;
   }
   int duration = sleep.minutesAsleep;
 
   //DURATION
   if (subjectCategory == category[0]) {
     if (duration>= 540 && duration <= 660) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } if (duration>= 420 && duration < 540 || duration> 660 && duration <= 720) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     }
   } if (subjectCategory == category[1]) {
     if (duration>= 480 && duration <= 600) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } if (duration>= 420 && duration < 480 || duration> 600 && duration <= 660) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     }
   } if (subjectCategory == category[2]) {
     if (duration>= 420 && duration <= 540) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } if (duration>= 360 && duration < 420 || duration> 540 && duration <= 660) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     }
   } if (subjectCategory == category[3]) {
     if (duration>= 420 && duration <= 540) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } if (duration>= 360 && duration < 420 || duration> 540 && duration <= 600) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     }
   } if (subjectCategory == category[4]) {
     if (duration>= 420 && duration <= 480) {
-      punteggio += 0;
+      punteggioCalcolato += 0;
     } if (duration>= 300 && duration < 420 || duration> 480 && duration <= 540) {
-      punteggio += 1;
+      punteggioCalcolato += 1;
     } else {
-      punteggio += 2;
+      punteggioCalcolato += 2;
     }
   } 
-  punteggio = punteggio/14*100;
-  punteggio = 100-punteggio;
+  punteggio = (punteggioCalcolato/14)*100;
+  punteggioFinale = (100-punteggio).round();
 
   notifyListeners();
-  return punteggio;
+  return punteggioFinale;
 
   }
 
