@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DataProvider()), 
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
           debugShowCheckedModeBanner: false,
           title: 'Login Page',
           home:  Splash(),

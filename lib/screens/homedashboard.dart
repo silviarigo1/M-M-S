@@ -55,7 +55,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         int currentPile = dataProvider.currentBattery;
         return Column(
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             //Hello User
             Align(
               alignment: Alignment.centerLeft,
@@ -106,7 +106,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               }
             ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 35),
             // Dropdown menu for choosing the city and help icon
             SizedBox(
               width: double.infinity,
@@ -201,7 +201,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
                   
             //Steps and tiredness indicators
             Row(
@@ -283,14 +283,13 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 ),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 50),
             
         Column(
           children: [
             Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
-            Text('punteggio: ' + dataProvider.punteggioFinale.toString())
             ],
           )
       ],
