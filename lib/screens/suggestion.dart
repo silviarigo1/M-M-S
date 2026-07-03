@@ -5,6 +5,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mms_app/providers/data_provider.dart';
+import 'package:nps_survey/nps_survey.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/swipe.dart';
 import '../models/places.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +45,10 @@ class _SuggestionState extends State<Suggestion> {
           int currentPile = Provider.of<DataProvider>(context, listen: false).currentBattery;
           int dispPile = currentPile - 1;
           final trip = provider.currentTrip;
-          List<int> indiciSelezionati = proposal(trip!, dispPile);
+          if (trip == null){
+            return const SizedBox.shrink(); // Return an empty widget if no trip is selected
+          }
+          List<int> indiciSelezionati = proposal(trip, dispPile);
           double hours = 0;
           for (int index in indiciSelezionati) {
             hours = hours + Places.mapDest["hours"]![index];
@@ -95,11 +100,70 @@ class _SuggestionState extends State<Suggestion> {
                         width: 2,
                         height: 30, 
                         color: Colors.lightGreen.withValues(alpha: 0.4),
+
+                        
                       ),
                     );
                   },
                 ),
               ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 24.0, top: 16.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () async {
+                            final currentContext = context;
+
+                            await NPSSurvey().showNPSDialog(
+                              context: currentContext,
+                              generalColor: Colors.lightGreen,
+                              submitButtonStyle: BoxDecoration(
+                                color: Colors.lightGreen,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              submitButtonText: "Submit",
+                              submitButtonTextStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              callback: (feedback, score) {
+                                print('Commento dell\'utente: $feedback');
+                                print('Voto dell\'utente: $score');
+                                
+                                SharedPreferences.getInstance().then((sp) {
+                                  sp.setInt('nps_score', score);
+                                  sp.setString('nps_feedback', feedback);
+                                });
+                              },
+                            );
+
+                            if (currentContext.mounted) {
+                              
+                              
+                              Provider.of<ResultSwipe>(currentContext, listen: false).endAndDeleteCurrentTrip();
+                              Navigator.of(currentContext).pop();
+                            }
+                          },
+                          child: const Text(
+                            "END",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
             ],
           );
         },

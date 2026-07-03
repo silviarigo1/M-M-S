@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart'; // Import fondamentale per leggere lo stato
 import '../models/places.dart';
+import '../models/swipe.dart'; // Assicurati che il percorso del tuo ResultSwipe sia corretto
 
 // --- WIDGET CARD AUTONOMO (Gestisce opacità e checkbox di ogni singola riga) ---
-class MetaCardItem extends StatefulWidget {
+class MetaCardItem extends StatelessWidget {
   final int indexDellaMeta;
   final bool isPari;
 
@@ -14,40 +15,23 @@ class MetaCardItem extends StatefulWidget {
   });
 
   @override
-  State<MetaCardItem> createState() => MetaCardItemState();
-}
-
-class MetaCardItemState extends State<MetaCardItem> {
-  // Ogni riga memorizza qui dentro se è stata cliccata o meno
-  bool _isCompleted = false; 
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCompletionStatus();
-  }
-
-  Future<void> _loadCompletionStatus() async {
-    final sp = await SharedPreferences.getInstance();
-    setState(() {
-      _isCompleted = sp.getBool('meta_${widget.indexDellaMeta}') ?? false;
-    });
-  }
-  
-  @override
   Widget build(BuildContext context) {
+    
+    final provider = Provider.of<ResultSwipe>(context);
+    
+    final bool isCompleted = provider.checkedPlaces.contains(indexDellaMeta);
+
     return Padding(
       padding: EdgeInsets.only(
-        left: widget.isPari ? 10 : 60, 
-        right: widget.isPari ? 60 : 10,
+        left: isPari ? 10 : 60, 
+        right: isPari ? 60 : 10,
         top: 6,
         bottom: 6,
       ),
       child: Opacity(
-        
-        opacity: _isCompleted ? 0.4 : 1.0, 
+        opacity: isCompleted ? 0.4 : 1.0, 
         child: Card(
-          elevation: _isCompleted ? 1 : 4, // Abbassa l'ombra se completato
+          elevation: isCompleted ? 1 : 4, // Abbassa l'ombra se completato
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15)),
@@ -59,7 +43,7 @@ class MetaCardItemState extends State<MetaCardItem> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
-                    Places.mapDest["image"]![widget.indexDellaMeta],
+                    Places.mapDest["image"]![indexDellaMeta],
                     width: 60,
                     height: 60,
                     fit: BoxFit.cover, 
@@ -73,13 +57,13 @@ class MetaCardItemState extends State<MetaCardItem> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "${Places.mapDest["title"]![widget.indexDellaMeta]}",
+                        "${Places.mapDest["title"]![indexDellaMeta]}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                           // Sbarra il testo se l'obiettivo è completato
-                          decoration: _isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-                          color: _isCompleted ? Colors.grey : Colors.black,
+                          decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+                          color: isCompleted ? Colors.grey : Colors.black,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -87,16 +71,16 @@ class MetaCardItemState extends State<MetaCardItem> {
                         mainAxisSize: MainAxisSize.min,   
                         children: [ 
                           // Testo dinamico
-                          Text(Places.batt[widget.indexDellaMeta] == -1 
+                          Text(Places.batt[indexDellaMeta] == -1 
                             ? '+1' 
-                            : "Cost: ${Places.batt[widget.indexDellaMeta]}"
+                            : "Cost: ${Places.batt[indexDellaMeta]}"
                           ),
                           const SizedBox(width: 2),
                           // Icona con colore dinamico
                           Icon(
                             Icons.battery_charging_full_outlined, 
                             size: 18,
-                            color: Places.batt[widget.indexDellaMeta] == -1
+                            color: Places.batt[indexDellaMeta] == -1
                               ? const Color.fromARGB(255, 82, 198, 40)  // Verde
                               : const Color.fromARGB(255, 198, 40, 40), // Rosso
                           ),
@@ -107,19 +91,14 @@ class MetaCardItemState extends State<MetaCardItem> {
                 ),
                 
                 const SizedBox(width: 8),
-                
+
                 // 3. CHECKBOX (Trailing)
                 Checkbox(
-                  value: _isCompleted,
+                  value: isCompleted,
                   activeColor: Colors.lightGreen,
-                  onChanged: (bool? value) async {
-                    final newValue = value ?? false;
-                    
-                    final sp = await SharedPreferences.getInstance();
-                    await sp.setBool('meta_${widget.indexDellaMeta}', newValue);
-                    setState(() {
-                      _isCompleted = newValue; // Aggiorna lo stato di questa specifica card
-                    });
+                  onChanged: (bool? value) {
+                  
+                    provider.tipPlaceCheck(indexDellaMeta);
                   },
                 ),
               ],

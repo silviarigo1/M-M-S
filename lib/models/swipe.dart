@@ -26,8 +26,12 @@ class ResultSwipe extends ChangeNotifier{
   Trip? _selectedTripData;
   Trip? get currentTrip => _selectedTripData;
 
+  bool isOngoing = false;
+  List<int> checkedPlaces = [];
+
   void startTrip(Trip trip) {
     _selectedTripData = trip;
+    isOngoing = true;
     notifyListeners();
   }
 
@@ -84,6 +88,34 @@ class ResultSwipe extends ChangeNotifier{
     swipes.removeAt(index);
     savedIndices.removeAt(index);
     nonSavedIndices.add(originalIndex);
+    notifyListeners();
+  }
+
+  void endTrip() {
+    _selectedTripData = null;
+    isOngoing = false;
+    notifyListeners();
+  }
+
+  void endAndDeleteCurrentTrip() {
+    if (_selectedTripData != null) {
+      trips.remove(_selectedTripData); 
+      _selectedTripData = null; 
+    }
+    isOngoing = false; 
+    
+    // Svuota i check quando il viaggio finisce!
+    checkedPlaces.clear(); 
+    
+    notifyListeners(); 
+  }
+
+  void tipPlaceCheck(int index) {
+    if (checkedPlaces.contains(index)) {
+      checkedPlaces.remove(index);
+    } else {
+      checkedPlaces.add(index);
+    }
     notifyListeners();
   }
 

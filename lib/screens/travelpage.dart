@@ -8,7 +8,6 @@ import 'package:mms_app/models/places.dart';
 import 'package:mms_app/screens/suggestion.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
-import 'package:nps_survey/nps_survey.dart';
 
 class TravelPage extends StatelessWidget {
   const TravelPage({super.key});
@@ -32,8 +31,13 @@ class TravelPage extends StatelessWidget {
                   itemBuilder: (context, tripIndex) {
                     final trip = provider.trips[tripIndex];
                     int index = provider.selectedIndexCity;
+                    bool isFaded = provider.isOngoing && provider.currentTrip != trip;
 
-                    return Card(
+                    return IgnorePointer(
+                      ignoring: isFaded,
+                      child: Opacity(
+                        opacity: isFaded ? 0.5 : 1.0,
+                      child: Card(
                       elevation: 5,
                       margin: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
@@ -155,22 +159,20 @@ class TravelPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const Suggestion()),
-                          ).then((_) {
-                            //when the user returns from the Suggestion page, show the NPS survey dialog 
-                            NPSSurvey().showNPSDialog(
-                              context: context,
-                              callback: (feedback, score) {
-                                print('Commento dell\'utente: $feedback');
-                                print('Voto dell\'utente: $score');
-                              },
-                            );
-                          });
+                          );
                         },
-                        child: const Text('START'))
+                        child: Text(
+                          provider.isOngoing && provider.currentTrip == trip
+                              ? 'RESUME'
+                              : 'START'
+                        ),
                       ),
-                      ),
-                    ); 
-                  },
+                    ),
+                  ),
+                ),
+              ),
+            ); 
+          },
                   separatorBuilder: (context, index) {
                     return const SizedBox(
                                   height: 20, 
