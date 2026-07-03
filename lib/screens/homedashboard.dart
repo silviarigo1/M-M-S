@@ -51,7 +51,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         Provider.of<DataProvider>(context, listen: false).saveBattery(currentPile);*/
         
         double currentSteps = dataProvider.stepsTotal.toDouble();
-        double currentTiredness = dataProvider.tiredness;
+        
         int currentPile = dataProvider.currentBattery;
         return Column(
           children: [
@@ -291,7 +291,15 @@ class _HomeDashboardState extends State<HomeDashboard> {
             SizedBox(height: 10),
             WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
             ],
-          )
+          ),
+          Text("Your current heart rate is: ${dataProvider.HRToday.toInt()} BPM"),
+          Text("Your average heart rate over the last 7 days is: ${dataProvider.meanHR.toInt()} BPM"),
+          Text("Your standard deviation is: ${dataProvider.std} BPM"),
+          Text("Your penalty is: ${dataProvider.penalty}"),
+          Text("Your tiredness is: ${dataProvider.energy}"),
+          Text("Your points from heart rate are: ${dataProvider.PointsHR}"),
+          Text("Your points from sleep are: ${dataProvider.PointsSleep}"),
+          Text("Your current battery level is: ${dataProvider.currentBattery}"),
       ],
     );
           }

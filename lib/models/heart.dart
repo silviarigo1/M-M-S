@@ -1,19 +1,21 @@
 import 'package:intl/intl.dart';
 
-class RHeartRate{
+class RHeartRate {
   final DateTime time;
-  final int value;
-  final int error; 
+  final double value;
+  final double error; 
 
   RHeartRate({required this.time, required this.value, required this.error});
 
+  // Costruttore corretto senza double.parse()
   RHeartRate.fromJson(String date, Map<String, dynamic> json) :
       time = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-      value = int.parse(json["value"]),
-      error = int.parse(json["error"]);
+      // Visto che sono già double nel JSON, facciamo il cast sicuro tramite num
+      value = (json["value"] as num).toDouble(),
+      error = (json["error"] as num).toDouble();
 
   @override
   String toString() {
     return 'RHeartRate(time: $time, value: $value, error: $error)';
-  }//toString
-}//RHeartRate
+  }
+}

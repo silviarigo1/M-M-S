@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mms_app/models/heart.dart';
 import 'package:mms_app/models/sleep.dart';
 import 'package:mms_app/models/steps.dart';
 import 'package:mms_app/utils/impact.dart';
@@ -13,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DataProvider extends ChangeNotifier {
   int stepsTotal = 0;
   double sleepHours = 0.0;
-  double tiredness = 0.0;
+  double energy = 0.0;
   int currentBattery = 0;
   double _stepGoal = 10000.0;
   final double _sleepGoal = 8.0;
@@ -21,6 +24,17 @@ class DataProvider extends ChangeNotifier {
   int punteggioFinale = 0;
   final Impact impact = Impact();
   List<Sleep> sleepRecords = [];
+  double HRToday = 60.0; 
+  double meanHR = 0.0; 
+  int count = 0;
+  double std = 0.0;
+  List<RHeartRate> bpmList = [];
+  double penalty = 0.0;
+  double PointsHR = 0.0;
+  double PointsSleep = 0.0;
+
+
+
 
   DataProvider() {
     _initData();
@@ -31,12 +45,16 @@ Future<void> _initData() async {
     _stepGoal = (prefs.getInt('StepsAim') ?? 10000).toDouble();
     await getStepsTotal();
     await requestSleepData();
-    await _calculateTiredness();
-    await _calculatePile();
+    await requestHeartRateData();
+    await requestHeartRateDataRange();
+    await calculateStdDev(bpmList, meanHR);
+    await calculatePenalty(HRToday, meanHR, std);
+    await _calculateEnergy(penalty, punteggioFinale);
+    await _calculatePile(energy);
   }
 
-Future<int> _calculatePile() async {
-    double currentEnergy = 1 - tiredness;
+Future<int> _calculatePile(double currentEnergy) async {
+    
     int currentPile;
 
     if (currentEnergy > 0.9) {
@@ -85,7 +103,9 @@ Future<List<Sleep>?> requestSleepData() async {
       access = spAggiornato.getString('access');
     }
 
-    final day = '2024-09-18'; 
+    //final day = '2024-09-18';
+    final ieri = DateTime.now().subtract(Duration(days: 1));
+    final day = DateFormat('yyyy-MM-dd').format(ieri); 
     // ignore: prefer_interpolation_to_compose_strings
     final url = Impact.baseUrl + Impact.sleepEndpoint + Impact.patientUsername + '/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
@@ -134,16 +154,12 @@ Future<List<Sleep>?> requestSleepData() async {
   
 }
 
-Future<void> _calculateTiredness() async {
-    if (_stepGoal == 0) _stepGoal = 10000.0; // Evita divisioni per zero
-    
-    double currentSteps = stepsTotal.toDouble();
-    
+Future<void> _calculateEnergy(double penalty, int punteggioFinale) async {
+    PointsHR = 50 - penalty;
+    PointsSleep = punteggioFinale / 2;
+    energy = (PointsHR + PointsSleep)/100;
     // Formula riadattata usando sleepHours calcolato dall'API
-    double tirednessFormula = (currentSteps / _stepGoal) * (1 - (sleepHours / _sleepGoal));
-    tiredness = tirednessFormula.clamp(0.0, 1.0);
-    
-    print('Stanchezza calcolata nel Provider: $tiredness (Ore Sonno: $sleepHours)');
+
     notifyListeners();
   }
 
@@ -374,6 +390,147 @@ void saveBattery(int battery) {
   return punteggioFinale;
 
   }
+  Future<double> requestHeartRateData() async {
+    //Initialize the result
+    RHeartRate? result;
+
+    //Get the stored access token (Note that this code does not work if the tokens are null)
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await impact.refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final ieri = DateTime.now().subtract(Duration(days: 1));
+    final day = DateFormat('yyyy-MM-dd').format(ieri);
+    final url = '${Impact.baseUrl}${Impact.heartRateEndpoint}${Impact.patientUsername}/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    print('Response: ${response.body}');
+    
+    //if OK parse the response, otherwise return null
+    if (response.statusCode == 200) {
+  try {
+    final decodedResponse = jsonDecode(response.body);
+    result = RHeartRate.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data']);
+    HRToday = result.value;
+    print('Il valore del battito è: $HRToday');
+  } catch (e) {
+    // Se c'è un errore di parsing, lo stampa qui nel terminale SENZA frizzare l'app!
+    print('Errore durante il parsing del JSON: $e');
+    HRToday = 0.0; // Valore di fallback
+  }
+}
+    else{
+      result = null;
+    }//else
+    notifyListeners();
+    return HRToday;
+
+  } //_requestData
+  
+  Future<double> requestHeartRateDataRange() async {
+    
+    double sum = 0.0;
+  
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
+
+    if(JwtDecoder.isExpired(access!)){
+      await impact.refreshTokens();
+      access = sp.getString('access');
+    }
+
+    // Date perfette per il tuo database
+    final startDate = '2024-05-04';
+    final endDate = '2024-05-10'; 
+    
+    final url = '${Impact.baseUrl}${Impact.heartRateEndpoint}${Impact.patientUsername}/daterange/start_date/$startDate/end_date/$endDate/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: headers);
+      
+      if (response.statusCode == 200) {
+        final decodedResponse = jsonDecode(response.body);
+        
+        // 'data' è la lista dei giorni (ce ne sono 7 nel tuo JSON)
+        final List<dynamic> listaGiorni = decodedResponse['data'];
+
+        for (var i = 0; i < listaGiorni.length; i++) {
+          final giornoCorrente = listaGiorni[i];
+          
+          if (giornoCorrente != null && giornoCorrente['data'] != null) {
+            final String dataDelGiorno = giornoCorrente['date'];
+            
+            // ESTRAZIONE DIRETTA: 'data' interno è una mappa {}, quindi lo leggiamo direttamente!
+            final Map<String, dynamic> heartData = giornoCorrente['data'];
+            
+            // Creiamo l'oggetto usando il tuo costruttore stabile
+            final nuovoBattito = RHeartRate.fromJson(dataDelGiorno, heartData);
+            bpmList.add(nuovoBattito);
+            
+            sum += nuovoBattito.value;
+            count++;
+          } 
+        }
+        
+        // Calcolo della media finale
+        meanHR = count > 0 ? sum / count : 0.0;
+        print('Media calcolata con successo su $count giorni!');
+        
+      } else {
+        throw Exception('Status ${response.statusCode}: ${response.body}');
+      }
+    } catch (e) {
+      rethrow; 
+    }
+    notifyListeners();
+    return meanHR;
+}
+
+Future<double> calculateStdDev(List<RHeartRate> bpsList, double mean) async{
+  // Se non ci sono abbastanza dati per calcolare la deviazione campionaria, restituisce 0.0
+  if (bpsList.length <= 1) return 0.0;
+
+  double sommaScartiQuadrati = 0.0;
+
+  // 1. Calcola la somma degli scarti al quadrato: (x - media)^2
+  for (var i = 0; i < bpsList.length; i++) {
+    double scarto = bpsList[i].value - mean;
+    sommaScartiQuadrati += scarto * scarto;
+  }
+
+  // 2. Applica la formula della deviazione standard campionaria (diviso N - 1)
+  double variance = sommaScartiQuadrati / (bpsList.length - 1);
+  std = math.sqrt(variance);
+  notifyListeners();
+  return std;
+}
+
+Future<double> calculatePenalty(double HRtoday, double mean, double std) async {
+  // Controllo di sicurezza: se la deviazione standard è zero, 
+  // evitiamo la divisione per zero restituendo una penalità nulla (0.0)
+  if (std == 0.0) {
+    print('Attenzione: Deviazione standard pari a 0. Di default la penalità è 0.0');
+    return 0.0;
+  }
+
+  // Applicazione della formula: ((HRtoday - media) / std) / 2
+  penalty = ((HRtoday - mean) / std) / 2;
+  penalty = penalty*50;
+
+  print('Coefficiente di penalità calcolato: $penalty');
+  notifyListeners();
+  return penalty;
+}
 
 
   /*void updateStepGoal(double newGoal) {
