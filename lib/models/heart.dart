@@ -1,19 +1,19 @@
 import 'package:intl/intl.dart';
 
-class HeartRate{
+class RHeartRate{
   final DateTime time;
   final int value;
-  final int confidence; 
+  final int error; 
 
-  HeartRate({required this.time, required this.value, required this.confidence});
+  RHeartRate({required this.time, required this.value, required this.error});
 
-  HeartRate.fromJson(String date, Map<String, dynamic> json) :
+  RHeartRate.fromJson(String date, Map<String, dynamic> json) :
       time = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
       value = int.parse(json["value"]),
-      confidence = int.parse(json["confidence"]);
+      error = int.parse(json["error"]);
 
   @override
   String toString() {
-    return 'HeartRate(time: $time, value: $value, confidence: $confidence)';
+    return 'RHeartRate(time: $time, value: $value, error: $error)';
   }//toString
-}//HeartRate
+}//RHeartRate

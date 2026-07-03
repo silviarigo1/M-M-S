@@ -115,9 +115,9 @@ Future<List<Steps>?> requestData() async {
 
   } //_requestData
 
-Future<List<HeartRate>?> requestHeartRateData() async {
+Future<List<RHeartRate>?> requestHeartRateData() async {
     //Initialize the result
-    List<HeartRate>? result;
+    List<RHeartRate>? result;
     
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
@@ -145,7 +145,7 @@ Future<List<HeartRate>?> requestHeartRateData() async {
       result = [];
       
       for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
-        result.add(HeartRate.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+        result.add(RHeartRate.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
       }//for
     } //if
     else{
