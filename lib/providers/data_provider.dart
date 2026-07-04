@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -51,6 +52,7 @@ Future<void> _initData() async {
     await calculatePenalty(HRToday, meanHR, std);
     await _calculateEnergy(penalty, punteggioFinale);
     await _calculatePile(energy);
+
   }
 
 Future<int> _calculatePile(double currentEnergy) async {
@@ -390,6 +392,7 @@ void saveBattery(int battery) {
   return punteggioFinale;
 
   }
+
   Future<double> requestHeartRateData() async {
     //Initialize the result
     RHeartRate? result;
@@ -538,4 +541,10 @@ Future<double> calculatePenalty(double HRtoday, double mean, double std) async {
     _calculateTiredness();
   }*/
 
+
+
+
 }
+
+
+

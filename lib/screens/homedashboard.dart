@@ -32,7 +32,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
         child: Consumer<DataProvider>(
           builder: (context, dataProvider, child) {
-          if (dataProvider.stepsTotal == 0 && dataProvider.sleepHours == 0.0) {
+          if (dataProvider.stepsTotal == 0 && dataProvider.sleepHours == 0.0 && dataProvider.currentBattery == 0 && dataProvider.HRToday == 0.0 && dataProvider.meanHR == 0.0 ) {
               return const Center(child: CircularProgressIndicator());
             }  
             /*
@@ -67,11 +67,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     if (sharedPreferences.getString('Name') != null) {
                       return Row(
                         children: [
-                          Image.asset("lib/images/mms.png", width: 45, height: 45),
+                          Image.asset("lib/images/mms.png", width: 40, height: 40),
                           Text(
                         'Hello ${sharedPreferences.getString('Name')}',
                         style: const TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
@@ -79,11 +79,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     } else {
                       return Row( 
                         children: [
-                          Image.asset("lib/images/mms.png", width: 45, height: 45),
+                          Image.asset("lib/images/mms.png", width: 40, height: 40),
                           Text(
                             'Hello user',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
@@ -93,11 +93,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   else {
                     return Row( 
                         children: [
-                          Image.asset("lib/images/mms.png", width: 45, height: 45),
+                          Image.asset("lib/images/mms.png", width: 40, height: 40),
                           Text(
                             'Hello user',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
@@ -106,11 +106,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
               }
             ),
             ),
-            const SizedBox(height: 35),
+            const SizedBox(height: 15),
             // Dropdown menu for choosing the city and help icon
             SizedBox(
               width: double.infinity,
-              height: 70,
+              height: 60,
               child: Row(
                 children: [
                   // 1. Compensatore a sinistra: serve a bilanciare l'ingombro dell'icona a destra
@@ -123,7 +123,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   DropdownButton2<String>(
                     isExpanded: true,
                     buttonStyleData: ButtonStyleData(
-                      height: 70,
+                      height: 60,
                       width: 220, // La larghezza fissa che hai scelto
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       decoration: BoxDecoration(
@@ -201,7 +201,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               ),
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 15),
                   
             //Steps and tiredness indicators
             Row(
@@ -210,8 +210,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 //Step indicator 
                 Column(
                   children: [
-                    const Text("Steps", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 20),
+                    
                     FutureBuilder( future: SharedPreferences.getInstance(),
                     builder: (context, snapshot) {
                       int stepGoal = 10000;
@@ -219,18 +218,32 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         final sharedPreferences = snapshot.data!;
                         stepGoal = sharedPreferences.getInt('StepsAim') ?? 10000;
                       }
-                        return Stack(
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
+                            borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                           alignment: Alignment.center,
+                          child: 
+                          Column(crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            
+                            const Text("Steps", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,)),
+                            const SizedBox(height: 20),
+                            Stack(
+                            alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              width: 150,
-                              height: 150,
+                              width: 120,
+                              height: 120,
                               child: CircularProgressIndicator(
                                 value: (stepGoal > 0) ? (currentSteps / stepGoal) : 0,
-                                strokeWidth: 15,
+                                strokeWidth: 10,
                                 backgroundColor: Colors.grey.withValues(alpha: 0.3),
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  Color.lerp(const Color.fromARGB(255, 33, 243, 79), Colors.green, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.blue,
+                                  Color.lerp(Colors.red, Colors.lightGreen, (currentSteps / stepGoal).clamp(0.0, 1.0)) ?? Colors.grey,
                                 ),
                                 strokeCap: StrokeCap.round,
                               ),
@@ -245,30 +258,44 @@ class _HomeDashboardState extends State<HomeDashboard> {
                               ],
                             ),
                           ],
+                          ),
+                          ])
+                          
                         );
                     },
                     ),
                   ],
                 ),
-
+SizedBox(width: 2),
                 //Sleep Quality indicator
                 Column(
                   children: [
-                    const Text("Sleep Quality", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 20),
+                    Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
+                            borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                          alignment: Alignment.center,
+                          child: 
+                          Column(crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                          const Text("Sleep Quality", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 20),
                     Stack(
                       alignment: Alignment.center,
                       children: [
                         SizedBox(
-                          width: 150,
-                          height: 150,
+                          width: 120,
+                          height: 120,
                           child: CircularProgressIndicator(
                             // ignore: deprecated_member_use
                             value: dataProvider.punteggioFinale / 100,
-                            strokeWidth: 15,
+                            strokeWidth: 10,
                             backgroundColor: Colors.grey.withValues(alpha: 0.3),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Color.lerp(const Color.fromARGB(255, 91, 76, 175), Colors.red, dataProvider.punteggioFinale / 100) ?? Colors.green,
+                              Color.lerp(Colors.red, Colors.lightGreen, dataProvider.punteggioFinale / 100) ?? Colors.grey,
                             ),
                             strokeCap: StrokeCap.round,
                           ),
@@ -278,16 +305,175 @@ class _HomeDashboardState extends State<HomeDashboard> {
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ],
-                    ),
+                    ),],),),
                   ],
                 ),
           ],
         ),
-        const SizedBox(height: 50),
-            
+        const SizedBox(height: 10),
+        
+        Column(children: [
+          Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
+                            borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          alignment: Alignment.center,
+                          child: 
+                          Row(crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                          
+                    Stack(
+                      alignment: Alignment.center,
+                      children:[
+                      Icon(Icons.favorite, size: 80, color: Color(0xFFE54B64)),
+                      Column(
+                         children: [
+                          Text("${dataProvider.HRToday.toInt()}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
+                      Text("BPM", style: TextStyle(fontSize: 8, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500)),
+                        ]
+                      )
+                      
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      Text("  Heart Rate Mean (7 days): ", style: const TextStyle(fontSize: 14, color: Colors.black87)),
+                      Text("${dataProvider.meanHR.toInt()} BPM", style: const TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 5),
+                      if (dataProvider.HRToday > dataProvider.meanHR) 
+                            const Text('Oggi il tuo battito è sopra la tua media!',
+                                                    style: TextStyle(fontSize: 10, color: Colors.black87),
+                                                  )
+                            else if (dataProvider.HRToday < dataProvider.meanHR) 
+                                  const Text(
+                                                          'Oggi il tuo battito è sotto la media!',
+                                                          style: TextStyle(fontSize: 10, color: Colors.black87),
+                                                        )
+                                                      
+                            else 
+                                       const Text(
+                                                      'Oggi il tuo battito è nella tua media.',
+                                                      style: TextStyle(fontSize: 10, color: Colors.black87),
+                                                    )
+                                                  
+                    ],)
+                    
+
+                    ],
+                    ),
+                    )
+        ],),
+
+        /*Column(
+          children: [
+            // Questo è il widget del Cuore Cliccabile
+            InkWell(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconButton(
+                        icon: const Icon(Icons.favorite, size: 80, color: Color(0xFFE54B64)),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Heart Rate'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Current HR: ${dataProvider.HRToday.toStringAsFixed(1)}'),
+                                  Text('Average HR: ${dataProvider.meanHR.toStringAsFixed(1)}'),
+                                  const SizedBox(height: 10),
+                                  if (dataProvider.HRToday > dataProvider.meanHR) 
+                                       Row(
+                                              children: [
+                                                const Icon(Icons.info_outline, color: Colors.amber),
+                                                const SizedBox(width: 10),
+                                                const Expanded(
+                                                  child: Text(
+                                                    'Oggi il tuo battito è sopra la tua media. Prenditi una pausa!',
+                                                    style: TextStyle(fontSize: 13, color: Colors.black87),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                       else if (dataProvider.HRToday < dataProvider.meanHR) 
+                                                Row(
+                                                    children: [
+                                                      const Icon(Icons.info_outline, color: Colors.lightGreen),
+                                                      const SizedBox(width: 10),
+                                                      const Expanded(
+                                                        child: Text(
+                                                          'Oggi il tuo battito è sotto la media!',
+                                                          style: TextStyle(fontSize: 13, color: Colors.black87),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                       else 
+                                        Row(
+                                                children: [
+                                                  const Icon(Icons.info_outline, color: Colors.blue),
+                                                  const SizedBox(width: 10),
+                                                  const Expanded(
+                                                    child: Text(
+                                                      'Oggi il tuo battito è nella tua media.',
+                                                      style: TextStyle(fontSize: 13, color: Colors.black87),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                      
+                                                                    ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                  ),
+                  Positioned(
+                    top: 30, // Regola la posizione verticale del testo nel cuore
+                    child: Column(
+                      children: [
+                         Text(
+                          '${dataProvider.HRToday.toInt()}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'BPM',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.8),
+                            fontSize: 8,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                ),
+        ),
+        ],
+        ),*/
+
+        const SizedBox(height: 15),
+
         Column(
           children: [
-            Text("USER BATTERY:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
             ],
@@ -300,4 +486,6 @@ class _HomeDashboardState extends State<HomeDashboard> {
   ),
 );}  
   }
-  
+
+
+

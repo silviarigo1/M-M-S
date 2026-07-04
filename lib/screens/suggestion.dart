@@ -149,7 +149,7 @@ class _SuggestionState extends State<Suggestion> {
                             if (currentContext.mounted) {
                               
                               
-                              Provider.of<ResultSwipe>(currentContext, listen: false).endAndDeleteCurrentTrip();
+                              //Provider.of<ResultSwipe>(currentContext, listen: false).endAndDeleteCurrentTrip();
                               Navigator.of(currentContext).pop();
                             }
                           },

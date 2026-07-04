@@ -50,7 +50,7 @@ class AimsState extends State<Aims> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter steps aim';
                           }
-                          if (int.tryParse(value) == null) {
+                          if (int.tryParse(value) == null || int.parse(value) <= 0) {
                             return 'Invalid format';
                           }
                           return null;

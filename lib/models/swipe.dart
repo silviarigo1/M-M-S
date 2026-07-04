@@ -97,7 +97,7 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
-  void endAndDeleteCurrentTrip() {
+  /*void endAndDeleteCurrentTrip() {
     if (_selectedTripData != null) {
       trips.remove(_selectedTripData); 
       _selectedTripData = null; 
@@ -108,7 +108,7 @@ class ResultSwipe extends ChangeNotifier{
     checkedPlaces.clear(); 
     
     notifyListeners(); 
-  }
+  }*/
 
   void tipPlaceCheck(int index) {
     if (checkedPlaces.contains(index)) {
