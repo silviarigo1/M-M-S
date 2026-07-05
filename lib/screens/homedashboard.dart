@@ -204,7 +204,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         final sharedPreferences = snapshot.data!;
                         stepGoal = sharedPreferences.getInt('StepsAim') ?? 10000;
                       }
-                        return Container(
+                        return dataProvider.stepsTotal == 0 
+                        ? const Center(child: CircularProgressIndicator())
+                        : 
+
+                        Container(
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
                             borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
@@ -256,7 +260,9 @@ SizedBox(width: 2),
                 //Sleep Quality indicator
                 Column(
                   children: [
-                    Container(
+                    dataProvider.punteggioFinale == 0 
+                    ? const Center(child: CircularProgressIndicator())
+                    : Container(
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
                             borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
@@ -299,7 +305,9 @@ SizedBox(width: 2),
         const SizedBox(height: 10),
         
         Column(children: [
-          Container(
+          dataProvider.HRToday == 60 && dataProvider.meanHR == 0.0
+            ? const Center(child: CircularProgressIndicator())
+            : Container(
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
                             borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
@@ -456,12 +464,14 @@ SizedBox(width: 2),
         ),*/
 
         const SizedBox(height: 15),
-
-        Column(
+        dataProvider.currentBattery == 0 
+            ? const Center(child: CircularProgressIndicator())
+        : Column(
           children: [
+        
             Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
+              SizedBox(height: 10),
+              WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
             ],
           ),
       ],
