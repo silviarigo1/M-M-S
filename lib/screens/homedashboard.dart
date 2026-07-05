@@ -35,21 +35,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
           if (dataProvider.stepsTotal == 0 && dataProvider.sleepHours == 0.0 && dataProvider.currentBattery == 0 && dataProvider.HRToday == 0.0 && dataProvider.meanHR == 0.0 ) {
               return const Center(child: CircularProgressIndicator());
             }  
-            /*
-            final double currentSteps = dataProvider.stepsTotal.toDouble();
-            final double currentTiredness = dataProvider.tiredness;
-            final double currentEnergy = 1 - currentTiredness;
-
-            int currentPile;
-            if (currentEnergy > 0.9) {
-              currentPile = 10;
-            } else if (currentEnergy < 0.15) {
-              currentPile = 1;
-            } else {
-              currentPile = (currentEnergy / 0.1).round();
-            }
-        Provider.of<DataProvider>(context, listen: false).saveBattery(currentPile);*/
-        
+            
         double currentSteps = dataProvider.stepsTotal.toDouble();
         
         int currentPile = dataProvider.currentBattery;
@@ -345,18 +331,18 @@ SizedBox(width: 2),
                       Text("${dataProvider.meanHR.toInt()} BPM", style: const TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       if (dataProvider.HRToday > dataProvider.meanHR) 
-                            const Text('Oggi il tuo battito è sopra la tua media!',
+                            const Text('Today your heart rate is above your average!',
                                                     style: TextStyle(fontSize: 10, color: Colors.black87),
                                                   )
                             else if (dataProvider.HRToday < dataProvider.meanHR) 
                                   const Text(
-                                                          'Oggi il tuo battito è sotto la media!',
+                                                          'Today your heart rate is below your average!',
                                                           style: TextStyle(fontSize: 10, color: Colors.black87),
                                                         )
                                                       
                             else 
                                        const Text(
-                                                      'Oggi il tuo battito è nella tua media.',
+                                                      'Today your heart rate is in your average.',
                                                       style: TextStyle(fontSize: 10, color: Colors.black87),
                                                     )
                                                   

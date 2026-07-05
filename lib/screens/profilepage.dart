@@ -21,7 +21,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(children: [
         const SizedBox(height:20),
         Row( 
@@ -154,10 +154,10 @@ class _ProfileState extends State<Profile> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text("Logout"),
-                        content: const Text("Sei sicuro di voler uscire?"),
+                        content: const Text("Are you sure you want to logout?"),
                         actions: [
                           TextButton(
-                            child: const Text("Annulla"),
+                            child: const Text("Cancel"),
                             onPressed: () {
                               Navigator.of(context).pop(); 
                             },
