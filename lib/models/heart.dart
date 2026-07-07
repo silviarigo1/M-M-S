@@ -1,3 +1,5 @@
+// This is a model class for representing heart rate data. It includes fields for the time of the measurement, the heart rate value, and an error margin. 
+
 import 'package:intl/intl.dart';
 
 class RHeartRate {
@@ -7,7 +9,6 @@ class RHeartRate {
 
   RHeartRate({required this.time, required this.value, required this.error});
 
-  // Costruttore corretto senza double.parse()
   RHeartRate.fromJson(String date, Map<String, dynamic> json) :
       time = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
       // Visto che sono già double nel JSON, facciamo il cast sicuro tramite num

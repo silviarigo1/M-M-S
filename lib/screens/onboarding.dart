@@ -1,6 +1,6 @@
-//This is the onboarding page of the app, where the user can insert some personal data that 
-//will be used to personalize the app experience. The data are stored in SharedPreferences and 
-//can be edited later in the settings page. The user can also skip this page and go directly to the home page.
+// This is the onboarding page of the app, where the user can insert some personal data that 
+// will be used to personalize the app experience. The data are stored in SharedPreferences and 
+// can be edited later in the settings page. The user can also skip this page and go directly to the home page.
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

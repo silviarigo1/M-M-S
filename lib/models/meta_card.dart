@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // Import fondamentale per leggere lo stato
-import '../models/places.dart';
-import '../models/swipe.dart'; // Assicurati che il percorso del tuo ResultSwipe sia corretto
+// This file defines a MetaCardItem widget that represents a card in a list. 
+// Each card displays an image, title, cost, and a checkbox to mark it as completed. 
+// The card's appearance changes based on whether it is completed or not, including opacity and shadow elevation. 
+// The widget uses the Provider package to manage state and read the completion status of each card. 
 
-// --- WIDGET CARD AUTONOMO (Gestisce opacità e checkbox di ogni singola riga) ---
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; 
+import '../models/places.dart';
+import '../models/swipe.dart'; 
+
 class MetaCardItem extends StatelessWidget {
   final int indexDellaMeta;
   final bool isPari;
@@ -18,9 +22,10 @@ class MetaCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final provider = Provider.of<ResultSwipe>(context);
-    
     final bool isCompleted = provider.checkedPlaces.contains(indexDellaMeta);
-
+    
+    // This is done to show the card in different positions based on whether the index is even or odd, 
+    // creating a staggered effect in the list.
     return Padding(
       padding: EdgeInsets.only(
         left: isPari ? 10 : 60, 
@@ -31,7 +36,7 @@ class MetaCardItem extends StatelessWidget {
       child: Opacity(
         opacity: isCompleted ? 0.4 : 1.0, 
         child: Card(
-          elevation: isCompleted ? 1 : 4, // Abbassa l'ombra se completato
+          elevation: isCompleted ? 1 : 4, 
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15)),
@@ -39,7 +44,8 @@ class MetaCardItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
             child: Row(
               children: [
-                // 1. IMMAGINE (Leading)
+
+                // IMAGE
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
@@ -50,7 +56,7 @@ class MetaCardItem extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                
+                // TITLE AND COST
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +67,6 @@ class MetaCardItem extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          // Sbarra il testo se l'obiettivo è completato
                           decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
                           color: isCompleted ? Colors.grey : Colors.black,
                         ),
@@ -70,19 +75,19 @@ class MetaCardItem extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,   
                         children: [ 
-                          // Testo dinamico
                           Text(Places.batt[indexDellaMeta] == -1 
                             ? '+1' 
                             : "Cost: ${Places.batt[indexDellaMeta]}"
                           ),
                           const SizedBox(width: 2),
-                          // Icona con colore dinamico
+                          
+                          // ICON WITH COLOR BASED ON BATTERY LEVEL
                           Icon(
                             Icons.battery_charging_full_outlined, 
                             size: 18,
                             color: Places.batt[indexDellaMeta] == -1
-                              ? const Color.fromARGB(255, 82, 198, 40)  // Verde
-                              : const Color.fromARGB(255, 198, 40, 40), // Rosso
+                              ? const Color.fromARGB(255, 82, 198, 40)  
+                              : const Color.fromARGB(255, 198, 40, 40), 
                           ),
                         ],
                       ),
@@ -92,12 +97,11 @@ class MetaCardItem extends StatelessWidget {
                 
                 const SizedBox(width: 8),
 
-                // 3. CHECKBOX (Trailing)
+                // CHECKBOX 
                 Checkbox(
                   value: isCompleted,
                   activeColor: Colors.lightGreen,
                   onChanged: (bool? value) {
-                  
                     provider.tipPlaceCheck(indexDellaMeta);
                   },
                 ),

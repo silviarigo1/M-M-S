@@ -1,4 +1,9 @@
-// This model is used to store the data of the sleep from a Json file. It contains the main class Sleep, which has a Levels object and a SleepSummary object. The Levels object contains a list of SleepStageData objects, which represent the different stages of sleep. The SleepSummary object contains information about the different stages of sleep, such as the number of times the user was in each stage and the total time spent in each stage. The SleepStageData object contains information about a specific stage of sleep, such as the start time, end time, and duration of the stage.
+// This model is used to store the data of the sleep from a Json file. 
+//It contains the main class Sleep, which has a Levels object and a SleepSummary object. 
+//The Levels object contains a list of SleepStageData objects, which represent the different stages of sleep. 
+//The SleepSummary object contains information about the different stages of sleep, such as 
+//the number of times the user was in each stage and the total time spent in each stage. 
+//The SleepStageData object contains information about a specific stage of sleep, such as the start time, end time, and duration of the stage.
 import 'package:intl/intl.dart';
 
 // --- CLASSE PRINCIPALE (RADICE) ---

@@ -1,3 +1,8 @@
+// This file contains the TravelCard class, which is responsible for creating a list of cards 
+// based on the data provided in the Places class. Each card displays information about a travel destination, 
+// including its title, image, description, and energy level (represented by battery icons).
+// They are used in the Options page of the app, where users can swipe through the available destinations and save the ones they like.
+
 import 'package:flutter/material.dart';
 import './places.dart';
 
@@ -23,7 +28,8 @@ class TravelCard {
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
-            // Intestazione
+            
+            // TITLE
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(16),
@@ -38,12 +44,12 @@ class TravelCard {
                     ),
                   ),
                 ),
-                  SizedBox(width: 8), 
-                  //emoji(Places.mapDest["pile"]![i]), 
+                  SizedBox(width: 8),  
                 ],
               ),
             ),
-            // Immagine
+
+            // IMAGE
             Container(
               color: Colors.grey[200],
               width: double.infinity,
@@ -53,7 +59,8 @@ class TravelCard {
                 fit: BoxFit.cover,
               ),
             ),
-            // Descrizione
+
+            // DESCRIPTION
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -73,10 +80,8 @@ class TravelCard {
             const Divider(
               height: 15,
             ),
-            /*WidgetEnergia(
-              livelloEnergia: Places.mapDest["pile"]![i], 
-              livelloMassimo: 3,
-            ),*/
+
+            // ENERGY LEVEL
             emoji(Places.mapDest["pile"]![i]),
             SizedBox(height: 8),
             
@@ -92,17 +97,15 @@ class TravelCard {
   }
 }
 
-
+// This function generates a row of battery icons based on the provided energy level (numPile).
 Widget emoji(int numPile) {
-  // Definiamo l'icona base per non doverla riscrivere mille volte
   const batteryIcon = Icon(Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 198, 40, 40));
   const batteryIcon2 = Icon(Icons.battery_charging_full_outlined, color: Color.fromARGB(255, 82, 198, 40));
   if (numPile == -1){
       return  batteryIcon2;
-      
   }
   return Row(
-    mainAxisSize: MainAxisSize.min, // Fondamentale per non occupare tutta la riga
+    mainAxisSize: MainAxisSize.min, 
     children: List.generate(numPile, (index) => batteryIcon),
   );
 }

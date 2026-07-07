@@ -1,6 +1,7 @@
-//This is the home dashboard of the app, where the user can see the main features of the app and navigate to other pages.
-//There is a dropdown menu that allows the user to choose the city of the trip, and a row of circles that show the user's steps and tiredness level.
-//There is also a battery widget that shows the user's energy level, which is calculated based on the tiredness level.
+// This is the home dashboard of the app, where the user can see the main features of the app and navigate to other pages.
+// There is a dropdown menu that allows the user to choose the city of the trip, and a row of circles that show the user's steps and sleep quality.
+// It's also indicated the user's heart rate and the mean heart rate of the last 7 days.
+// There is also a battery widget that shows the user's energy level, which is calculated based on the tiredness level.
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
         return Column(
           children: [
             const SizedBox(height: 15),
-            //Hello User
+            
+            // HELLO USER
             Align(
               alignment: Alignment.centerLeft,
               child: FutureBuilder(
@@ -93,24 +95,22 @@ class _HomeDashboardState extends State<HomeDashboard> {
             ),
             ),
             const SizedBox(height: 15),
-            // Dropdown menu for choosing the city and help icon
+
+            // DROPDOWN MENU FOR CHOOSING CITY
             SizedBox(
               width: double.infinity,
               height: 60,
               child: Row(
                 children: [
-                  // 1. Compensatore a sinistra: serve a bilanciare l'ingombro dell'icona a destra
-                  // così il dropdown rimane matematicamente al centro dello schermo.
                   const Expanded(
                     child: SizedBox.shrink(),
                   ),
 
-                  // 2. Il tuo dropdown originale (mantiene la sua dimensione al centro)
                   DropdownButton2<String>(
                     isExpanded: true,
                     buttonStyleData: ButtonStyleData(
                       height: 60,
-                      width: 220, // La larghezza fissa che hai scelto
+                      width: 220, 
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
@@ -156,8 +156,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     },
                   ),
 
-                  // 3. Spazio fluido a destra: prende TUTTO lo spazio rimanente fino al margine destro
-                  // e posiziona l'icona esattamente al centro di questo spazio vuoto.
+                  // HELP ICON
                   Expanded(
                     child: Center(
                       child: IconButton(
@@ -189,7 +188,6 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
             const SizedBox(height: 15),
                   
-            //Steps and tiredness indicators
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -208,6 +206,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                         ? const Center(child: CircularProgressIndicator())
                         : 
 
+                        // STEP
                         Container(
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
@@ -256,16 +255,17 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     ),
                   ],
                 ),
-SizedBox(width: 2),
-                //Sleep Quality indicator
+                SizedBox(width: 2),
+
+                // SLEEP
                 Column(
                   children: [
                     dataProvider.finalScore == 0 
                     ? const Center(child: CircularProgressIndicator())
                     : Container(
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 234, 232, 232), // Colore di sfondo leggermente più chiaro
-                            borderRadius: BorderRadius.circular(16.0), // Angoli arrotondati
+                            color: const Color.fromARGB(255, 234, 232, 232), 
+                            borderRadius: BorderRadius.circular(16.0), 
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                           alignment: Alignment.center,
@@ -303,7 +303,8 @@ SizedBox(width: 2),
           ],
         ),
         const SizedBox(height: 10),
-        
+
+        // HEART RATE
         Column(children: [
           dataProvider.HRToday == 60 && dataProvider.meanHR == 0.0
             ? const Center(child: CircularProgressIndicator())
@@ -340,135 +341,31 @@ SizedBox(width: 2),
                       const SizedBox(height: 5),
                       if (dataProvider.HRToday > dataProvider.meanHR) 
                             const Text('Today your heart rate is above your average!',
-                                                    style: TextStyle(fontSize: 10, color: Colors.black87),
-                                                  )
-                            else if (dataProvider.HRToday < dataProvider.meanHR) 
-                                  const Text(
-                                                          'Today your heart rate is below your average!',
-                                                          style: TextStyle(fontSize: 10, color: Colors.black87),
-                                                        )
+                                        style: TextStyle(fontSize: 10, color: Colors.black87),
+                                        )
+                      else if (dataProvider.HRToday < dataProvider.meanHR) 
+                            const Text('Today your heart rate is below your average!',
+                                        style: TextStyle(fontSize: 10, color: Colors.black87),
+                                      )
                                                       
-                            else 
-                                       const Text(
-                                                      'Today your heart rate is in your average.',
-                                                      style: TextStyle(fontSize: 10, color: Colors.black87),
-                                                    )
+                      else 
+                            const Text('Today your heart rate is in your average.',
+                                        style: TextStyle(fontSize: 10, color: Colors.black87),
+                                      )
                                                   
                     ],)
-                    
 
                     ],
                     ),
                     )
         ],),
 
-        /*Column(
-          children: [
-            // Questo è il widget del Cuore Cliccabile
-            InkWell(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  IconButton(
-                        icon: const Icon(Icons.favorite, size: 80, color: Color(0xFFE54B64)),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Heart Rate'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text('Current HR: ${dataProvider.HRToday.toStringAsFixed(1)}'),
-                                  Text('Average HR: ${dataProvider.meanHR.toStringAsFixed(1)}'),
-                                  const SizedBox(height: 10),
-                                  if (dataProvider.HRToday > dataProvider.meanHR) 
-                                       Row(
-                                              children: [
-                                                const Icon(Icons.info_outline, color: Colors.amber),
-                                                const SizedBox(width: 10),
-                                                const Expanded(
-                                                  child: Text(
-                                                    'Oggi il tuo battito è sopra la tua media. Prenditi una pausa!',
-                                                    style: TextStyle(fontSize: 13, color: Colors.black87),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                       else if (dataProvider.HRToday < dataProvider.meanHR) 
-                                                Row(
-                                                    children: [
-                                                      const Icon(Icons.info_outline, color: Colors.lightGreen),
-                                                      const SizedBox(width: 10),
-                                                      const Expanded(
-                                                        child: Text(
-                                                          'Oggi il tuo battito è sotto la media!',
-                                                          style: TextStyle(fontSize: 13, color: Colors.black87),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                       else 
-                                        Row(
-                                                children: [
-                                                  const Icon(Icons.info_outline, color: Colors.blue),
-                                                  const SizedBox(width: 10),
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Oggi il tuo battito è nella tua media.',
-                                                      style: TextStyle(fontSize: 13, color: Colors.black87),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                      
-                                                                    ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text("Close", style: TextStyle(color: Colors.lightGreen)),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                  ),
-                  Positioned(
-                    top: 30, // Regola la posizione verticale del testo nel cuore
-                    child: Column(
-                      children: [
-                         Text(
-                          '${dataProvider.HRToday.toInt()}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'BPM',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
-                            fontSize: 8,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                ),
-        ),
-        ],
-        ),*/
-
+        // BATTERY
         const SizedBox(height: 15),
         dataProvider.currentBattery == 0 
             ? const Center(child: CircularProgressIndicator())
         : Column(
           children: [
-        
             Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),

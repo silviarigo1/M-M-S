@@ -1,4 +1,5 @@
 //This is the login page of the app. It contains two text fields for the username and password, and a login button.
+// If the onboarding has not been completed, the user is redirected to the presentation page. Otherwise, the user is redirected to the home page.
 
 import 'package:flutter/material.dart';
 import 'package:mms_app/providers/data_provider.dart';
@@ -36,6 +37,7 @@ class LoginPage extends StatelessWidget {
               ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:100.0),
+              // LOGO IMAGE
               child: Column(children: [
               Image.asset(
                 'lib/images/logonuovo.jpeg',
@@ -47,7 +49,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-
+              // USERNAME 
                 TextField(
               controller: userController,
               decoration: InputDecoration(
@@ -62,7 +64,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-
+              // PASSWORD
               TextField(
               controller: passwordController,
               obscureText: true,
@@ -89,10 +91,7 @@ class LoginPage extends StatelessWidget {
               ),
               child: Text('Login'),
               onPressed: () async {
-                    // check if credentials are correct
                     final result = await impact.getAndStoreTokens(userController.text, passwordController.text);
-                    // If correct, store the username and password in SharedPreferences
-                    // and navigate to the PresentationPage screen
                     if (result == 200) {
                       final sp = await SharedPreferences.getInstance();
                       await sp.setBool('isUserLogged', true);
@@ -100,7 +99,6 @@ class LoginPage extends StatelessWidget {
                       await sp.setString('password', passwordController.text);
                       final onboarding_completed = await sp.getBool('onboarding_completed');
                       if(onboarding_completed == null || onboarding_completed == false){
-                        //pushReplacement to remove the login screen from the stack
                         Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -118,7 +116,6 @@ class LoginPage extends StatelessWidget {
                             builder: (context) => ChangeNotifierProvider<DataProvider>(
                             create: (context) => DataProvider(),
                             child: HomeScreen(),
-                            
                           ),
                           ),
                         );

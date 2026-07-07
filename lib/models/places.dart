@@ -1,11 +1,12 @@
+// This model is used to store the data of the places, including their titles, images, descriptions, and other relevant information.
+// It also contains a method to calculate the battery level of each place 
 
 
 class Places{
-
   static const List<String> cities = [
     "Padova",
-    
   ];
+
   static const List<String> images = [
     "lib/images/simbolo_padova.png",
   ];
@@ -16,12 +17,11 @@ class Places{
   static const List<bool> _opened = [false, true, false, false,  true, false, true, false, true, false, false, false, false];
   static const List<bool> _charge = [false, true, false, true, false, false,false, false,false, true,false, false, true];
 
-  // 2. Creiamo la lista batt calcolandola direttamente dai dati sopra
+  // The battery of each place is calculated based on the steps, hours, crowdedness, opened status, and charge status.
+  // It recalls the pile() method
   static List<int> batt = List.generate(_steps.length, (i) {
-    // Qui chiami la tua funzione pile() passando i dati i-esimi
     return pile(_steps[i], _hours[i], _crowded[i], _opened[i], _charge[i]);
   });
-
 
  static Map<String, List<dynamic>> mapDest = {"title": ["Cappella degli Scrovegni", 
     "Giardini dell'Arena",
@@ -73,41 +73,6 @@ class Places{
 
 };
 
-
-double calcoloDelta(int steps, double hour, int crowded, bool opened) {
-  if (hour <= 0) return 0; // Evita divisione per zero
-
-  int cp = 25; // Soglia Critica (%HRR)
-  double durationMinutes = hour * 60;
-  double stepsPerMin = steps / durationMinutes;
-  
-  double regrHRR = (0.4 * stepsPerMin) + 10;  // regressione lineare "forzata"
-  double adjHRR = regrHRR + (crowded * 0.5) + (opened ? 5 : 0);  // aggiusto con coefficineti per affollamento e apertura
-
-  double percHRR = adjHRR.round().toDouble(); // Arrotonda al numero intero più vicino
-
-  double delta = 0; // inizializzo delta a 0
-  
-  if (percHRR > cp) { 
-    // sfozo sopra-soglia ---> affaticamento
-    delta = (percHRR - cp) * durationMinutes; 
-  } 
-  else if (percHRR > 20) {  
-    // Zona Neutra 
-    delta = 0; 
-  } 
-  else {
-    // sforzo sotto-soglia --> recupero
-    delta = 2.4 * (percHRR - cp) * durationMinutes;
-  }
-  
-  return delta;
-}
-
-
-
-
-
 static int pile(int steps, double hour, int crowded, bool opened, bool charge) {
   double points = 0;
   double intensity = steps / hour;
@@ -145,7 +110,4 @@ static int pile(int steps, double hour, int crowded, bool opened, bool charge) {
   
   else{
     return 1;}} 
-
-
-
 }
