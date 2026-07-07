@@ -1,6 +1,6 @@
-//This is the home page of the app, where the user can see the main features of the app and navigate to other pages.
-//There is a bottom navigation bar that allows the user to navigate between the home page, the trips page and 
-//the profile page. By default, the home page is selected and the user can see the home dashboard.
+// This is the home page of the app, where the user can see the main features of the app and navigate to other pages.
+// There is a bottom navigation bar that allows the user to navigate between the home page, the trips page and 
+// the profile page. By default, the home page is selected and the user can see the home dashboard.
 
 import 'package:mms_app/screens/homedashboard.dart';
 import 'package:flutter/material.dart';

@@ -21,7 +21,6 @@ class ResultSwipe extends ChangeNotifier{
   List<Container> swipes = [];
   List<int> savedIndices = [];
   List<int> nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index);
-  //int currentBattery = 0;
 
   List<Trip> trips = [];
   String selectedCity = "";

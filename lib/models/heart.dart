@@ -11,7 +11,6 @@ class RHeartRate {
 
   RHeartRate.fromJson(String date, Map<String, dynamic> json) :
       time = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-      // Visto che sono già double nel JSON, facciamo il cast sicuro tramite num
       value = (json["value"] as num).toDouble(),
       error = (json["error"] as num).toDouble();
 
