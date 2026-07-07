@@ -1,3 +1,4 @@
+// This model is used to store the data of the steps: date/time and value of steps.
 import 'package:intl/intl.dart';
 
 class Steps{

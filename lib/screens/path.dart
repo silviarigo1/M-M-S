@@ -1,6 +1,6 @@
-// This is the page where the user can see the destinations he/she has selected and can remove them if he/she wants.
-// When the user presses the button, the app will save the selected destinations and navigate to the home page and 
-// the trip will be saved in the travel page. 
+// This page shows the user the destinations they have selected and allows them to remove any they no longer want.
+// When the user presses the button, the app will save the selected destinations, navigate to the home page 
+// and save the trip to the travel page. 
 
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';

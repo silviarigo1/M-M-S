@@ -1,7 +1,11 @@
+// This model is used to store the data of the swipes and the trips. 
+// It is a ChangeNotifier that notifies the listeners when the data changes.
+
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
 
-
+// The Trip class represents a trip with a title, a list of destinations (as Containers), 
+// and a list of indices corresponding to the destinations.
 class Trip {
   String title;
   List<Container> destinations;
@@ -29,39 +33,45 @@ class ResultSwipe extends ChangeNotifier{
   bool isOngoing = false;
   List<int> checkedPlaces = [];
 
+// This method is used to start a trip. It sets the selected trip data and notifies the listeners.
   void startTrip(Trip trip) {
     _selectedTripData = trip;
     isOngoing = true;
     notifyListeners();
   }
 
+// This method is used to select a trip. It adverts the listeners that the selected trip data has changed.
   void setSelectedCity(String city) {
     selectedCity = city;
-    notifyListeners(); // Avvisa tutti che la città è cambiata
+    notifyListeners(); 
   }
 
+// This method is used to select a trip by its index. It adverts the listeners that the selected city index has changed.
   void setSelectedIndexCity(int index) {
     selectedIndexCity = index;
-    notifyListeners(); // Avvisa tutti che la città è cambiata
+    notifyListeners(); 
   }
 
-
+// This method is used to save a swipe. It adds the swipe to the list of swipes and notifies the listeners.
   void saveSwipe(Container toAdd){
     swipes.add(toAdd);
     notifyListeners();
   }
 
+// This method is used to save an index. 
+// It adds the index to the list of saved indices and removes it from the list of non-saved indices. 
   void saveIndex(int index){
     savedIndices.add(index);
     nonSavedIndices.remove(index);
-
     notifyListeners();
   }
   
+  // This method is used to save a trip. 
+  // It creates a new trip with the current swipes and saved indices, adds it to the list of trips, and clears the swipes and indices.
   void savePlaces() {
     if (swipes.isNotEmpty) {
       Trip newtrip = Trip(
-        title: "Trip to $selectedCity ${trips.length + 1}", // Titolo dinamico basato sulla città e sul numero di viaggi
+        title: "Trip to $selectedCity ${trips.length + 1}", // Dynamic title based on the selected city and the number of trips
         destinations: List.from(swipes),
         indices: List.from(savedIndices),
       );
@@ -69,12 +79,13 @@ class ResultSwipe extends ChangeNotifier{
     swipes.clear();
     savedIndices.clear();
     nonSavedIndices.clear();
-    nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index);
+    nonSavedIndices = List.generate(Places.mapDest["title"]!.length, (index) => index); // Reset nonSavedIndices to include all indices again
     notifyListeners();  
     }
     
   }
 
+// This method is used to clear all swipes and indices.
   void clearSwipes() {
     swipes.clear();
     savedIndices.clear();
@@ -83,6 +94,7 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
+// This method is used to remove a destination from the list of saved destinations.
   void trashDest(int index) {
     int originalIndex = savedIndices[index];
     swipes.removeAt(index);
@@ -91,25 +103,14 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
+// This method is used to end a trip. 
   void endTrip() {
     _selectedTripData = null;
     isOngoing = false;
     notifyListeners();
   }
 
-  /*void endAndDeleteCurrentTrip() {
-    if (_selectedTripData != null) {
-      trips.remove(_selectedTripData); 
-      _selectedTripData = null; 
-    }
-    isOngoing = false; 
-    
-    // Svuota i check quando il viaggio finisce!
-    checkedPlaces.clear(); 
-    
-    notifyListeners(); 
-  }*/
-
+// This method is used to check or uncheck a place in the list of checked places.
   void tipPlaceCheck(int index) {
     if (checkedPlaces.contains(index)) {
       checkedPlaces.remove(index);
@@ -119,8 +120,4 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
-  /*void saveBattery(int battery) {
-    currentBattery = battery;
-    notifyListeners();
-  }*/
 }

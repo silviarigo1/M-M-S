@@ -260,7 +260,7 @@ SizedBox(width: 2),
                 //Sleep Quality indicator
                 Column(
                   children: [
-                    dataProvider.punteggioFinale == 0 
+                    dataProvider.finalScore == 0 
                     ? const Center(child: CircularProgressIndicator())
                     : Container(
                           decoration: BoxDecoration(
@@ -283,17 +283,17 @@ SizedBox(width: 2),
                           height: 120,
                           child: CircularProgressIndicator(
                             // ignore: deprecated_member_use
-                            value: dataProvider.punteggioFinale / 100,
+                            value: dataProvider.finalScore / 100,
                             strokeWidth: 10,
                             backgroundColor: Colors.grey.withValues(alpha: 0.3),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Color.lerp(Colors.red, Colors.lightGreen, dataProvider.punteggioFinale / 100) ?? Colors.grey,
+                              Color.lerp(Colors.red, Colors.lightGreen, dataProvider.finalScore / 100) ?? Colors.grey,
                             ),
                             strokeCap: StrokeCap.round,
                           ),
                         ),
                         Text(
-                          "${(dataProvider.punteggioFinale).toInt()}%",
+                          "${(dataProvider.finalScore).toInt()}%",
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ],
