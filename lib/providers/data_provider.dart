@@ -429,9 +429,9 @@ void saveBattery(int battery) {
     }
 
     // Define the date range (7 days)
-    final start = DateTime.now().subtract(Duration(days: 2));
+    final start = DateTime.now().subtract(Duration(days: 8));
     final startDate = DateFormat('yyyy-MM-dd').format(start);
-    final end = DateTime.now().subtract(Duration(days: 8));
+    final end = DateTime.now().subtract(Duration(days: 2));
     final endDate = DateFormat('yyyy-MM-dd').format(end);
     
     final url = '${Impact.baseUrl}${Impact.heartRateEndpoint}${Impact.patientUsername}/daterange/start_date/$startDate/end_date/$endDate/';
