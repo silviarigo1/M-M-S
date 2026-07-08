@@ -1,3 +1,8 @@
+// This is the aims page of the app, where the user can set his/her aims for the number of steps he/she wants to take each day.
+// The user can also edit this information and save it permanently in the shared preferences.
+
+
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +14,7 @@ class Aims extends StatefulWidget {
 }
 
 class AimsState extends State<Aims> {
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _stepsAimController = TextEditingController();
   final sharedPreferences = SharedPreferences.getInstance();
@@ -16,7 +22,7 @@ class AimsState extends State<Aims> {
 @override
   void initState() {
     super.initState();
-    _loadStepsAim(); // Carica i dati salvati quando apri la pagina
+    _loadStepsAim(); 
   }
 
   Future<void> _loadStepsAim() async {
@@ -38,7 +44,7 @@ class AimsState extends State<Aims> {
         backgroundColor: Colors.lightGreen,
       ),
       body: Form(
-        key: _formKey, // Colleghiamo la chiave al Form
+        key: _formKey, 
         child:  SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(

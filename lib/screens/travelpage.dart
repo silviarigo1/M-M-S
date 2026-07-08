@@ -1,7 +1,8 @@
-//This is the travel page of the app, where the user can see the trips they have saved and start a trip.
-//If you click on a trip, you can see the stages of the trip and the energy cost of each stage. 
-//You can also start a trip by clicking on the "START" button.
-//When you click start, the app will propose trip suggestions based on the user's tiredness level and the energy cost of the trip.
+// This is the travel page of the app, where the user can see an overview of the trips they have saved.
+// If the user clicks on a trip, he/she can see all the selected attraction and each associated energy cost.
+// The "START" buttons allows to begin the trip and redirect the user to the suggestion page, 
+// where the app will propose trip suggestions based on the user's tiredness level.
+
 
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
@@ -31,13 +32,9 @@ class TravelPage extends StatelessWidget {
                   itemBuilder: (context, tripIndex) {
                     final trip = provider.trips[tripIndex];
                     int index = provider.selectedIndexCity;
-                    bool isFaded = provider.isOngoing && provider.currentTrip != trip;
+              
 
-                    return IgnorePointer(
-                      ignoring: isFaded,
-                      child: Opacity(
-                        opacity: isFaded ? 0.5 : 1.0,
-                      child: Card(
+                    return Card(
                       elevation: 5,
                       margin: EdgeInsets.zero,
                       shape: RoundedRectangleBorder(
@@ -96,12 +93,12 @@ class TravelPage extends StatelessWidget {
                                           trailing: Row(
                                             mainAxisSize: MainAxisSize.min,   
                                             children: [ 
-                                              // Testo dinamico
+                                              
                                               Text(Places.batt[indexOriginale] == -1 
                                                 ? '+1' 
                                                 : "${Places.batt[indexOriginale]}"
                                               ),
-                                              // If the destination lets you recharge, show a green icon, otherwise show a red icon
+                                              
                                               Icon(
                                                 Icons.battery_charging_full_outlined, 
                                                 color: Places.batt[indexOriginale] == -1
@@ -169,9 +166,7 @@ class TravelPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
-            ); 
+                );   
           },
                   separatorBuilder: (context, index) {
                     return const SizedBox(

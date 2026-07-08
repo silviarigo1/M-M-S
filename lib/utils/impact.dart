@@ -1,3 +1,12 @@
+// This page contains the Impact class, which is used to interact with the Impact API. 
+// As instance variables, it contains: the base url of the API, the endpoints of the API, 
+// the username and the password of the user (that are taken from the login page),
+// and the username of the patient.
+// As methods it contains: refreshTokens, getAndStoreTokens and requestData.
+// The first two methods are used to get and refresh the JWT tokens, while the last one is used to request 
+// the step-related data of the patient.
+
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
@@ -25,6 +34,7 @@ class Impact{
 
 //This method allows to refresh the stored JWT in SharedPreferences
   Future<int> refreshTokens() async {
+
     //Create the request
     final url = Impact.baseUrl + Impact.refreshEndpoint;
     final sp = await SharedPreferences.getInstance();
@@ -44,11 +54,11 @@ class Impact{
         await sp.setString('refresh', decodedResponse['refresh']);
       } 
 
-      //Just return the status code
       return response.statusCode;
     }
     return 401;
-  } //_refreshTokens
+  } // _refreshTokens
+
 
   Future<int> getAndStoreTokens(String username, String password ) async {
 
@@ -60,7 +70,7 @@ class Impact{
     print('Calling: $url');
     final response = await http.post(Uri.parse(url), body: body);
 
-    //If response is OK, decode it and store the tokens. Otherwise do nothing.
+    // If response is OK, decode it and store the tokens. Otherwise do nothing.
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
       final sp = await SharedPreferences.getInstance();
@@ -73,14 +83,11 @@ class Impact{
   } //_getAndStoreTokens
 
 
-
-
 Future<List<Steps>?> requestData() async {
-    //Initialize the result
+    
     List<Steps>? result;
     
-
-    //Get the stored access token (Note that this code does not work if the tokens are null)
+    //Get the stored access token
     final sp = await SharedPreferences.getInstance();
     var access = sp.getString('access');
 
@@ -91,7 +98,6 @@ Future<List<Steps>?> requestData() async {
     }//if
 
     //Create the (representative) request
-    //final day = '2024-05-04';
     final ieri = DateTime.now().subtract(Duration(days: 1));
     final day = DateFormat('yyyy-MM-dd').format(ieri);
     final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$day/';

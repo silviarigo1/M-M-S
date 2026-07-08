@@ -1,3 +1,8 @@
+// This is the account page of the app, where the user can see a recap of some of the information he/she has given 
+// in the onboarding page. Precisely, the user can see his/her name, surname, date of birth and sex.
+// Here the user can also edit this information and save them permanently in the shared preferences.
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,14 +34,14 @@ class AccountState extends State<Account> {
     List<String> allowedGenders = ['M', 'F', 'Other'];
 
     setState(() {
-      // Riempio i controller con i dati salvati o stringa vuota se non esistono
+      
       _nameController.text = sp.getString('Name') ?? '';
       _surnameController.text = sp.getString('Surname') ?? '';
       _dateController.text = sp.getString('Date') ?? '';
       if (allowedGenders.contains(savedGender)) {
       _selectedGender = savedGender;
         } else {
-          _selectedGender = null; // Se non è valido, resettiamo a null (nessuna selezione)
+          _selectedGender = null; 
         }
     });
   }
@@ -55,18 +60,7 @@ class AccountState extends State<Account> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-          /*FutureBuilder(
-          future: SharedPreferences.getInstance(),
-          builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final sharedPreferences = snapshot.data!;
-            // Recuperiamo i valori o assegniamo un default se sono null
-            String nickname = sharedPreferences.getString('Nickname') ?? 'Your nickname';
-            String name = sharedPreferences.getString('Name') ?? 'Name';
-            String surname = sharedPreferences.getString('Surname') ?? 'Surname';
 
-            return Column(
-              children: [*/
                 TextFormField(controller: _nameController, 
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r"[a-zA-ZàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚùûüÿÝ\s']")),
@@ -77,7 +71,9 @@ class AccountState extends State<Account> {
                           }
                           return null;
                         },
-                decoration: InputDecoration(labelText: "Name")),
+                decoration: InputDecoration(labelText: "Name", border: OutlineInputBorder())),
+
+                const SizedBox(height: 15,),
                             
                 TextFormField(controller: _surnameController, 
                         inputFormatters: [
@@ -89,8 +85,10 @@ class AccountState extends State<Account> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(labelText: "Surname",  )),
-                SizedBox(    height: 15,),
+                        decoration: InputDecoration(labelText: "Surname", border: OutlineInputBorder())),
+
+                const SizedBox(height: 15,),
+
                 TextFormField(controller: _dateController, readOnly: true,
                         decoration: const InputDecoration(labelText: 'Date of birth', border: OutlineInputBorder()),
                         onTap: () async {
@@ -106,10 +104,9 @@ class AccountState extends State<Account> {
                             });
                           }
                         }, 
-                             ),
+                  ),
 
-                             SizedBox(    height: 15,
-              ),
+              const SizedBox(height: 15,),
                 DropdownButtonFormField<String>(
                       decoration: const InputDecoration(labelText: 'Sex', border: OutlineInputBorder()),
                       initialValue: _selectedGender,
@@ -122,25 +119,8 @@ class AccountState extends State<Account> {
                       onChanged: (value) => setState(() => _selectedGender = value),
                     ),
               
+        const SizedBox(height: 20),
 
-        
-        
-       /* } else {
-          return Column(
-          children: [
-            TextField(controller: _nameController, decoration: InputDecoration(labelText: "Name", 
-                          hintText: 'Enter your name',)),
-            TextField(controller: _surnameController, decoration: InputDecoration(labelText: "Surname", 
-                          hintText: 'Enter your surname',)),
-            TextField(controller: _dateController, decoration: InputDecoration(labelText: "Date of Birth", 
-                          hintText: 'Enter your date of birth',)),
-            TextField(controller: _selectedGenderController, decoration: InputDecoration(labelText: "Selected Gender", 
-                          hintText: 'Enter your selected gender',)),
-                          hintText: 'Enter your nickname',)),
-          ]);
-          }}),    */ 
-
-        SizedBox(height: 20),
             ElevatedButton(
               child: Text("Save"),
               onPressed: () async {
@@ -166,10 +146,9 @@ class AccountState extends State<Account> {
             })
           ]
         )
-            ));
-            
-            
-    }
+      )
+    );   
+  }
 }
 
 

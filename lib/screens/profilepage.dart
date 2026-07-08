@@ -1,6 +1,6 @@
-//This is the profile page where the user can see his/her profile picture, name and surname.
-//You can also navigate to the account page where you can change your personal data and to the aims page 
-//where you can change your steps aim.
+// This is the profile page, where the user can see his/her profile picture, name and surname.
+// You can also navigate to the account page where you can change your personal data and to the aims page 
+// where you can change your daily steps aim.
 
 import 'package:flutter/material.dart';
 import 'package:mms_app/screens/accountpage.dart';
@@ -35,15 +35,15 @@ class _ProfileState extends State<Profile> {
         ),
         
          GestureDetector(
-            onTap: () => _mostraOpzioniFoto(context), // Funzione per il pop-up
+            onTap: () => _mostraOpzioniFoto(context), 
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
-                color: Colors.grey, // Colore cerchio
+                color: Colors.grey, 
                 shape: BoxShape.circle,
               ),
               child: const Icon(
-                Icons.edit, // Icona matita
+                Icons.edit, 
                 color: Colors.white,
                 size: 10,
               ),
@@ -194,7 +194,6 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-// Function to show the bottom sheet with options to upload or delete the profile picture 
 
 void _mostraOpzioniFoto(BuildContext context) {
   showModalBottomSheet(

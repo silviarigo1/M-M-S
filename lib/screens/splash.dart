@@ -1,5 +1,6 @@
-//This page is the first one that is called when the app is opened. It shows a splash screen with a loading animation and the logo of the app.
-//Then, it checks if the user has still valid tokens. If yes, it navigates to the HomePage, if not, it navigates to the LoginPage.
+// This page is the first screen that is called when the app is opened. 
+// It shows a splash screen with a loading animation and the logo of the app.
+// Then, it checks if the user has still valid tokens. If yes, it navigates to the HomePage, if not, it navigates to the LoginPage.
 
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -26,7 +27,7 @@ class _SplashState extends State<Splash> {
     await Future.delayed(const Duration(seconds: 3, milliseconds: 200),);
     final result = await Impact().refreshTokens();
 
-    if (!mounted) return; // Check if the widget is still mounted before navigating
+    if (!mounted) return; 
     if (result == 200) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
     } else {
@@ -44,7 +45,7 @@ class _SplashState extends State<Splash> {
         children: [ Stack(
           alignment: Alignment.center,
           children: [
-          // This is the circular progress indicator that shows the loading animation. 
+          
           StreamBuilder<double>(
             stream: Stream.periodic(const Duration(milliseconds: 30), (x) => x * 0.01).take(101),
             builder: (context, snapshot) {
@@ -68,25 +69,22 @@ class _SplashState extends State<Splash> {
         ],
       ),
     ),
-
-  );
-  
+  ); 
 }
 
-  // Method for navigation SplashPage -> HomePage
+
   void _toHomePage(BuildContext context) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
   } 
 
-  // Method for navigation SplashPage -> LoginPage
+
   void _toLoginPage(BuildContext context) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: ((context) =>  LoginPage())));
   } 
 
-  // Method for checking if the user has still valid tokens
-  // If yes, navigate to HomePage if not, navigate to LoginPage
+  
   void _checkLogin(BuildContext context) async {
     final result = await Impact().refreshTokens();
     if (result == 200) {

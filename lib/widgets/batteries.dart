@@ -1,10 +1,16 @@
+// This widget is used to display the energy level of the patient in the form of batteries. 
+// For is realization two instances variables are needed: livelloEnergia and livelloMassimo. The first one is the current energy level of the patient, 
+// while the second one is the maximum energy level of the patient. 
+// The actual visualization can be seen in the homepage screen.
+
+
 import 'package:flutter/material.dart';
 
 class WidgetEnergia extends StatelessWidget {
-  final int livelloEnergia;
-  final int livelloMassimo; // Valore da 0 a 10
 
-  // SINTASSI CORRETTA: Usiamo il super.key moderno di Dart 3
+  final int livelloEnergia;
+  final int livelloMassimo; 
+
   const WidgetEnergia({
     super.key, 
     required this.livelloEnergia,
@@ -16,12 +22,12 @@ class WidgetEnergia extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(livelloMassimo, (index) {
-        // Identifica se la batteria in questa posizione deve essere carica o scarica
+        
         final bool isCarica = index < livelloEnergia;
 
         return Expanded(
           child: Padding(
-            // Un piccolissimo padding laterale per non far attaccare le batterie tra loro
+            
             padding: const EdgeInsets.symmetric(horizontal: 2.0), 
             child: Image.asset(
               
@@ -29,8 +35,7 @@ class WidgetEnergia extends StatelessWidget {
                   ? 'lib/images/carica.png' 
                   : 'lib/images/scarica.png',
                   
-              // fit: BoxFit.contain fa in modo che l'immagine si rimpicciolisca 
-              // proporzionalmente per stare dentro lo spazio dell'Expanded senza deformarsi
+
               fit: BoxFit.contain, 
             ),
           ),

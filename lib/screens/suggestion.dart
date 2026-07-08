@@ -1,5 +1,8 @@
-// This is the suggestion page of the app, where the user can see the suggested destinations based on their saved trips,
-// thanks to the proposal function
+// This is the suggestion page of the app, where the user can see the suggested destinations based on their saved attractions.
+// The screen shows the estimated time to complete the suggested destinations and a list of cards representing each destination.
+// At the bottom of the screen, there is a button to end the trip and submit feedback through an NPS survey.
+// The end button redirects to the travelPage.
+
 
 
 import 'dart:math';
@@ -46,7 +49,7 @@ class _SuggestionState extends State<Suggestion> {
           int dispPile = currentPile - 1;
           final trip = provider.currentTrip;
           if (trip == null){
-            return const SizedBox.shrink(); // Return an empty widget if no trip is selected
+            return const SizedBox.shrink(); 
           }
           List<int> indiciSelezionati = proposal(trip, dispPile);
           double hours = 0;
@@ -58,7 +61,7 @@ class _SuggestionState extends State<Suggestion> {
           
           return Column(
             children: [
-              // Estimated time display
+              
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Row(
@@ -78,14 +81,14 @@ class _SuggestionState extends State<Suggestion> {
                 ),
               ),
 
-              // Destinations
+              
               Expanded(
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   itemCount: indiciSelezionati.length,
                   itemBuilder: (context, i) {
                     int indexDellaMeta = indiciSelezionati[i];
-                    // isPari is used to alternate the dispaly of the cards
+                    
                     bool isPari = i % 2 == 0;
                     return MetaCardItem(
                       indexDellaMeta: indexDellaMeta,
@@ -145,11 +148,10 @@ class _SuggestionState extends State<Suggestion> {
                                 });
                               },
                             );
-
+                            provider.endTrip();
+                            
                             if (currentContext.mounted) {
                               
-                              
-                              //Provider.of<ResultSwipe>(currentContext, listen: false).endAndDeleteCurrentTrip();
                               Navigator.of(currentContext).pop();
                             }
                           },
@@ -172,7 +174,7 @@ class _SuggestionState extends State<Suggestion> {
   }
 }
 
-// --- FUNZIONE LOGICA ALGORITMO ---
+
 List<int> proposal(Trip viaggio, int dispPile) {
   List<int> shuffled = List.from(viaggio.indices);
   final randomconSeed = Random(42);
