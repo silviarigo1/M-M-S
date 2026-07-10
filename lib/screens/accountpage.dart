@@ -1,13 +1,10 @@
 // This is the account page of the app, where the user can see a recap of some of the information he/she has given 
-// in the onboarding page. Precisely, the user can see his/her name, surname, date of birth and sex.
+// in the onboarding page. Precisely, the user can see his/her name, surname and sex.
 // Here the user can also edit this information and save them permanently in the shared preferences.
 
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:mms_app/providers/data_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
@@ -20,7 +17,7 @@ class Account extends StatefulWidget {
 class AccountState extends State<Account> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+
   String? _selectedGender;
   final sharedPreferences = SharedPreferences.getInstance();
   
@@ -40,7 +37,6 @@ class AccountState extends State<Account> {
       
       _nameController.text = sp.getString('Name') ?? '';
       _surnameController.text = sp.getString('Surname') ?? '';
-      _dateController.text = sp.getString('Dob') ?? '';
       if (allowedGenders.contains(savedGender)) {
       _selectedGender = savedGender;
         } else {
@@ -90,25 +86,6 @@ class AccountState extends State<Account> {
                         },
                         decoration: InputDecoration(labelText: "Surname", border: OutlineInputBorder())),
 
-                const SizedBox(height: 15,),
-
-                TextFormField(controller: _dateController, readOnly: true,
-                        decoration: const InputDecoration(labelText: 'Date of birth', border: OutlineInputBorder()),
-                        onTap: () async {
-                          DateTime? picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2002),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                          );
-                          if (picked != null) {
-                            setState(() {
-                              _dateController.text = "${picked.day}/${picked.month}/${picked.year}";
-                            });
-                          }
-                        }, 
-                  ),
-
               const SizedBox(height: 15,),
                 DropdownButtonFormField<String>(
                       decoration: const InputDecoration(labelText: 'Sex', border: OutlineInputBorder()),
@@ -128,18 +105,6 @@ class AccountState extends State<Account> {
               child: Text("Save"),
               onPressed: () async {
                 final sharedPreferences = await SharedPreferences.getInstance();
-                final dataProvider = Provider.of<DataProvider>(context, listen: false);
-
-                if (_dateController.text.isNotEmpty) {
-                  await sharedPreferences.setString('Dob', _dateController.text);
-                  
-                  // Calcolo età
-                  int age = DateTime.now().year - DateFormat('dd/MM/yyyy').parse(_dateController.text).year;
-                  await sharedPreferences.setInt('Age', age);
-                  
-                  // AGGIORNAMENTO PROVIDER
-                  await dataProvider.updateAge(age);
-  }
               
               if (_nameController.text.isNotEmpty) {
                 await sharedPreferences.setString('Name', _nameController.text);

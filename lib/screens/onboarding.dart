@@ -82,11 +82,13 @@ class _OnboardingState extends State<Onboarding> {
         );
     }
   }
+  
   Future<void> _setOnboardingCompleted() async {
     final sp = await SharedPreferences.getInstance();
     await sp.setInt('Age',30);
     await sp.setBool('onboarding_completed', true);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -218,27 +220,49 @@ class _OnboardingState extends State<Onboarding> {
             ),
                   ),
             Positioned(
-              bottom: 16,
-              right: 16,
-              child: TextButton(
-                onPressed: () async {
-                  await _setOnboardingCompleted();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChangeNotifierProvider<DataProvider>(
-                        create: (context) => DataProvider(),
-                        child: const HomeScreen(), 
-                      ),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Skip',
-                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                ),
-              ),    
-                  ),]
+  bottom: 16,
+  right: 16,
+  child: TextButton(
+    onPressed: () async {
+      
+      if (_dateController.text.isEmpty) {
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select your Date of Birth before skipping!'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return; 
+      }
+
+      
+      int age = DateTime.now().year - DateFormat('dd/MM/yyyy').parse(_dateController.text).year;
+
+      final sp = await SharedPreferences.getInstance();
+      await sp.setInt('Age', age);
+      await sp.setString('Dob', _dateController.text); 
+      await sp.setBool('onboarding_completed', true);
+      
+      if (!context.mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<DataProvider>(
+            create: (context) => DataProvider(),
+            child: const HomeScreen(), 
+          ),
+        ),
+      );
+    },
+    child: Text(
+      'Skip',
+      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+    ),
+  ),    
+)]
         ),
       ),);
   }
