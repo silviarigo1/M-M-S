@@ -362,6 +362,8 @@ Future<double> calculatePenalty(double HRtoday, double mean, double std) async {
 }
 // This method calculates the sleep quality score based on various parameters and the user's age (literature-based thresholds).
  Future<int> sleepQuality(int age) async {
+  print('Età: $age');
+  
     if (sleepRecords.isEmpty) {
       print('No sleep records are available to calculate sleep quality.');
       return 0; 

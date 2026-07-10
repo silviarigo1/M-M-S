@@ -110,12 +110,17 @@ class _SuggestionState extends State<Suggestion> {
                   },
                 ),
               ),
+                  
+                  
                   Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 24.0, top: 16.0),
                       child: SizedBox(
                         width: double.infinity,
                         height: 50,
-                        child: ElevatedButton(
+                        
+                        child: trip.isCompleted
+                        ? null
+                        : ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
@@ -155,7 +160,8 @@ class _SuggestionState extends State<Suggestion> {
                               Navigator.of(currentContext).pop();
                             }
                           },
-                          child: const Text(
+                          child: 
+                          const Text(
                             "END",
                             style: TextStyle(
                               fontSize: 18,

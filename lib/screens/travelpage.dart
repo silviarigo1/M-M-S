@@ -145,23 +145,23 @@ class TravelPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        trailing: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            side: const BorderSide(
-                              color: Colors.green, 
-                              width: 2,            
-                            ),
-                          ),
-                          onPressed: () { provider.startTrip(trip);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const Suggestion()),
-                          );
-                        },
+                                              // All'interno del ListView.builder di TravelPage
+                      trailing: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          side: const BorderSide(color: Colors.green, width: 2),
+                        ),
+                        onPressed: 
+                            () {
+                                provider.startTrip(trip);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const Suggestion()),
+                                );
+                              },
                         child: Text(
-                          provider.isOngoing && provider.currentTrip == trip
-                              ? 'RESUME'
-                              : 'START'
+                          trip.isCompleted 
+                              ? 'COMPLETED' 
+                              : (provider.currentTrip == trip ? 'RESUME' : 'START'),
                         ),
                       ),
                     ),

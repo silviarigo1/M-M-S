@@ -10,8 +10,9 @@ class Trip {
   String title;
   List<Container> destinations;
   List<int> indices;
+  bool isCompleted;
 
-  Trip({required this.title, required this.destinations, required this.indices});
+  Trip({required this.title, required this.destinations, required this.indices, this.isCompleted = false});
   int get length => destinations.length;
 
 }
@@ -29,13 +30,13 @@ class ResultSwipe extends ChangeNotifier{
   Trip? _selectedTripData;
   Trip? get currentTrip => _selectedTripData;
 
-  bool isOngoing = false;
+
   List<int> checkedPlaces = [];
 
 // This method is used to start a trip. It sets the selected trip data and notifies the listeners.
   void startTrip(Trip trip) {
     _selectedTripData = trip;
-    isOngoing = true;
+
     notifyListeners();
   }
 
@@ -104,8 +105,12 @@ class ResultSwipe extends ChangeNotifier{
 
 // This method is used to end a trip. 
   void endTrip() {
-    _selectedTripData = null;
-    isOngoing = false;
+    if (_selectedTripData != null) {
+      _selectedTripData!.isCompleted = true; 
+      _selectedTripData = null;
+    }
+    
+
     notifyListeners();
   }
 

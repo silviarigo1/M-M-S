@@ -151,7 +151,6 @@ class AccountState extends State<Account> {
               if (_selectedGender != null) {
                 await sharedPreferences.setString('SelectedGender', _selectedGender!);
               }
-              DataProvider();
 
               ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Well done!"),
