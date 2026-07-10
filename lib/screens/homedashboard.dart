@@ -259,7 +259,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
                 // SLEEP
                 Column(
+                  
                   children: [
+                    dataProvider.isPresentSleep == false
+                  ? Text('Non ci sono dati')
+                  : 
                     dataProvider.finalScore == 0 
                     ? const Center(child: CircularProgressIndicator())
                     : Container(
@@ -339,11 +343,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       Text("  Heart Rate Mean (7 days): ", style: const TextStyle(fontSize: 14, color: Colors.black87)),
                       Text("${dataProvider.meanHR.toInt()} BPM", style: const TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
-                      if (dataProvider.HRToday > dataProvider.meanHR) 
+                      if ((dataProvider.HRToday).toInt() > (dataProvider.meanHR).toInt()) 
                             const Text('Today your heart rate is above your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                         )
-                      else if (dataProvider.HRToday < dataProvider.meanHR) 
+                      else if ((dataProvider.HRToday).toInt() < (dataProvider.meanHR).toInt()) 
                             const Text('Today your heart rate is below your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                       )

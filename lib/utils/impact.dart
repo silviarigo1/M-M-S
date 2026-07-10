@@ -100,6 +100,7 @@ Future<List<Steps>?> requestData() async {
     //Create the (representative) request
     final ieri = DateTime.now().subtract(Duration(days: 1));
     final day = DateFormat('yyyy-MM-dd').format(ieri);
+    
     final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$day/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 

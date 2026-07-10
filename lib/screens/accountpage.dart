@@ -5,6 +5,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:mms_app/providers/data_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
@@ -37,7 +40,7 @@ class AccountState extends State<Account> {
       
       _nameController.text = sp.getString('Name') ?? '';
       _surnameController.text = sp.getString('Surname') ?? '';
-      _dateController.text = sp.getString('Date') ?? '';
+      _dateController.text = sp.getString('Dob') ?? '';
       if (allowedGenders.contains(savedGender)) {
       _selectedGender = savedGender;
         } else {
@@ -124,19 +127,31 @@ class AccountState extends State<Account> {
             ElevatedButton(
               child: Text("Save"),
               onPressed: () async {
-              final sharedPreferences = await SharedPreferences.getInstance();
+                final sharedPreferences = await SharedPreferences.getInstance();
+                final dataProvider = Provider.of<DataProvider>(context, listen: false);
+
+                if (_dateController.text.isNotEmpty) {
+                  await sharedPreferences.setString('Dob', _dateController.text);
+                  
+                  // Calcolo età
+                  int age = DateTime.now().year - DateFormat('dd/MM/yyyy').parse(_dateController.text).year;
+                  await sharedPreferences.setInt('Age', age);
+                  
+                  // AGGIORNAMENTO PROVIDER
+                  await dataProvider.updateAge(age);
+  }
+              
               if (_nameController.text.isNotEmpty) {
                 await sharedPreferences.setString('Name', _nameController.text);
               }
               if (_surnameController.text.isNotEmpty) {
                 await sharedPreferences.setString('Surname', _surnameController.text);
               }
-              if (_dateController.text.isNotEmpty) {
-                await sharedPreferences.setString('Date', _dateController.text);
-              }
+              
               if (_selectedGender != null) {
                 await sharedPreferences.setString('SelectedGender', _selectedGender!);
               }
+              DataProvider();
 
               ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Well done!"),
