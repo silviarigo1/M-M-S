@@ -34,6 +34,8 @@ class DataProvider extends ChangeNotifier {
   double PointsHR = 0.0;
   double PointsSleep = 0.0;
   bool isPresentSleep = true;
+  bool isPresentStep = true;
+  bool isPresentHeart = true;
 
   DataProvider() {
     _initData();
@@ -61,12 +63,56 @@ void saveBattery(int battery) {
     notifyListeners();
   }
 
+Future<List<Steps>?> requestData() async {
+    
+    List<Steps>? result;
+    
+    //Get the stored access token
+    final sp = await SharedPreferences.getInstance();
+    var access = sp.getString('access');
 
+    //If access token is expired, refresh it
+    if(JwtDecoder.isExpired(access!)){
+      await impact.refreshTokens();
+      access = sp.getString('access');
+    }//if
+
+    //Create the (representative) request
+    final ieri = DateTime.now().subtract(Duration(days: 1));
+    final day = DateFormat('yyyy-MM-dd').format(ieri);
+    
+    final url = '${Impact.baseUrl}${Impact.stepsEndpoint}${Impact.patientUsername}/day/$day/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    //Get the response
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+    
+    //if OK parse the response, otherwise return null
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      if (decodedResponse['data'].isEmpty){
+        isPresentStep = false;
+      }
+      
+      result = [];
+      
+      for (var i = 0; i < decodedResponse['data']['data'].length; i++) {
+        result.add(Steps.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data'][i]));
+      }//for
+    } //if
+    else{
+      result = null;
+    }//else
+    
+    return result;
+
+  } //_requestData
 // This method calculates the total number of steps taken by the user. 
 //It retrieves the data from the Impact API and sums up the values of steps.
 Future<int> getStepsTotal() async {
   try {
-    final List<Steps>? stepsList = await impact.requestData();
+    final List<Steps>? stepsList = await requestData();
     if (stepsList != null) {
       for (var step in stepsList) {
           stepsTotal += step.value; 
@@ -105,7 +151,7 @@ Future<List<Sleep>?> requestSleepData() async {
       access = spAggiornato.getString('access');
     }
 
-    final ieri = DateTime.now().subtract(Duration(days: 2));
+    final ieri = DateTime.now().subtract(Duration(days: 1));
     final day = DateFormat('yyyy-MM-dd').format(ieri); 
     
 
@@ -183,8 +229,12 @@ Future<List<Sleep>?> requestSleepData() async {
     print('Response: ${response.body}');
     
     if (response.statusCode == 200) {
+      
   try {
     final decodedResponse = jsonDecode(response.body);
+    if (decodedResponse['data'].isEmpty){
+        isPresentHeart = false;
+      }
     result = RHeartRate.fromJson(decodedResponse['data']['date'], decodedResponse['data']['data']);
     HRToday = result.value;
     print('The value of heart rate is: $HRToday');

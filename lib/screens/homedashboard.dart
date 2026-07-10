@@ -194,7 +194,9 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 //Step indicator 
                 Column(
                   children: [
-                    
+                    dataProvider.isPresentStep == false
+                  ? Text('Data not available')
+                  : 
                     FutureBuilder( future: SharedPreferences.getInstance(),
                     builder: (context, snapshot) {
                       int stepGoal = 10000;
@@ -262,7 +264,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   
                   children: [
                     dataProvider.isPresentSleep == false
-                  ? Text('Non ci sono dati')
+                  ? Text('Data not available')
                   : 
                     dataProvider.finalScore == 0 
                     ? const Center(child: CircularProgressIndicator())
@@ -309,7 +311,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
         const SizedBox(height: 10),
 
         // HEART RATE
-        Column(children: [
+        Column(children: 
+        [ dataProvider.isPresentHeart == false
+                  ? Text('Data not available')
+                  : 
           dataProvider.HRToday == 60 && dataProvider.meanHR == 0.0
             ? const Center(child: CircularProgressIndicator())
             : Container(
