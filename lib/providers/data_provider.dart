@@ -1,5 +1,4 @@
 // This provider is responsible for managing the data related to steps, sleep, heart rate, and energy levels.
-// 
 
 import 'dart:convert';
 import 'dart:io';
@@ -332,9 +331,9 @@ Future<List<Sleep>?> requestSleepData() async {
         throw Exception('Status ${response2.statusCode}: ${response2.body}');
       }
 
-    final start3 = DateTime.now().subtract(Duration(days: 15));
+    final start3 = DateTime.now().subtract(Duration(days: 22));
     final startDate3 = DateFormat('yyyy-MM-dd').format(start3);
-    final end3 = DateTime.now().subtract(Duration(days: 9));
+    final end3 = DateTime.now().subtract(Duration(days: 16));
     final endDate3 = DateFormat('yyyy-MM-dd').format(end3);
 
 
@@ -512,9 +511,9 @@ Future<double> calculatePenalty(double HRtoday, double mean, double std) async {
     int remSleep = sleep.levels.summary.rem.minutes;
     int percentageRemSleep = (remSleep * 100) ~/ sleep.minutesAsleep;
     if (subjectCategory == category[0]) {
-      if (percentageRemSleep <=5) {
+      if (percentageRemSleep <= 20) {
         score += 2;
-      } if (percentageRemSleep >=11) {
+      } if (percentageRemSleep >= 41) {
         score += 1;
     }
   } if (subjectCategory == category[1]) {
@@ -529,7 +528,7 @@ Future<double> calculatePenalty(double HRtoday, double mean, double std) async {
       } if (percentageRemSleep >=41) {
         score += 2;
     }
-  } if (subjectCategory == category[3]) {
+  } if (subjectCategory == category[4]) {
       if (percentageRemSleep >=41) {
         score += 2;
       } if (percentageRemSleep >=21 && percentageRemSleep <=30) {

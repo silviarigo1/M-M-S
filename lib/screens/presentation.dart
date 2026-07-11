@@ -17,22 +17,18 @@ class _PresentationPageState extends State<PresentationPage> {
     {
       "image": "lib/images/screen1.jpg",
       "title": "Welcome to the Home Page",
-      "desc": "Here you can see your tiredness level and plan your trips accordingly. Just click on the green button to start your adventure!"
     },
     {
       "image": "lib/images/screen2.jpg",
       "title": "Choose the destinations",
-      "desc": ""
     },
     {
       "image": "lib/images/screen3.jpg",
       "title": "Travel Page",
-      "desc": "Here the algorithm will suggest you the best route to reach your destination, taking into account your tiredness level and the energy cost of the trip."
     },
     {
       "image": "lib/images/screen4.jpg",
       "title": "Profile Page",
-      "desc": "Here you can view and change your profile information and steps aim."
     },
   ];
 
@@ -73,15 +69,6 @@ class _PresentationPageState extends State<PresentationPage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        /*const SizedBox(height: 10),
-                        Text(
-                          _slides[index]["desc"]!,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),*/
                       ],
                     ),
                   );

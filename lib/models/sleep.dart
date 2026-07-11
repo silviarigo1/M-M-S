@@ -6,7 +6,7 @@
 //The SleepStageData object contains information about a specific stage of sleep, such as the start time, end time, and duration of the stage.
 import 'package:intl/intl.dart';
 
-// --- CLASSE PRINCIPALE (RADICE) ---
+// --- CLASSE PRINCIPALE ---
 class Sleep {
   final String dateOfSleep;          
   final DateTime startTime;          

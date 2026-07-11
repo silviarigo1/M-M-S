@@ -146,7 +146,6 @@ class TravelPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                                              // All'interno del ListView.builder di TravelPage
                       trailing: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           side: const BorderSide(color: Colors.green, width: 2),
