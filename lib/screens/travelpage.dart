@@ -172,7 +172,7 @@ class TravelPage extends StatelessWidget {
                         child: Text(
                           trip.isCompleted 
                               ? 'COMPLETED' 
-                              : (provider.currentTrip == trip ? 'RESUME' : 'START'),
+                              : (trip.isStarted ? 'RESUME' : 'START'),
                         ),
                   ),
                     ),

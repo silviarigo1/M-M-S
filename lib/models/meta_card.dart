@@ -22,7 +22,7 @@ class MetaCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final provider = Provider.of<ResultSwipe>(context);
-    final bool isCompleted = provider.checkedPlaces.contains(indexDellaMeta);
+    final bool isCompleted = provider.isPlaceChecked(indexDellaMeta);
     
     // This is done to show the card in different positions based on whether the index is even or odd, 
     // creating a staggered effect in the list.

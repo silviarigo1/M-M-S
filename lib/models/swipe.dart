@@ -11,10 +11,19 @@ class Trip {
   List<Container> destinations;
   List<int> indices;
   bool isCompleted;
+  List<int> checkedIndices; 
+  bool isStarted; 
 
-  Trip({required this.title, required this.destinations, required this.indices, this.isCompleted = false});
+  Trip({
+    required this.title, 
+    required this.destinations, 
+    required this.indices, 
+    this.isCompleted = false,
+    this.isStarted = false, // Di base è false
+    List<int>? checkedIndices,
+  }) : this.checkedIndices = checkedIndices ?? [];
+
   int get length => destinations.length;
-
 }
 
 class ResultSwipe extends ChangeNotifier{
@@ -31,12 +40,10 @@ class ResultSwipe extends ChangeNotifier{
   Trip? get currentTrip => _selectedTripData;
 
 
-  List<int> checkedPlaces = [];
-
 // This method is used to start a trip. It sets the selected trip data and notifies the listeners.
   void startTrip(Trip trip) {
     _selectedTripData = trip;
-
+    trip.isStarted = true;
     notifyListeners();
   }
 
@@ -114,14 +121,22 @@ class ResultSwipe extends ChangeNotifier{
     notifyListeners();
   }
 
-// This method is used to check or uncheck a place in the list of checked places.
+
+  bool isPlaceChecked(int index) {
+    if (_selectedTripData == null) return false;
+    return _selectedTripData!.checkedIndices.contains(index);
+  }
+
+  // This method is used to check or uncheck a place in the list of checked places.
   void tipPlaceCheck(int index) {
-    if (checkedPlaces.contains(index)) {
-      checkedPlaces.remove(index);
-    } else {
-      checkedPlaces.add(index);
+    if (_selectedTripData != null) {
+      if (_selectedTripData!.checkedIndices.contains(index)) {
+        _selectedTripData!.checkedIndices.remove(index);
+      } else {
+        _selectedTripData!.checkedIndices.add(index);
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
 }
