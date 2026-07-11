@@ -35,8 +35,7 @@ class Options extends StatelessWidget {
           ],
         ),
         ),  
-      body: Flexible(
-        child: CardSwiper(
+      body: CardSwiper(
           isVerticalSwipingEnabled: false,
           isLoop: false,
           cardsCount: carte.length,
@@ -52,7 +51,7 @@ class Options extends StatelessWidget {
                 );
               });
             }
-            })));
+            }));
             }
 }
 

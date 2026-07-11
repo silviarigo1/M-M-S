@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mms_app/models/places.dart';
+import 'package:mms_app/providers/data_provider.dart';
 import 'package:mms_app/screens/suggestion.dart';
 import 'package:provider/provider.dart';
 import '../models/swipe.dart';
@@ -151,7 +152,17 @@ class TravelPage extends StatelessWidget {
                           side: const BorderSide(color: Colors.green, width: 2),
                         ),
                         onPressed: 
-                            () {
+                            () { final dataProvider = Provider.of<DataProvider>(context, listen: false);
+
+                                  if (!dataProvider.isPresentSleep || !dataProvider.isPresentHeart) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Data not available'),
+                                        backgroundColor: Colors.redAccent,
+                                      ),
+                                    );
+                                    return; 
+                                  }
                                 provider.startTrip(trip);
                                 Navigator.push(
                                   context,
@@ -163,7 +174,7 @@ class TravelPage extends StatelessWidget {
                               ? 'COMPLETED' 
                               : (provider.currentTrip == trip ? 'RESUME' : 'START'),
                         ),
-                      ),
+                  ),
                     ),
                   ),
                 );   
@@ -179,3 +190,5 @@ class TravelPage extends StatelessWidget {
     );
   }
 }
+
+

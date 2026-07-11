@@ -103,6 +103,7 @@ class _ChoicesState extends State<Choices> {
             tooltip: "Add more destinations",
         onPressed: () {
     _showDestinationsPopup(context); 
+    
   },
         backgroundColor: Colors.lightGreen,
         child: const Icon(

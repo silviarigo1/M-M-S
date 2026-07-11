@@ -15,20 +15,25 @@ class _PresentationPageState extends State<PresentationPage> {
   final PageController _pageController = PageController();
   final List<Map<String, String>> _slides = [
     {
-      "image": "lib/images/screen1.png",
+      "image": "lib/images/screen1.jpg",
       "title": "Welcome to the Home Page",
       "desc": "Here you can see your tiredness level and plan your trips accordingly. Just click on the green button to start your adventure!"
     },
     {
-      "image": "lib/images/screen2.png",
+      "image": "lib/images/screen2.jpg",
+      "title": "Choose the destinations",
+      "desc": ""
+    },
+    {
+      "image": "lib/images/screen3.jpg",
       "title": "Travel Page",
       "desc": "Here the algorithm will suggest you the best route to reach your destination, taking into account your tiredness level and the energy cost of the trip."
     },
-    /*{
-      "image": "lib/images/screen3.png",
+    {
+      "image": "lib/images/screen4.jpg",
       "title": "Profile Page",
       "desc": "Here you can view and change your profile information and steps aim."
-    },*/
+    },
   ];
 
   @override
@@ -45,16 +50,20 @@ class _PresentationPageState extends State<PresentationPage> {
                 itemCount: _slides.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.all(40.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          _slides[index]["image"]!,
-                          height: 300,
-                          fit: BoxFit.contain,
-                        ),
+                        Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            child: Image.asset(
+                            _slides[index]["image"]!,
+                            height: 300,
+                            fit: BoxFit.contain,
+                        ),),),
+
                         const SizedBox(height: 24),
+
                         Text(
                           _slides[index]["title"]!,
                           style: const TextStyle(
@@ -64,7 +73,7 @@ class _PresentationPageState extends State<PresentationPage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 10),
+                        /*const SizedBox(height: 10),
                         Text(
                           _slides[index]["desc"]!,
                           style: const TextStyle(
@@ -72,14 +81,14 @@ class _PresentationPageState extends State<PresentationPage> {
                             color: Colors.grey,
                           ),
                           textAlign: TextAlign.center,
-                        ),
+                        ),*/
                       ],
                     ),
                   );
                 },
               ),
             ),
-            
+            const SizedBox(height: 30.0),
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: ElevatedButton(

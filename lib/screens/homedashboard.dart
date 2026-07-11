@@ -195,7 +195,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 Column(
                   children: [
                     dataProvider.isPresentStep == false
-                  ? Text('Data not available')
+                  ? Text('Step data is not available')
                   : 
                     FutureBuilder( future: SharedPreferences.getInstance(),
                     builder: (context, snapshot) {
@@ -264,7 +264,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   
                   children: [
                     dataProvider.isPresentSleep == false
-                  ? Text('Data not available')
+                  ? Text('Sleep data is not available')
                   : 
                     dataProvider.finalScore == 0 
                     ? const Center(child: CircularProgressIndicator())
@@ -345,15 +345,15 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      Text("  Heart Rate Mean (7 days): ", style: const TextStyle(fontSize: 14, color: Colors.black87)),
+                      Text("  Resting Heart Rate Mean (20 days): ", style: const TextStyle(fontSize: 14, color: Colors.black87)),
                       Text("${dataProvider.meanHR.toInt()} BPM", style: const TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       if ((dataProvider.HRToday).toInt() > (dataProvider.meanHR).toInt()) 
-                            const Text('Today your heart rate is above your average!',
+                            const Text('Today your resting heart rate is above your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                         )
                       else if ((dataProvider.HRToday).toInt() < (dataProvider.meanHR).toInt()) 
-                            const Text('Today your heart rate is below your average!',
+                            const Text('Today your resting heart rate is below your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                       )
                                                       
@@ -370,14 +370,18 @@ class _HomeDashboardState extends State<HomeDashboard> {
         ],),
 
         // BATTERY
-        const SizedBox(height: 15),
+        const SizedBox(height: 20),
+
         dataProvider.currentBattery == 0 
             ? const Center(child: CircularProgressIndicator())
-        : Column(
-          children: [
-            Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
-              WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
+            : (!dataProvider.isPresentSleep || !dataProvider.isPresentHeart)
+
+              ? const Center(child: Text('Data not available'))
+              : Column(
+                children: [
+                  Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 10),
+                    WidgetEnergia(livelloEnergia: currentPile, livelloMassimo: 10),
             ],
           ),
       ],
