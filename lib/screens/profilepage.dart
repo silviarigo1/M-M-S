@@ -58,8 +58,8 @@ class _ProfileState extends State<Profile> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final sharedPreferences = snapshot.data!;
-                  String name = sharedPreferences.getString('Name') ?? 'Name';
-                  String surname = sharedPreferences.getString('Surname') ?? 'Surname';
+                  String name = sharedPreferences.getString('Name') ?? '';
+                  String surname = sharedPreferences.getString('Surname') ?? '';
 
                   return Text(
                         "$name $surname",
