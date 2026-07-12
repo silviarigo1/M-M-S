@@ -2,9 +2,8 @@
 // As instance variables, it contains: the base url of the API, the endpoints of the API, 
 // the username and the password of the user (that are taken from the login page),
 // and the username of the patient.
-// As methods it contains: refreshTokens, getAndStoreTokens and requestData.
-// The first two methods are used to get and refresh the JWT tokens, while the last one is used to request 
-// the step-related data of the patient.
+// As methods it contains: refreshTokens, getAndStoreTokens 
+// They are used to get and refresh the JWT tokens
 
 
 import 'dart:convert';
