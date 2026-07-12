@@ -65,7 +65,7 @@ class _SplashState extends State<Splash> {
         ]
       ),
       SizedBox(height: 20),
-      Text('WELCOME TO MMS TRIP', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.lightGreen)),
+      Text('WELCOME TO\n M&MS TRIP', textAlign: TextAlign.center, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.lightGreen)),
         ],
       ),
     ),

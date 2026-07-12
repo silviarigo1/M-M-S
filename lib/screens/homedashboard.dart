@@ -345,20 +345,20 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      Text("  Resting Heart Rate Mean (20 days): ", style: const TextStyle(fontSize: 14, color: Colors.black87)),
+                      Text("Resting Heart Rate Mean (20 days):", style: const TextStyle(fontSize: 14, color: Colors.black87)),
                       Text("${dataProvider.meanHR.toInt()} BPM", style: const TextStyle(fontSize: 14, color: Colors.black87, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       if ((dataProvider.HRToday).toInt() > (dataProvider.meanHR).toInt()) 
-                            const Text('Today your resting heart rate is above your average!',
+                            const Text('Today your resting HR is above your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                         )
                       else if ((dataProvider.HRToday).toInt() < (dataProvider.meanHR).toInt()) 
-                            const Text('Today your resting heart rate is below your average!',
+                            const Text('Today your resting HR is below your average!',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                       )
                                                       
                       else 
-                            const Text('Today your heart rate is in your average.',
+                            const Text('Today your resting HR is in your average.',
                                         style: TextStyle(fontSize: 10, color: Colors.black87),
                                       )
                                                   
