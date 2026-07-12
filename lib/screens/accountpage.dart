@@ -172,11 +172,14 @@ class AccountState extends State<Account> {
                 );
                 
                 
-                Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => ChangeNotifierProvider<DataProvider>(
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChangeNotifierProvider<DataProvider>(
                     create: (context) => DataProvider(),
                     child: HomeScreen(),
-                  )));
+                  )),
+                  (route) => false,
+                );
               },
             )
           ]
