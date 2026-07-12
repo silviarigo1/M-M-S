@@ -115,10 +115,7 @@ class AccountState extends State<Account> {
                         onTap: () => _selectDate(context),
                         validator: (value) => value == null || value.isEmpty ? 'Pick a date' : null,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                
+                      
                 const SizedBox(height: 15,),
                 DropdownButtonFormField<String>(
                       decoration: const InputDecoration(labelText: 'Sex', border: OutlineInputBorder()),
