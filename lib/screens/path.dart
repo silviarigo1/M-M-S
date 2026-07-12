@@ -68,11 +68,8 @@ class _ChoicesState extends State<Choices> {
                             Icons.delete_rounded,
                             color: Color.fromARGB(255, 93, 92, 92),
                           ),
-                          onPressed: () {
-                            
+                          onPressed: () {                            
                             setState(() {number.trashDest(destIndex);});
-                            ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Destination removed!")),);
                           }
                           
                         ),
