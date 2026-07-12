@@ -5,6 +5,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:mms_app/providers/data_provider.dart';
+import 'package:mms_app/screens/home.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
@@ -19,6 +23,7 @@ class AccountState extends State<Account> {
   final TextEditingController _surnameController = TextEditingController();
 
   String? _selectedGender;
+  final TextEditingController _dateController = TextEditingController();
   final sharedPreferences = SharedPreferences.getInstance();
   
   @override
@@ -28,10 +33,25 @@ class AccountState extends State<Account> {
     _loadUserData(); 
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2002),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = DateFormat('dd/MM/yyyy').format(picked);
+      });
+    }
+  }
+
   Future<void> _loadUserData() async {
     final sp = await SharedPreferences.getInstance();
     String? savedGender = sp.getString('Gender');
     List<String> allowedGenders = ['M', 'F', 'Other'];
+    _dateController.text = sp.getString('Dob') ?? '';
 
     setState(() {
       
@@ -86,7 +106,20 @@ class AccountState extends State<Account> {
                         },
                         decoration: InputDecoration(labelText: "Surname", border: OutlineInputBorder())),
 
-              const SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
+
+                      TextFormField(
+                        controller: _dateController,
+                        readOnly: true,
+                        decoration: InputDecoration(labelText: 'Date of birth', border: OutlineInputBorder()),
+                        onTap: () => _selectDate(context),
+                        validator: (value) => value == null || value.isEmpty ? 'Pick a date' : null,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                
+                const SizedBox(height: 15,),
                 DropdownButtonFormField<String>(
                       decoration: const InputDecoration(labelText: 'Sex', border: OutlineInputBorder()),
                       initialValue: _selectedGender,
@@ -102,27 +135,53 @@ class AccountState extends State<Account> {
         const SizedBox(height: 20),
 
             ElevatedButton(
-              child: Text("Save"),
+              child: const Text("Save"),
               onPressed: () async {
-                final sharedPreferences = await SharedPreferences.getInstance();
-              
-              if (_nameController.text.isNotEmpty) {
-                await sharedPreferences.setString('Name', _nameController.text);
-              }
-              if (_surnameController.text.isNotEmpty) {
-                await sharedPreferences.setString('Surname', _surnameController.text);
-              }
-              
-              if (_selectedGender != null) {
-                await sharedPreferences.setString('SelectedGender', _selectedGender!);
-              }
+                final sp = await SharedPreferences.getInstance();
+                
+                if (_nameController.text.isNotEmpty) {
+                  await sp.setString('Name', _nameController.text);
+                }
+                if (_surnameController.text.isNotEmpty) {
+                  await sp.setString('Surname', _surnameController.text);
+                }
+                
+                if (_selectedGender != null) {
+                  await sp.setString('Gender', _selectedGender!);
+                }
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Well done!"),
-                                  backgroundColor: Colors.green, 
-                                  behavior: SnackBarBehavior.floating,),);
-              Navigator.pop(context);
-            })
+                int ageToSend = sp.getInt('Age') ?? 30; 
+
+                if (_dateController.text.isNotEmpty) {
+                  await sp.setString('Dob', _dateController.text);
+                  try {
+                    int calculatedAge = DateTime.now().year - DateFormat('dd/MM/yyyy').parse(_dateController.text).year;
+                    await sp.setInt('Age', calculatedAge);
+                    ageToSend = calculatedAge; 
+                  } catch (e) {
+                    print("Error parsing date: $e");
+                  }
+                  
+                }
+
+                Provider.of<DataProvider>(context, listen: false).sleepQuality(ageToSend);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Well done!"),
+                    backgroundColor: Colors.green, 
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+                
+                
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => ChangeNotifierProvider<DataProvider>(
+                    create: (context) => DataProvider(),
+                    child: HomeScreen(),
+                  )));
+              },
+            )
           ]
         )
       )

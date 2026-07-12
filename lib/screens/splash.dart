@@ -37,7 +37,7 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3, milliseconds: 200), () => _checkLogin(context));
+    Future.delayed(const Duration(seconds: 3, milliseconds: 200));
   return Scaffold(
     body: Center(
       child: Column(
@@ -70,28 +70,6 @@ class _SplashState extends State<Splash> {
       ),
     ),
   ); 
-}
-
-
-  void _toHomePage(BuildContext context) {
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
-  } 
-
-
-  void _toLoginPage(BuildContext context) {
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: ((context) =>  LoginPage())));
-  } 
-
-  
-  void _checkLogin(BuildContext context) async {
-    final result = await Impact().refreshTokens();
-    if (result == 200) {
-      _toHomePage(context);
-    } else {
-      _toLoginPage(context);
-    }
-  } //_checkLogin
+}//_checkLogin
 
 }
