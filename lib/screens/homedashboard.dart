@@ -376,7 +376,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             ? const Center(child: CircularProgressIndicator())
             : (!dataProvider.isPresentSleep || !dataProvider.isPresentHeart)
 
-              ? const Center(child: Text('Data not available'))
+              ? const Center(child: Text('Insufficient data to calculate your energy level'))
               : Column(
                 children: [
                   Text("YOUR BATTERY", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),

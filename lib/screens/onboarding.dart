@@ -83,12 +83,6 @@ class _OnboardingState extends State<Onboarding> {
     }
   }
   
-  Future<void> _setOnboardingCompleted() async {
-    final sp = await SharedPreferences.getInstance();
-    await sp.setInt('Age',30);
-    await sp.setBool('onboarding_completed', true);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
